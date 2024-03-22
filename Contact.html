@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,4 +79,86 @@
 </div>
 
 </body>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+    }
+
+    .image-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 30px; /* 距离网页顶部xxx个像素 */
+    }
+
+    .image-link {
+      text-decoration: none; /* 去除超链接下划线 */
+      margin: 0 0; /* 为图片之间设置间距，这里设置较小以近似"左右连接"效果，根据图片实际情况可能需要调整 */
+    }
+
+    .image-link img {
+      width: 200px; /* 图片宽度为容器宽度的1/4，减去间距以保持并列 */
+      height: 50px;
+      transition: transform 0.3s ease; /* 设置图片悬浮效果的过渡动画 */
+    }
+
+    .image-link:hover img {
+      transform: scale(1.1); /* 鼠标悬停时放大图片，可以调整放大的比例 */
+    }
+
+    /* 针对第一个和最后一个图片链接，去除左右的间距 */
+    .image-container .image-link:first-child {
+      margin-left: 0;
+    }
+
+    .image-container .image-link:last-child {
+      margin-right: 0;
+    }
+
+    /* 针对图片容器本身设置左右间距 */
+    .image-container {
+      max-width: calc(100% - 16px); /* 设置容器宽度为视口的100%减去左右各8像素的间距 */
+      margin-left: auto;
+      margin-right: auto;
+    }
+    body{
+      background-image: url("image/background-photo/contact-backg2.png");
+      background-size: cover;
+      background-color: rgba(9, 96, 246, 0.01);
+    }
+   </style>
+  <style>
+      .divecontainer{
+          display: flex;
+          justify-content: center; /* 水平居中 */
+          align-items: center; /* 垂直居中 */
+      }
+  </style>
+</head>
+<body>
+<div class="image-container">
+    <a href="index.html" class="image-link"><img src="image/index-labpage2/home3.png" alt="图片1"></a> <!-- 替换为您的图片地址 -->
+    <a href="people.html" class="image-link"><img src="image/index-labpage2/team.png" alt="图片2"></a>
+    <a href="publication.html" class="image-link"><img src="image/index-labpage2/publication3.png" alt="图片3"></a>
+    <a href="Contact.html" class="image-link"><img src="image/index-labpage2/contact2.png" alt="图片4"></a>
+    <a href="protocol.html" class="image-link"><img src="image/index-labpage2/protocol2.png" alt="图片5"></a>
+    <a href="link.html" class="image-link"><img src="image/index-labpage2/Link2.png" alt="图片6"></a>
+</div>
+
+<div class="divecontainer">
+    <p style="text-align: center;color: #f1f1f1;font-size: 50px">Contact us if you are interested!</p>
+    <br><br>
+    <a href="mailto:jingmin0629@163.com" class="image-link2">
+        <img src="image/background-photo/contact1.png" style="height: 50px;width: 150px" ></a>
+</div>
+
+</body>
+>>>>>>> 2d161011138358efd1a5b8f62b1a368aa42d68a2
 </html>
