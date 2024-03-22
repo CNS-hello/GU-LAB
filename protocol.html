@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>protocol</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+    }
+
+    .image-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 30px; /* 距离网页顶部xxx个像素 */
+    }
+
+    .image-link {
+      text-decoration: none; /* 去除超链接下划线 */
+      margin: 0 0; /* 为图片之间设置间距，这里设置较小以近似"左右连接"效果，根据图片实际情况可能需要调整 */
+    }
+
+    .image-link img {
+      width: 200px; /* 图片宽度为容器宽度的1/4，减去间距以保持并列 */
+      height: 50px;
+      transition: transform 0.3s ease; /* 设置图片悬浮效果的过渡动画 */
+    }
+
+    .image-link:hover img {
+      transform: scale(1.1); /* 鼠标悬停时放大图片，可以调整放大的比例 */
+    }
+
+    /* 针对第一个和最后一个图片链接，去除左右的间距 */
+    .image-container .image-link:first-child {
+      margin-left: 0;
+    }
+
+    .image-container .image-link:last-child {
+      margin-right: 0;
+    }
+
+    /* 针对图片容器本身设置左右间距 */
+    .image-container {
+      max-width: calc(100% - 16px); /* 设置容器宽度为视口的100%减去左右各8像素的间距 */
+      margin-left: auto;
+      margin-right: auto;
+    }
+    body{
+      background-image: url("image/background-photo/back2.png");
+      background-size: cover;
+    }
+  </style><!--这里是导航栏css-->
+  <style>
+      .image-carousel-container {
+          position: relative;
+          width: 80%;
+          margin: 50px auto 0;
+          height: 400px;
+          overflow: hidden;
+      }
+      .image-carousel {
+          display: flex;
+          width: 100%;
+          height: 100%;
+          transition: transform 1s ease;
+      }
+      .image-carousel a {
+          flex: 0 0 100%;
+          height: 100%;
+          background-size: cover;
+          background-position: center;
+          display: block;
+      }
+      .carousel-control {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 50px;
+          height: 50px;
+          cursor: pointer;
+          background: rgba(255, 255, 255, 0.5);
+          border-radius: 50%;
+          text-align: center;
+          line-height: 50px;
+          color: #000;
+          font-size: 24px;
+          z-index: 10;
+      }
+      .carousel-control:hover {
+          background: rgba(255, 255, 255, 0.8);
+      }
+      #prev {
+          left: 20px;
+      }
+      #next {
+          right: 20px;
+      }
+      .image-container {
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+          padding-top: 30px; /* 距离网页顶部xxx个像素 */
+      }
+
+      .image-link {
+          text-decoration: none; /* 去除超链接下划线 */
+          margin: 0 0; /* 为图片之间设置间距，这里设置较小以近似"左右连接"效果，根据图片实际情况可能需要调整 */
+      }
+
+      .image-link img {
+          width: 240px; /* 图片宽度为容器宽度的1/4，减去间距以保持并列 */
+          height: 50px;
+          transition: transform 0.3s ease; /* 设置图片悬浮效果的过渡动画 */
+      }
+
+      .image-link:hover img {
+          transform: scale(1.1); /* 鼠标悬停时放大图片，可以调整放大的比例 */
+      }
+
+      /* 针对第一个和最后一个图片链接，去除左右的间距 */
+      .image-container .image-link:first-child {
+          margin-left: 0;
+      }
+
+      .image-container .image-link:last-child {
+          margin-right: 0;
+      }
+
+      /* 针对图片容器本身设置左右间距 */
+      .image-container {
+          max-width: calc(100% - 16px); /* 设置容器宽度为视口的100%减去左右各8像素的间距 */
+          margin-left: auto;
+          margin-right: auto;
+      }
+      a{
+          text-decoration: none;color: black;
+      }
+      a:hover{
+          color: #0960f6;font-size: large;
+      }
+      ul li{
+          margin-bottom: 10px;
+      }
+  </style>
+
+</head>
+<body>
+<div class="image-container">
+    <a href="index.html" class="image-link"><img src="image/index-labpage2/home3.png" alt="图片1"></a> <!-- 替换为您的图片地址 -->
+    <a href="people.html" class="image-link"><img src="image/index-labpage2/team.png" alt="图片2"></a>
+    <a href="publication.html" class="image-link"><img src="image/index-labpage2/publication3.png" alt="图片3"></a>
+
+    <a href="protocol.html" class="image-link"><img src="image/index-labpage2/protocol2.png" alt="图片5"></a>
+    <a href="link.html" class="image-link"><img src="image/index-labpage2/Link2.png" alt="图片6"></a>
+</div>
+<div class="image-carousel-container" style="opacity: 0.90">
+    <div class="image-carousel" id="carousel"><!--文章图片-->
+        <a target="_blank" rel="noopener noreferrer" href="https://www.jove.com/cn/" style="background-image: url('image/protocols-image/jove.png');target: new"></a>
+        <a target="_blank" rel="noopener noreferrer" href="https://currentprotocols.onlinelibrary.wiley.com/" style="background-image: url('image/protocols-image/current-protocol.png');"></a>
+        <a target="_blank" rel="noopener noreferrer" href="https://link.springer.com/search?facet-content-type=%22Protocol%22" style="background-image: url('image/protocols-image/springer.png');"></a>
+        <a target="_blank" rel="noopener noreferrer" href="https://protocolexchange.researchsquare.com/" style="background-image: url('image/protocols-image/protocol-exchange.png');"></a>
+        <a target="_blank" rel="noopener noreferrer" href="https://cn.bio-protocol.org/en" style="background-image: url('image/protocols-image/bio-protocol.png');"></a>
+        <a target="_blank" rel="noopener noreferrer" href="https://pro.biomart.cn/lab-web/" style="background-image: url('image/protocols-image/dingxiang.png');"></a>
+        <a target="_blank" rel="noopener noreferrer" href="https://jishu.medpeer.cn/show/technique/index" style="background-image: url('image/protocols-image/medpeer.png');"></a>
+        <a target="_blank" rel="noopener noreferrer" href="https://cshprotocols.cshlp.org/" style="background-image: url('image/protocols-image/cold.png');"></a>
+        <a target="_blank" rel="noopener noreferrer" href="https://experiments.springernature.com/" style="background-image: url('image/protocols-image/nature-protocol.png');"></a>
+        <!-- 在此处添加更多图片 -->
+    </div>
+    <div class="carousel-control" id="prev">&#10094;</div>
+    <div class="carousel-control" id="next">&#10095;</div>
+</div>
+<div style="width: 80%;height: 500px;background-color: #ffffff;margin-left: auto;
+     margin-right: auto;margin-top: 50px;opacity: 0.8;overflow-y: scroll;margin-bottom: 50px">
+    <ul style="text-align: justify">
+        <li><a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S0048969722074046">噬菌体的分离与培养</a>
+        <li><a target="_blank" rel="noopener noreferrer" href="https://pubs.rsc.org/en/content/articlelanding/2022/fo/d2fo00699e">Wang X#, Ji Y#, Qiu C, Zhang H, Bi L, Xi H, Lei L, Liu B, Han W,Gu J*. A phage cocktail combined with the enteric probiotic Lactobacillus reuteri ameliorated mouse colitis caused by S. typhimurium. Food Funct. 2022 Aug 15;13(16):8509-8523.</a> </li>
+        <li><a target="_blank" rel="noopener noreferrer" href="https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2022.944495/full">Wang X#, Xing Y#, Ji Y, Xi H, Liu X, Yang L, Lei L, Han W,Gu J*.The Combination of Phages and Faecal Microbiota Transplantation Can Effectively Treat Mouse Colitis Caused by Salmonella enterica Serovar Typhimurium. Front Microbiol. 2022 Jul 7;13:944495. </a> </li>
+        <li><a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S0378113522000955">Wang Z, Liu X, Shi Z, Zhao R, Ji Y, Tang F, Guan Y, Feng X, Sun C, Lei L, Han W, Du XD*,Gu J*. A novel lysin Ply1228 provides efficient protection against Streptococcus suis type 2 infection in a murine bacteremia model. Vet Microbiol. 2022 Apr 4;268:109425.</a> </li>
+        <li><a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S0956566321008368">Liu X#, Huang C#, Qiu C, Wang Z, Cheng M, Zhang Y, Qiao Y, Guan Y, Feng X, Sun C, Li N, Li F, Lei L, Han W*, Zhang X*,Gu J*. Rapid and sensitive detection of Staphylococcus aureus using biolayer interferometry technology combined with phage lysin LysGH15. Biosens Bioelectron. 2022 Feb 15;198:113799.</a> </li>
+        <li><a target="_blank" rel="noopener noreferrer" href="https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2021.674068/full">Wang Z#, Cai R#, Wang G#, Guo Z#, Liu X, Guan Y, Ji Y, Zhang H, Xi H, Zhao R, Bi L, Liu S, Yang L, Feng X, Sun C, Lei L, Han W andGu J*. Combination Therapy of Phage vB_KpnM_P-KP2 and Gentamicin Combats Acute Pneumonia Caused by K47 Serotype Klebsiella pneumoniae. Front. Microbiol. 2021,12:674068.</a> </li>
+        <li><a target="_blank" rel="noopener noreferrer" href="https://www.liebertpub.com/doi/10.1089/fpd.2020.2833">Song J#, Niu W#, Wu R#, Wang J, Lei L, Han W,Gu J*. The Phage Holin HolGH15 Exhibits Potential As an Antibacterial Agent to Control Listeria monocytogenes. Foodborne Pathog Dis. 2021 Aug;18(8):574-581.</a> </li>
+        <li><a target="_blank" rel="noopener noreferrer" href="https://europepmc.org/article/PMC/7642090">Wang X#, Ji Y#, Su J#, Xue Y, Xi H, Wang Z, Bi L, Zhao R, Zhang H, Yang L, Guo Z, Guan Y, Feng X, Sun C, Lei L, Ur Rahman S, Dong J, Han W,Gu J*.Therapeutic Efficacy of Phage PIZ SAE-01E2 Against Abortion Caused by Salmonella abortus equi in Mice. Appl Environ Microbiol. 2020 Oct 28;86(22):e01366-20.</a> </li>
+        <li><a target="_blank" rel="noopener noreferrer" href="https://www.frontiersin.org/articles/10.3389/fvets.2020.00588/full">Xi H#, He D#, Li D#, Liu S, Wang G, Ji Y, Wang X, Wang Z, Bi L, Zhao R, Zhang H, Yang L, Guo Z, Han W andGu J*(2020) Bacteriophage Protects Against Aerococcus viridans Infection in a Murine Mastitis Model. Front Vet Sci. 2020 Aug 28;7:588.</a> </li>
+        <li><a target="_blank" rel="noopener noreferrer" href="https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2020.00351/full">Xue Y#, Zhai S#, Wang Z#, Ji Y, Wang G, Wang T, Wang X, Xi H, Cai R, Zhao R, Zhang H, Bi L, Guan Y, Guo Z*, Han W*andGu J*. The Yersinia Phage X1 Administered Orally Efficiently Protects a Murine Chronic Enteritis Model Against Yersinia enterocolitica Infection. Front. Microbiol. 2020. 11:351. </a> </li>
+        <li><a target="_blank" rel="noopener noreferrer" href="https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2019.01189/full">Cai R, Wang G, Le S, Wu M,Cheng M, Guo Z, Ji Y, Xi H, Zhao C,Wang X, Xue Y, Wang Z, Zhang H,Fu Y, Sun C, Feng X, Lei L, Yang Y,ur Rahman S, Liu X*, Han W*andGu J*.Three Capsular PolysaccharideSynthesis-RelatedGlucosyltransferases,GT-1, GT-2and WcaJ, Are Associated WithVirulence and Phage Sensitivityof Klebsiella pneumoniae.Front. Microbiol. 2019,10:1189 .</a> </li>
+        <li><a target="_blank" rel="noopener noreferrer" href="https://www.mdpi.com/1999-4915/11/2/104">XiH#, DaiJ#, TongY#, ChengM, ZhaoF, FanH, LiX, CaiR, JiY, SunC, FengX, LeiL, RahmanS, HanW*andGuJ*.The characteristics and genome analysis of vB_AviM_AVP, the first phage infecting Aerococcus viridans.Viruses. 2019 Jan 26;11(2). </a> </li>
+        <li><a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S037811351831321X">Ji Y#, Cheng M#, Zhai S#, Xi H, Cai R, Wang Z, Zhang H, Wang X, Xue Y, Li X, Sun C, Feng X, Lei L, Ur Rahman S, Han W*,Gu J*.Preventive effect of the phage VB-SavM-JYL01 on rabbit necrotizing pneumonia caused by Staphylococcus aureus.Vet Microbiol. 2019 Feb;229:72-80. </a> </li>
+        <li><a target="_blank" rel="noopener noreferrer" href="https://journals.asm.org/doi/full/10.1128/aem.01585-18">Cai R#, Wu M#, Zhang H, Zhang Y, Cheng M, Guo Z, Ji Y, Xi H, Wang X, Xue Y, Sun C, Feng X, Lei L, Tong Y, Liu X, Han W*,Gu J*.A smooth-type, phage-resistant Klebsiella pneumoniae mutant strain reveals OmpC is indispensable for GH-K3 infection.Appl Environ Microbiol. 2018 Oct 17;84(21). </a> </li>
+        <li><a target="_blank" rel="noopener noreferrer" href="https://journals.plos.org/plospathogens/article?id=10.1371/journal.ppat.1004109">Gu J, Feng Y, Feng X, Sun C, Lei L, Ding W, Niu F, Jiao L, Yang M, Li Y, Liu X, Song J, Cui Z, Han D, Du C, Yang Y, Ouyang S*, Liu ZJ*, Han W*. Structural and biochemical characterization reveals LysGH15 as an unprecedented "EF-hand-like" calcium-binding phage lysin.PLoS Pathog. 2014 May 15;10(5):e1004109. </a> </li>
+    </ul>
+</div>
+<script>
+    var carousel = document.getElementById('carousel');
+    var carouselImages = Array.from(carousel.children);
+    var currentIndex = 0;
+    var imageWidth = carousel.offsetWidth;
+
+    function setImagePosition() {
+        carousel.style.transform = 'translateX(' + (-currentIndex * imageWidth) + 'px)';
+    }
+
+    function goToPrevImage() {
+        currentIndex--;
+        if (currentIndex < 0) {
+            currentIndex = carouselImages.length - 1;
+        }
+        setImagePosition();
+    }
+
+    function goToNextImage() {
+        currentIndex++;
+        if (currentIndex >= carouselImages.length) {
+            currentIndex = 0;
+        }
+        setImagePosition();
+    }
+
+    document.getElementById('prev').addEventListener('click', goToPrevImage);
+    document.getElementById('next').addEventListener('click', goToNextImage);
+
+    // 自动播放图片轮播
+    setInterval(goToNextImage, 10000); // 每3秒切换一次图片
+
+    // 初始化图片位置
+    setImagePosition();
+</script>
+</body>
+</html>
