@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Link-Database</title>
+  <style>
+    /* 侧边导航菜单 */
+    .sidebar {
+      margin: 0;
+      padding: 0;
+      width: 200px;
+      background-color: #f1f1f1;
+      position: fixed;
+      height: 100%;
+      overflow: auto;
+    }
+
+    /* 侧边栏链接 */
+    .sidebar a {
+      display: block;
+      color: black;
+      padding: 16px;
+      text-decoration: none;
+    }
+
+    /* 活动/当前链接 */
+    .sidebar a.active {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    /* 鼠标悬停链接 */
+    .sidebar a:hover:not(.active) {
+      background-color: #555;
+      color: white;
+    }
+
+    /* 页面内容。 margin-left 属性的值应该与侧边栏的 width 属性的值匹配 */
+  </style><!--左侧导航栏-->
+  <style>
+    a{
+      text-decoration: none;
+      color: black;
+      text-align: center;
+    }
+    a:hover{
+      color: deepskyblue;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      grid-gap: 30px 50px; /* Row gap is 30px, column gap is 50px */
+      padding: 30px 50px; /* Top padding is 100px, left/right padding is 50px */
+      margin-left: 200px;
+      background-color: rgba(241, 241, 241, 0.7);
+    }
+
+    .grid-item {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden; /* To hide parts of the image outside the circular area */
+    }
+
+    .grid-item img {
+      width: 150px;
+      height: 150px; /* 2/5 of the total height */
+      object-fit: cover; /* Maintain aspect ratio and cover the container */
+      margin-right: auto;
+      margin-left: auto;
+      border-radius: 150px;
+    }
+
+    .grid-item .text-content {
+      flex-grow: 1; /* Fill the remaining space */
+      padding: 10px;
+      border-radius: 0 0 50% 50% / 50%; /* Make the bottom corners circular */
+    }
+    .grid-item:hover{
+      transform: scale(1.1);
+    }
+  </style><!--右侧links-->
+  <style>
+    .image-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 30px; /* 距离网页顶部xxx个像素 */
+    }
+
+    .image-link {
+      text-decoration: none; /* 去除超链接下划线 */
+      margin: 0 0; /* 为图片之间设置间距，这里设置较小以近似"左右连接"效果，根据图片实际情况可能需要调整 */
+    }
+
+    .image-link img {
+      width: 240px; /* 图片宽度为容器宽度的1/4，减去间距以保持并列 */
+      height: 50px;
+      transition: transform 0.3s ease; /* 设置图片悬浮效果的过渡动画 */
+    }
+
+    .image-link:hover img {
+      transform: scale(1.1); /* 鼠标悬停时放大图片，可以调整放大的比例 */
+    }
+
+    /* 针对第一个和最后一个图片链接，去除左右的间距 */
+    .image-container .image-link:first-child {
+      margin-left: 0;
+    }
+
+    .image-container .image-link:last-child {
+      margin-right: 0;
+    }
+
+    /* 针对图片容器本身设置左右间距 */
+    .image-container {
+      max-width: calc(100% - 16px); /* 设置容器宽度为视口的100%减去左右各8像素的间距 */
+      margin-left: auto;
+      margin-right: auto;
+    }
+    body{
+      background-image: url("image/background-photo/back6.png");
+      background-size: cover;
+    }
+  </style><!--页面导航栏-->
+</head>
+<body>
+<div class="image-container" >
+  <a href="index.html" class="image-link"><img src="image/index-labpage2/home3.png" alt="图片1"></a> <!-- 替换为您的图片地址 -->
+  <a href="people.html" class="image-link"><img src="image/index-labpage2/team.png" alt="图片2"></a>
+  <a href="publication.html" class="image-link"><img src="image/index-labpage2/publication3.png" alt="图片3"></a>
+  <a href="protocol.html" class="image-link"><img src="image/index-labpage2/protocol2.png" alt="图片5"></a>
+  <a href="link.html" class="image-link"><img src="image/index-labpage2/Link2.png" alt="图片6"></a>
+</div>
+<!-- 侧边栏 -->
+<div class="sidebar" style="margin-top: 10px">
+  <a href="link.html">Journal</a>
+  <a href="link-tool.html">Tool</a>
+  <a href="link-database.html">Database</a>
+  <a class="active" href="link-about.html">About</a>
+</div>
+
+<!-- 页面内容 -->
+<div class="grid-container" >
+  <!--1-->
+  <div class="grid-item" style="margin-left: auto;margin-right: auto">
+    <img src="image/links/about/vet.jpg" alt="Image">
+    <div class="text-content">
+      <a target="_blank" rel="noopener noreferrer" href="https://dwyx.jlu.edu.cn/">
+        <p>吉林大学动物医学学院</p>
+      </a>
+    </div>
+  </div>
+  <!--2-->
+  <div class="grid-item" style="margin-left: auto;margin-right: auto">
+    <img src="image/links/about/jilinuniversity.jpg" alt="Image">
+    <div class="text-content">
+      <a target="_blank" rel="noopener noreferrer" href="https://www.jlu.edu.cn/">
+        <p>吉林大学官网</p>
+      </a>
+    </div>
+  </div>
+  <!--3-->
+  <div class="grid-item" style="margin-left: auto;margin-right: auto">
+    <img src="image/links/about/yanjiushengyuan.png" alt="Image">
+    <div class="text-content">
+      <a target="_blank" rel="noopener noreferrer" href="https://yjsy.jlu.edu.cn/index.htm">
+        <p>吉林大学研究生院</p>
+      </a>
+    </div>
+  </div>
+  <!--4-->
+  <div class="grid-item" style="margin-left: auto;margin-right: auto">
+    <img src="image/links/about/renchu.png" alt="Image">
+    <div class="text-content">
+      <a target="_blank" rel="noopener noreferrer" href="https://szid.tjh.com.cn/index.html">
+        <p>人畜共患传染病重症诊治全国重点实验室</p>
+      </a>
+    </div>
+  </div>
+  <!--5-->
+  <div class="grid-item" style="margin-left: auto;margin-right: auto">
+    <img src="image/links/about/studentemail.png" alt="Image">
+    <div class="text-content">
+      <a target="_blank" rel="noopener noreferrer" href="https://mails.jlu.edu.cn/index.php">
+        <p>吉林大学学生邮箱</p>
+      </a>
+    </div>
+  </div>
+  <!--6-->
+
+</div>
+</body>
+</html>

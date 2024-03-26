@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gu Lab</title>
+    <meta name="author " content="邱操">
+    <meta name="description" content="这是一个用于吉林大学顾敬敏教授课题组的文化展示页面，无商业用途，网页设计参考了诸多开源素材，如有侵权请及时联系">
+    <meta name="keywords" content="顾敬敏，吉林大学动物医学学院，噬菌体，裂解酶，超级细菌，phage,LysGH15，解聚酶 ">
+    <link rel="icon" href="favicon.ico">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 125px; /* 距离网页顶部xxx个像素 */
+        }
+
+        .image-link {
+            text-decoration: none; /* 去除超链接下划线 */
+            margin: 0 0; /* 为图片之间设置间距，这里设置较小以近似"左右连接"效果，根据图片实际情况可能需要调整 */
+        }
+
+        .image-link img {
+            width: 240px; /* 图片宽度为容器宽度的1/4，减去间距以保持并列 */
+            height: 50px;
+            transition: transform 0.3s ease; /* 设置图片悬浮效果的过渡动画 */
+        }
+
+        .image-link:hover img {
+            transform: scale(1.1); /* 鼠标悬停时放大图片，可以调整放大的比例 */
+        }
+
+        /* 针对第一个和最后一个图片链接，去除左右的间距 */
+        .image-container .image-link:first-child {
+            margin-left: 0;
+        }
+
+        .image-container .image-link:last-child {
+            margin-right: 0;
+        }
+
+        /* 针对图片容器本身设置左右间距 */
+        .image-container {
+            max-width: calc(100% - 16px); /* 设置容器宽度为视口的100%减去左右各8像素的间距 */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        body{
+            background-image: url("image/background-photo/index-backdrop.png");
+            background-size: cover;
+        }
+        </style>
+</head>
+<body>
+<div class="image-container">
+    <a href="index.html" class="image-link"><img src="image/index-labpage2/home3.png" alt="图片1"></a> <!-- 替换为您的图片地址 -->
+    <a href="people.html" class="image-link"><img src="image/index-labpage2/team.png" alt="图片2"></a>
+    <a href="publication.html" class="image-link"><img src="image/index-labpage2/publication3.png" alt="图片3"></a>
+
+    <a href="protocol.html" class="image-link"><img src="image/index-labpage2/protocol2.png" alt="图片5"></a>
+    <a href="link.html" class="image-link"><img src="image/index-labpage2/Link2.png" alt="图片6"></a>
+</div>
+</body>
+</html>
