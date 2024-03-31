@@ -81,7 +81,11 @@
       transform: scale(1.1);
     }
   </style><!--右侧links-->
-  <style>
+    <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+    }
     .image-container {
       display: flex;
       justify-content: center;
@@ -92,10 +96,11 @@
     .image-link {
       text-decoration: none; /* 去除超链接下划线 */
       margin: 0 0; /* 为图片之间设置间距，这里设置较小以近似"左右连接"效果，根据图片实际情况可能需要调整 */
+      width: 20%;
     }
 
     .image-link img {
-      width: 240px; /* 图片宽度为容器宽度的1/4，减去间距以保持并列 */
+      width: 100%; /* 图片宽度为容器宽度的1/4，减去间距以保持并列 */
       height: 50px;
       transition: transform 0.3s ease; /* 设置图片悬浮效果的过渡动画 */
     }
@@ -120,10 +125,11 @@
       margin-right: auto;
     }
     body{
-      background-image: url("image/background-photo/back6.png");
-      background-size: cover;
+      background-image: url("image/background-photo/back1.png");
+      background-size: 100%;
     }
-  </style><!--页面导航栏-->
+
+  </style><!--导航栏-->
 </head>
 <body>
 <div class="image-container" >
