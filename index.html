@@ -17,7 +17,8 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            padding-top: 125px; /* 距离网页顶部xxx个像素 */
+            padding-top: 9%; /* 距离网页顶部xxx个像素 */
+
         }
 
         .image-link {
@@ -26,8 +27,8 @@
         }
 
         .image-link img {
-            width: 240px; /* 图片宽度为容器宽度的1/4，减去间距以保持并列 */
-            height: 50px;
+            width:100%; /* 图片宽度为容器宽度的1/4，减去间距以保持并列 */
+            height: 100%;
             transition: transform 0.3s ease; /* 设置图片悬浮效果的过渡动画 */
         }
 
@@ -46,7 +47,7 @@
 
         /* 针对图片容器本身设置左右间距 */
         .image-container {
-            max-width: calc(100% - 16px); /* 设置容器宽度为视口的100%减去左右各8像素的间距 */
+            max-width: 100%; /* 设置容器宽度为视口的100%减去左右各8像素的间距 */
             margin-left: auto;
             margin-right: auto;
         }
