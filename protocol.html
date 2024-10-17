@@ -1,195 +1,189 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Protocol</title>
-       <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-        }
-        .image-container {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 30px; /* 距离网页顶部xxx个像素 */
-        }
+  <meta charset="utf-8">
+  <title>Protocol</title>
+  <style type="text/css">
+    /* 设置所有元素的边距和内边距为0，并设置box-sizing为border-box，使元素的宽度和高度包括边框和内边距 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+    /* 设置容器的相对定位，居中显示，设置transform-origin为preserve-3d */
+    .container {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform-origin: preserve-3d;
+    }
 
-        .image-link {
-            text-decoration: none; /* 去除超链接下划线 */
-            margin: 0 0; /* 为图片之间设置间距，这里设置较小以近似"左右连接"效果，根据图片实际情况可能需要调整 */
-            width: 20%;
-        }
+    /* 设置box的宽度、高度、相对定位、过渡效果、设置-webkit-box-reflect为下方1px的线性渐变 */
+    .container .box {
+      width: 300px;
+      height: 300px;
+      position: relative;
+      transition: .5s;
+      -webkit-box-reflect: below 1px linear-gradient(transparent, #0002);
+    }
 
-        .image-link img {
-            width: 100%; /* 图片宽度为容器宽度的1/4，减去间距以保持并列 */
-            height: 4%;
-            transition: transform 0.3s ease; /* 设置图片悬浮效果的过渡动画 */
-        }
+    /* 设置box的绝对定位，宽度、高度为100% */
+    .container .box img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
 
-        .image-link:hover img {
-            transform: scale(1.1); /* 鼠标悬停时放大图片，可以调整放大的比例 */
-        }
+    /* 设置鼠标悬停时，非悬停元素的边距为-20px，设置filter为drop-shadow(0 0 25px #000) drop-shadow(0 0 25px #000)，设置transform为perspective(500px) rotateY(45deg) scale(0.95) */
+    .container:hover> :not(:hover) {
+      margin: 0 -20px;
+      filter: drop-shadow(0 0 25px #000) drop-shadow(0 0 25px #000);
+      transform: perspective(500px) rotateY(45deg) scale(0.95);
+    }
 
-        /* 针对第一个和最后一个图片链接，去除左右的间距 */
-        .image-container .image-link:first-child {
-            margin-left: 0;
-        }
+    /* 设置鼠标悬停时，box的兄弟元素的transform为perspective(500px) rotateY(-45deg) scale(0.95) */
+    .container .box:hover~.box {
+      transform: perspective(500px) rotateY(-45deg) scale(0.95);
+    }
 
-        .image-container .image-link:last-child {
-            margin-right: 0;
-        }
+    /* 设置鼠标悬停时，box的transform为perspective(500px) rotateY(0) scale(1.2) */
+    .container .box:hover {
+      transform: perspective(500px) rotateY(0) scale(1.2);
+    }
+  </style>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+    }
+    .image-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 30px; /* 距离网页顶部xxx个像素 */
+    }
 
-        /* 针对图片容器本身设置左右间距 */
-        .image-container {
-            max-width: calc(100% - 16px); /* 设置容器宽度为视口的100%减去左右各8像素的间距 */
-            margin-left: auto;
-            margin-right: auto;
-        }
-        body{
-            background-image: url("image/background-photo/back1.png");
-            background-size: 100%;
-        }
+    .image-link {
+      text-decoration: none; /* 去除超链接下划线 */
+      margin: 0 0; /* 为图片之间设置间距，这里设置较小以近似"左右连接"效果，根据图片实际情况可能需要调整 */
+      width: 20%;
+    }
 
-    </style><!--导航栏-->
-    <style>
-      .image-carousel-container {
-          position: relative;
-          width: 80%;
-          margin: 50px auto 0;
-          height: 400px;
-          overflow: hidden;
-      }
-      .image-carousel {
-          display: flex;
-          width: 100%;
-          height: 100%;
-          transition: transform 1s ease;
-      }
-      .image-carousel a {
-          flex: 0 0 100%;
-          height: 100%;
-          background-size: cover;
-          background-position: center;
-          display: block;
-      }
-      .carousel-control {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 50px;
-          height: 50px;
-          cursor: pointer;
-          background: rgba(255, 255, 255, 0.5);
-          border-radius: 50%;
-          text-align: center;
-          line-height: 50px;
-          color: #000;
-          font-size: 24px;
-          z-index: 10;
-      }
-      .carousel-control:hover {
-          background: rgba(255, 255, 255, 0.8);
-      }
-      #prev {
-          left: 20px;
-      }
-      #next {
-          right: 20px;
-      }
-    </style><!--图片滚动区-->
-    <style>
-      a{
-          text-decoration: none;color: black;
-      }
-      a:hover{
-          color: #0960f6;font-size: large;
-      }
-      ul li{
-          margin-bottom: 10px;
-      }
-    </style><!--文本链接-->
+    .image-link img {
+      width: 100%; /* 图片宽度为容器宽度的1/4，减去间距以保持并列 */
+      height: 4%;
+      transition: transform 0.3s ease; /* 设置图片悬浮效果的过渡动画 */
+    }
 
+    .image-link:hover img {
+      transform: scale(1.1); /* 鼠标悬停时放大图片，可以调整放大的比例 */
+    }
+
+    /* 针对第一个和最后一个图片链接，去除左右的间距 */
+    .image-container .image-link:first-child {
+      margin-left: 0;
+    }
+
+    .image-container .image-link:last-child {
+      margin-right: 0;
+    }
+
+    /* 针对图片容器本身设置左右间距 */
+    .image-container {
+      max-width: calc(100% - 16px); /* 设置容器宽度为视口的100%减去左右各8像素的间距 */
+      margin-left: auto;
+      margin-right: auto;
+    }
+    body{
+      background-image: url("image/background-photo/back1.png");
+      background-size: 100%;
+    }
+
+  </style><!--导航栏-->
+  <style>
+    a{
+      text-decoration: none;color: black;
+    }
+    a:hover{
+      color: #0960f6;font-size: large;
+    }
+    ul li{
+      margin-bottom: 10px;
+    }
+  </style><!--文本链接-->
 </head>
 <body>
 <div class="image-container">
-    <a href="index.html" class="image-link"><img src="image/index-labpage2/home3.png" alt="图片1"></a> <!-- 替换为您的图片地址 -->
-    <a href="people.html" class="image-link"><img src="image/index-labpage2/team.png" alt="图片2"></a>
-    <a href="publication.html" class="image-link"><img src="image/index-labpage2/publication3.png" alt="图片3"></a>
-
-    <a href="protocol.html" class="image-link"><img src="image/index-labpage2/protocol2.png" alt="图片5"></a>
-    <a href="link.html" class="image-link"><img src="image/index-labpage2/Link2.png" alt="图片6"></a>
+  <a href="index.html" class="image-link"><img src="image/index-labpage2/home3.png" alt="图片1"></a> <!-- 替换为您的图片地址 -->
+  <a href="people.html" class="image-link"><img src="image/index-labpage2/team.png" alt="图片2"></a>
+  <a href="publication.html" class="image-link"><img src="image/index-labpage2/publication3.png" alt="图片3"></a>
+  <a href="protocol.html" class="image-link"><img src="image/index-labpage2/protocol2.png" alt="图片5"></a>
+  <a href="link.html" class="image-link"><img src="image/index-labpage2/Link2.png" alt="图片6"></a>
 </div>
-<div class="image-carousel-container" style="opacity: 0.90">
-    <div class="image-carousel" id="carousel"><!--文章图片-->
-        <a target="_blank" rel="noopener noreferrer" href="https://www.jove.com/cn/" style="background-image: url('image/protocols-image/jove.png');target: new"></a>
-        <a target="_blank" rel="noopener noreferrer" href="https://currentprotocols.onlinelibrary.wiley.com/" style="background-image: url('image/protocols-image/current-protocol.png');"></a>
-        <a target="_blank" rel="noopener noreferrer" href="https://link.springer.com/search?facet-content-type=%22Protocol%22" style="background-image: url('image/protocols-image/springer.png');"></a>
-        <a target="_blank" rel="noopener noreferrer" href="https://protocolexchange.researchsquare.com/" style="background-image: url('image/protocols-image/protocol-exchange.png');"></a>
-        <a target="_blank" rel="noopener noreferrer" href="https://cn.bio-protocol.org/en" style="background-image: url('image/protocols-image/bio-protocol.png');"></a>
-        <a target="_blank" rel="noopener noreferrer" href="https://pro.biomart.cn/lab-web/" style="background-image: url('image/protocols-image/dingxiang.png');"></a>
-        <a target="_blank" rel="noopener noreferrer" href="https://jishu.medpeer.cn/show/technique/index" style="background-image: url('image/protocols-image/medpeer.png');"></a>
-        <a target="_blank" rel="noopener noreferrer" href="https://cshprotocols.cshlp.org/" style="background-image: url('image/protocols-image/cold.png');"></a>
-        <a target="_blank" rel="noopener noreferrer" href="https://experiments.springernature.com/" style="background-image: url('image/protocols-image/nature-protocol.png');"></a>
-        <!-- 在此处添加更多图片 -->
+<!-- 设置容器的class为container -->
+<div class="container" style="margin-top: 200px">
+  <!-- 设置box的class为box，并设置img的src为1.webp -->
+  <div class="box">
+    <a target="_blank" rel="noopener noreferrer" href="https://www.jove.com/cn/">
+    <img src="image/protocols-image/jove.png" alt="" /></a>
+  </div>
+  <!-- 设置box的class为box，并设置img的src为2.webp -->
+  <div class="box">
+    <a target="_blank" rel="noopener noreferrer" href="https://currentprotocols.onlinelibrary.wiley.com/">
+    <img src="image/protocols-image/current-protocol.png" alt="" /></a>
+  </div>
+  <!-- 设置box的class为box，并设置img的src为3.webp -->
+  <div class="box">
+    <div class="box">
+      <a target="_blank" rel="noopener noreferrer" href="https://experiments.springernature.com/">
+      <img src="image/protocols-image/springer.png" alt="" /></a>
     </div>
-    <div class="carousel-control" id="prev">&#10094;</div>
-    <div class="carousel-control" id="next">&#10095;</div>
+  </div>
+  <!-- 设置box的class为box，并设置img的src为4.webp -->
+  <div class="box">
+    <a target="_blank" rel="noopener noreferrer" href="https://cshprotocols.cshlp.org/">
+    <img src="image/protocols-image/cold.png" alt="" /></a>
+  </div>
+  <!-- 设置box的class为box，并设置img的src为5.webp -->
+  <div class="box">
+    <a target="_blank" rel="noopener noreferrer" href="https://link.springer.com/">
+    <img src="image/protocols-image/nature-protocol.png" alt="" /></a>
+  </div>
+  <!-- 设置box的class为box，并设置img的src为6.webp -->
+  <div class="box">
+    <a target="_blank" rel="noopener noreferrer" href="https://www.protocols.io/">
+    <img src="image/protocols-image/protocol-exchange.png" alt="" /></a>
+  </div>
+  <!-- 设置box的class为box，并设置img的src为7.webp -->
+  <div class="box">
+    <a target="_blank" rel="noopener noreferrer" href="https://cn.bio-protocol.org/en">
+    <img src="image/protocols-image/bio-protocol.png" alt="" /></a>
+  </div>
 </div>
 <div style="width: 80%;height: 500px;background-color: #ffffff;margin-left: auto;
-     margin-right: auto;margin-top: 50px;opacity: 0.8;overflow-y: scroll;margin-bottom: 50px">
-    <ul style="text-align: justify">
-        <li><a  target="_blank" rel="noopener noreferrer" href="protocol/PROTOCOL-1%20the%20isolation%20and%20purification%20of%20phage.pdf">噬菌体的分离与纯化（PDF）</a></li>
-        <li><a  target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/video/BV1Wh4y1c7F9/">噬菌体的分离与纯化（视频）</a></li>
-        <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol-2Agarose%20Gel%20Electrophoresis.pdf" >琼脂糖凝胶电泳（PDF）</a></li>
-        <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol-3%20ÄKTA™%20pure%20specification.pdf" >AKTA使用说明书（PDF）</a></li>
-        <li><a  target="_blank" rel="noopener noreferrer" href="https://pan.baidu.com/s/1V5zYXNXMmltK4tkIkloFuA" >AKTA使用视频（百度网盘-提取码：lysi）</a></li>
-        <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol5-plasmid%20connection%20and%20transform.pdf" >质粒连接与转化（无缝克隆 PDF）</a></li>
-        <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol-4%20sosoo-specification.pdf" >Sosoo 说明书（PDF）</a></li>
-        <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol6-DNAMAN_Guide.pdf" >DNAMAN user guide（PDF）</a></li>
-        <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol7%20D7010%20Seamless%20Cloning%20Kit.pdf" >碧云天无缝克隆说明书（PDF）</a></li>
-        <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protoco8-size%20exclusion%20chromatography.pdf" >尺寸排阻层析（PDF）</a></li>
-        <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol9-western%20blotting.pdf" >Western Blotting（PDF）</a></li>
-        <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol10-ion%20exchange%20chromatography.pdf" >离子交换层析（PDF）</a></li>
-        <li><a  target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/video/BV1fL411G7G8/?vd_source=b0b83711f2adefdd1edcde3067429dc2" >测序原理及基因组组装注释（视频）</a></li>
-        <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol12-restrict%20DNAse.pdf" >常见核酸内切酶及其保护性碱基（PDF）</a></li>
-        <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol13%20TAKARA-Prime%20star.pdf" >TAKARA Prime star（PDF）</a></li>
-    </ul>
+     margin-right: auto;margin-top: 200px;opacity: 0.8;overflow-y: scroll;margin-bottom: 50px">
+  <ul style="text-align: justify">
+    <li><a  target="_blank" rel="noopener noreferrer" href="protocol/PROTOCOL-1%20the%20isolation%20and%20purification%20of%20phage.pdf">噬菌体的分离与纯化（PDF）</a></li>
+    <li><a  target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/video/BV1Wh4y1c7F9/">噬菌体的分离与纯化（视频）</a></li>
+    <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol-2Agarose%20Gel%20Electrophoresis.pdf" >琼脂糖凝胶电泳（PDF）</a></li>
+    <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol-3%20ÄKTA™%20pure%20specification.pdf" >AKTA使用说明书（PDF）</a></li>
+    <li><a  target="_blank" rel="noopener noreferrer" href="https://pan.baidu.com/s/1V5zYXNXMmltK4tkIkloFuA" >AKTA使用视频（百度网盘-提取码：lysi）</a></li>
+    <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol5-plasmid%20connection%20and%20transform.pdf" >质粒连接与转化（无缝克隆 PDF）</a></li>
+    <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol-4%20sosoo-specification.pdf" >Sosoo 说明书（PDF）</a></li>
+    <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol6-DNAMAN_Guide.pdf" >DNAMAN user guide（PDF）</a></li>
+    <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol7%20D7010%20Seamless%20Cloning%20Kit.pdf" >碧云天无缝克隆说明书（PDF）</a></li>
+    <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protoco8-size%20exclusion%20chromatography.pdf" >尺寸排阻层析（PDF）</a></li>
+    <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol9-western%20blotting.pdf" >Western Blotting（PDF）</a></li>
+    <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol10-ion%20exchange%20chromatography.pdf" >离子交换层析（PDF）</a></li>
+    <li><a  target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/video/BV1fL411G7G8/?vd_source=b0b83711f2adefdd1edcde3067429dc2" >测序原理及基因组组装注释（视频）</a></li>
+    <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol12-restrict%20DNAse.pdf" >常见核酸内切酶及其保护性碱基（PDF）</a></li>
+    <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol13%20TAKARA-Prime%20star.pdf" >TAKARA Prime star（PDF）</a></li>
+
+
+  </ul>
 </div>
-<script>
-    var carousel = document.getElementById('carousel');
-    var carouselImages = Array.from(carousel.children);
-    var currentIndex = 0;
-    var imageWidth = carousel.offsetWidth;
-
-    function setImagePosition() {
-        carousel.style.transform = 'translateX(' + (-currentIndex * imageWidth) + 'px)';
-    }
-
-    function goToPrevImage() {
-        currentIndex--;
-        if (currentIndex < 0) {
-            currentIndex = carouselImages.length - 1;
-        }
-        setImagePosition();
-    }
-
-    function goToNextImage() {
-        currentIndex++;
-        if (currentIndex >= carouselImages.length) {
-            currentIndex = 0;
-        }
-        setImagePosition();
-    }
-
-    document.getElementById('prev').addEventListener('click', goToPrevImage);
-    document.getElementById('next').addEventListener('click', goToNextImage);
-
-    // 自动播放图片轮播
-    setInterval(goToNextImage, 10000); // 每3秒切换一次图片
-
-    // 初始化图片位置
-    setImagePosition();
-</script>
 </body>
 </html>
