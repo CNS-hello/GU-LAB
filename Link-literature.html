@@ -1,88 +1,321 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="Link-literature" content="width=device-width, initial-scale=1.0">
-  <title>文献速递</title>
+  <title>文献资源</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-       /* 侧边导航菜单 */
-     .sidebar {
-       margin: 0;
-       padding: 0;
-       width: 200px;
-       background-color: #f1f1f1;
-       position: fixed;
-       height: 100%;
-       overflow: auto;
-     }
-
-    /* 侧边栏链接 */
-    .sidebar a {
-      display: block;
-      color: black;
-      padding: 16px;
-      text-decoration: none;
+    :root {
+      --primary: #2c6eb5;
+      --primary-dark: #1a4a8d;
+      --secondary: #3fa796;
+      --accent: #f2a341;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+      --light-gray: #e9ecef;
+      --border-radius: 12px;
+      --box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      --transition: all 0.3s ease;
     }
 
-    /* 活动/当前链接 */
-    .sidebar a.active {
-      background-color: #4CAF50;
-      color: white;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    /* 鼠标悬停链接 */
-    .sidebar a:hover:not(.active) {
-      background-color: #555;
-      color: white;
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+      color: var(--dark);
+      min-height: 100vh;
+      transition: var(--transition);
+      background-size: cover;
+      background-attachment: fixed;
     }
 
-    /* 页面内容。 margin-left 属性的值应该与侧边栏的 width 属性的值匹配 */
-     a{
-       text-decoration: none;
-       color: black;
-       text-align: center;
-     }
-    a:hover{
-      color: deepskyblue;
-    }
-    .grid-container {
+    /* Main Content Layout */
+    .main-container {
+      max-width: 2200px;
+      margin: 30px auto;
+      padding: 0 20px;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: repeat(4, 1fr);
-      grid-gap: 30px 50px; /* Row gap is 30px, column gap is 50px */
-      padding: 30px 50px; /* Top padding is 100px, left/right padding is 50px */
-      margin-left: 200px;
-      background-color: rgba(241, 241, 241, 0.7);
+      grid-template-columns: 240px 1fr;
+      gap: 30px;
     }
 
-    .grid-item {
-      display: flex;
-      flex-direction: column;
+    /* Sidebar */
+    .sidebar {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      padding: 0;
+      transition: var(--transition);
+      height: fit-content;
+    }
+
+    .dark-mode .sidebar {
+      background-color: #1e2a45;
+    }
+
+    .sidebar h3 {
+      font-size: 18px;
+      padding: 20px;
+      color: white;
+      background-color: var(--primary);
+      margin: 0;
+    }
+
+    .dark-mode .sidebar h3 {
+      background-color: var(--primary-dark);
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar-menu li {
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    .sidebar-menu li:last-child {
+      border: none;
+    }
+
+    .sidebar-menu a {
+      display: block;
+      padding: 15px 20px;
+      text-decoration: none;
+      color: var(--dark);
+      transition: var(--transition);
+      font-weight: 500;
+    }
+
+    .dark-mode .sidebar-menu a {
+      color: var(--dark);
+    }
+
+    .sidebar-menu a:hover {
+      background-color: var(--light-gray);
+    }
+
+    .dark-mode .sidebar-menu a:hover {
+      background-color: #253253;
+    }
+
+    .sidebar-menu a.active {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .dark-mode .sidebar-menu a.active {
+      background-color: var(--primary-dark);
+    }
+
+    /* Content Area */
+    .page-title {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 25px;
+      color: var(--primary);
       position: relative;
-      overflow: hidden; /* To hide parts of the image outside the circular area */
+      padding-bottom: 10px;
     }
 
-    .grid-item img {
-      width: 150px;
-      height: 150px; /* 2/5 of the total height */
-      object-fit: cover; /* Maintain aspect ratio and cover the container */
-      margin-right: auto;
-      margin-left: auto;
-      border-radius: 150px;
+    .dark-mode .page-title {
+      color: var(--primary-dark);
     }
 
-    .grid-item .text-content {
-      flex-grow: 1; /* Fill the remaining space */
-      padding: 10px;
-      border-radius: 0 0 50% 50% / 50%; /* Make the bottom corners circular */
+    .page-title::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 4px;
+      width: 80px;
+      background: var(--accent);
+      border-radius: 2px;
     }
-    .grid-item:hover{
-      transform: scale(1.1);
+
+    .literature-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
     }
-     body, html {
-       margin: 0;
-       padding: 0;
-     }
+
+    @media (max-width: 900px) {
+      .literature-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .literature-section {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .dark-mode .literature-section {
+      background-color: #1e2a45;
+    }
+
+    .section-header {
+      background-color: var(--primary);
+      padding: 20px;
+      color: white;
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .dark-mode .section-header {
+      background-color: var(--primary-dark);
+    }
+
+    .literature-list {
+      padding: 20px;
+      max-height: 900px;
+      overflow-y: auto;
+    }
+
+    .literature-list::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .literature-list::-webkit-scrollbar-track {
+      background: var(--light-gray);
+      border-radius: 4px;
+    }
+
+    .literature-list::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 4px;
+    }
+
+    .dark-mode .literature-list::-webkit-scrollbar-track {
+      background: #2d3748;
+    }
+
+    .dark-mode .literature-list::-webkit-scrollbar-thumb {
+      background: var(--primary-dark);
+    }
+
+    .category-title {
+      font-size: 20px;
+      color: var(--primary);
+      margin: 20px 0 10px;
+      padding-bottom: 5px;
+      border-bottom: 2px solid var(--light-gray);
+    }
+
+    .dark-mode .category-title {
+      color: var(--primary-dark);
+      border-color: #2d3748;
+    }
+
+    .literature-item {
+      margin-bottom: 15px;
+      padding: 15px;
+      border-radius: var(--border-radius);
+      background-color: var(--light-gray);
+      transition: var(--transition);
+    }
+
+    .dark-mode .literature-item {
+      background-color: #2d3748;
+    }
+
+    .literature-item:hover {
+      transform: translateX(5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .literature-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: var(--dark);
+      transition: var(--transition);
+    }
+
+    .dark-mode .literature-link {
+      color: var(--dark);
+    }
+
+    .literature-link:hover {
+      color: var(--primary);
+    }
+
+    .literature-link i {
+      margin-right: 10px;
+      color: var(--primary);
+      font-size: 18px;
+    }
+
+    .dark-mode .literature-link i {
+      color: var(--primary-dark);
+    }
+
+    .literature-link:hover i {
+      transform: translateX(3px);
+    }
+
+
+    .dark-mode .site-footer {
+      background-color: #1a243a;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+    }
+
+    .dark-mode .footer-logo {
+      color: var(--primary-dark);
+    }
+
+    .footer-text {
+      color: var(--gray);
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .dark-mode .footer-text {
+      color: var(--gray);
+    }
+
+    .copyright {
+      color: var(--gray);
+      font-size: 14px;
+      margin-top: 20px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 2000px) {
+      .main-container {
+        grid-template-columns: 1fr;
+        padding: 0 15px;
+      }
+
+      .sidebar {
+        margin-bottom: 20px;
+      }
+    }
+
+    @media (max-width: 800px) {
+      .nav-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+  </style>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+    }
     .image-container {
       display: flex;
       justify-content: center;
@@ -98,7 +331,7 @@
 
     .image-link img {
       width: 100%; /* 图片宽度为容器宽度的1/4，减去间距以保持并列 */
-      height: 4%;
+      height:4%;
       transition: transform 0.3s ease; /* 设置图片悬浮效果的过渡动画 */
     }
 
@@ -125,21 +358,8 @@
       background-image: url("image/background-photo/back1.png");
       background-size: 100%;
     }
-    .container {
-      position: relative;
-      top: 10%;
-      left: 20%;
-      width: 75%; /* 假设我们想要这个div占据页面的剩余80%宽度的三分之二 */
-      display: flex;
-      justify-content: space-between; /* 使两个子div之间有空隙 */
-    }
 
-    .left-list, .right-list {
-      flex: 1 ; /* 平分宽度 */
-      list-style-type: decimal; /* 有序列表默认样式 */
-      padding: 10px; /* 添加一些内边距以美化 */
-    }
-  </style>
+  </style><!--导航栏-->
 </head>
 <body>
 <div class="image-container" >
@@ -149,94 +369,366 @@
   <a href="protocol.html" class="image-link"><img src="image/index-labpage2/protocol2.png" alt="图片5"></a>
   <a href="link.html" class="image-link"><img src="image/index-labpage2/Link2.png" alt="图片6"></a>
 </div>
-<!-- 侧边栏 -->
-<div class="sidebar" style="margin-top: 10px">
-  <a href="link.html">Journal</a>
-  <a href="link-tool.html">Tool</a>
-  <a href="link-database.html">Database</a>
-  <a href="link-about.html">About</a>
-  <a class="active" href="Link-literature.html">Literature</a>
-</div>
-
-<div class="container">
-  <div class="left-list"; style="background-color: white;opacity:0.9;padding-right: 10px;margin-right: 10px" >
-      <ul style="text-align: justify;line-height: 1.5">
-      <li style="font-size: X-large;margin-bottom: 10px;color: #0960f6">课题组毕业论文</li>
-      <li style="color: #0960f6;font-size:large;margin-bottom: 5px">博士毕业论文</li>
-      <li><a target="_blank" rel="noopener noreferrer" href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7VsqOpps2C83OhGco-PwsrN8CLNZyReLYshIEG8FP-JmuoWAa9kOlIa8zfG7tbhUpGtP06K_02OiRJTyzyJjr8mwuDPtfekAbS3D5YxVuWwrvYvKgNXmQyK7ahja5Rjz1M-QgokuyMg8RtTbUTFe6LwbyUS5pWpl7swDnLDx2rcgYcRFfG1UKH4&uniplatform=NZKPT&language=CHS">顾敬敏-金黄色葡萄球菌噬菌体GH15及其裂解酶三维结构与分子作用机制研究</a></li>
-      <li><a target="_blank" rel="noopener noreferrer" href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7V7NktRKfjtVOzBAP6_p5Rh23exwKu8VNxeEkgOIOZICFnuSSvquR9hMlxq9xA6OvkJrFsOmY0TWazUdOgFYR0GlkpxWSMZ8kXUhhjr6xZkLhXQ9qA3jdYD4LK2U7qT5LehcW310fjqxk0DXlpMtULL33we3aLAqXZ2K8n5KS5bwFEZ8XAzvPrChzf9AA-ImlM=&uniplatform=NZKPT&language=CHS">冀亚路-腹泻断奶仔猪肠道噬菌体组特征及其相关耐药和裂解酶基因研究 </a></li>
-      <li><a target="_blank" rel="noopener noreferrer" href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7WVj9QvMQ8zkBPtXWys_35NK5cbBN2mwbnhwvKoViZli38XLiwdUpY3TceKV5qgFGrFchq6v_EmfU5ClY7TSU1ISchvSPxIwasLjLS5aVkiWB1cK1FbbL1FbNNvWHwUPonjKN63gSMOB8wi3AAu18Y_CLfklDLXxiA7QUqSKxx-yLZPb7ZEeEkbthNUFCpIR9M=&uniplatform=NZKPT&language=CHS">蔡若鹏-噬菌体GH-K3的生物学特性及其诱导肺炎克雷伯菌产生噬菌体抗性的机制</a></li>
-      <li><a target="_blank" rel="noopener noreferrer" href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7UPN_eKnuZrano9bvOBUQBfe-8NCPtGrLAmhbqdGO3Px5e4S6VerMInLI084_6tj4Hx20ahvitIz2gNHgSreS2uvnkTuI4rMFyw5H8SxirTmMpypnraI4N-u-Nm8rEgm5o3QSkhIEGRbs9tSO6uhckSWMzFyPK9BEwvNIFCs36fK3CGSmW4Erna&uniplatform=NZKPT&language=CHS">刘潇-基于噬菌体裂解酶LysGH15快速检测金黄色葡萄球菌方法的建立与应用评价</a></li>
-      <li><a target="_blank" rel="noopener noreferrer" href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7WhI0H75WPpSDdZuEx_GxsQeomT1iPGv9Nkyo12N6oqIoERcsVvXZbbHB1yno8IM_S9SCMuxQ-9xU2jO8tPj4a-Xw4adqSm1s60TIB5EtxCbkLMcW1snpG4h04jrqsAlleEPNx9ltYHg_YtPcpS4KyZ7-rwdJMlo7YPHeVjOwPY__naomwk0--V&uniplatform=NZKPT&language=CHS">袭恒豫-绿色气球菌噬菌体裂解酶AVPL的生物学特性及其抗菌作用机制</a></li>
-      <li><a target="_blank" rel="noopener noreferrer" href=""></a></li>
-
-      <li style="color: #0960f6;font-size:large;margin-bottom: 5px;margin-top: 10px">硕士毕业论文</li>
-      <li><a target="_blank" rel="noopener noreferrer" href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7XrCoeHjN-YzJEsGucaE9SHHp_3CyazOqEgeZHG2eOlCKsK4VeJap_uX1Gc4pWx-cZ4z6arW9JYtLdR6FfD_rT1b3eISVJ6Dg5f6smN5Rs0SyjrgdX8KPAT-k6O_LKDlQawviO4e9ADVPZ_gV2e6Z006Ry5EEQ4hANiZOsHbRhmIUOwo5FoTV-eFE4wHo0vKwc=&uniplatform=NZKPT&language=CHS">黄春正-裂解酶LysLF1的生物学特性及其抗链球菌的效果评价</a></li>
-      <li><a target="_blank" rel="noopener noreferrer" href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7UGYs-j_DgLDWPXpXx6iiG4EfjoZE8Vuo_RpnkrYdKJRuMgnsiwD2FhwL5DSaq4V562sxuZawHRXEtYnXB8Emzm-0kvJxyJaPYsT_4hVmvtmhCZkVjunkRqVnRn5vEUboqeVWP3Imf-8KAar9Gd-y394wU0lp1emMlSe0bBGrKzVkcblYQZuhqj&uniplatform=NZKPT&language=CHS">路艳-铜绿假单胞菌单链RNA噬菌体Ppa61的生物学特性及其治疗效果评价</a></li>
-      <li><a target="_blank" rel="noopener noreferrer" href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7WjLC0K9huvFSZQYrXyMhL-B6vNSfjmB7H-u8TJR4Qf8qJHxbcDb06ADsBRlhDGCU3La9ohTB2wpT-eyS6PrRmLLCUDiQwgC1i6U1RHpNBSUmopvzt1eCna5uQg2fqeqMDbkrrKXeqoVpcvISAmmqG_Ci9EfIMBB0nIpwqXz7QcYd_plKjU9peDs9Jdwr_hQu0=&uniplatform=NZKPT&language=CHS">袭恒豫-绿色气球菌噬菌体AVP与其裂解酶的生物学特性及对小鼠乳腺炎模型的实验性治疗</a></li>
-      <li><a target="_blank" rel="noopener noreferrer" href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7U-it48QnM4Kw6mZNpPLOeTy9CF4IMufeimtG2unJ3sCOCEiB3cGJbVnoFPhCxBL5DnkaY3tLvaVElrQ2T2LlxLzHulZ4-VALrysgq3fvrGLtinFz6UePEaZ63nt_eA95hUnWDrhVifyV0GWy5n7WXCfNgT1iz5tygnJ1QPVZ2NfIEX2N9YnIhiXVoM0DVFUlg=&uniplatform=NZKPT&language=CHS">冀亚路-金黄色葡萄球菌噬菌体VB-SavM-JYL01的生物学特性及其对兔坏死性肺炎实验治疗的研究</a></li>
-      <li><a target="_blank" rel="noopener noreferrer" href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7XMf3Y9l6GVKbY-RtN3nFhczN7oTIfGV09x5BR-KPj1BUO4IDseq1u_bphH9NJsGHiazCvMasTKU5XTy2CXgvOaOCZUDukemE_lsTPgpUjTg_QstWq3LqSxW5w2quohHSDMKlFpjulZS-hrBkRcHPr7Ie87aPBq7mnCx_KeCXptVC0vquFwMX7qnl0fpQC-HSk=&uniplatform=NZKPT&language=CHS">赵日虹-K1型肺炎克雷伯菌噬菌体vB＿KpnP＿ZK1及其解聚酶的生物学特性研究</a></li>
-      <li><a target="_blank" rel="noopener noreferrer" href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7W0tcElnPVofMk3_hG_F0J26BJC1Cd67pFMXNL6kpa0UwEBICFgarr4SEGcycO8g4QyZj5CWRqwypWkL6kfEQoqHYicCHEwZGVC7HMsjE9CibSwDOmTGRN4nQ3diA77hi5WDEfQ1R9mpU0iRHCGQo8un6Ry0upZ3n0qAfPfIvCIqQGzFtd1NU7E8yQwk7SMTNY=&uniplatform=NZKPT&language=CHS">张梅梅-鼠伤寒沙门菌裂解性噬菌体的分离鉴定及其宿主菌抗性机制分析</a></li>
-      <li><a target="_blank" rel="noopener noreferrer" href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7XMyaN5DZZMMio7GSrytVR1J9pkvcwNAefp_tlmprSZY6rXlhhtztYjitGFJ28kyYj5eimm_qh3pEMZwWJIqhz3pBTVLkaX0dvF-Ia73JgKxlYBdkmUO2LDuggfcWpnGDYhG-xPz5fvPtRMoESzeU2XwiNWSNxQ13jWSI1L72L2_xFCweYEhogh&uniplatform=NZKPT&language=CHS">康汉莉-联合磁珠与裂解酶LysGH15检测金黄色葡萄球菌方法的建立与评价</a></li>
-      <li><a target="_blank" rel="noopener noreferrer" href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7Wdzh0S-EkB26WAcc6qd8kZhfQ5RFm28NJVntA3ViSKB4M08XJMPyHU9eStxVuFJoislQMXch6HSXWzlA8Rc2_2jZ3C3-BKUnv7bERA8Sn4Wqt5IebbKEqFqAPCJuPbr6lqz1_EiQVpk-3d3wBB6U2EyxEsfCiuhSFibO0wRYt9ckd1lzzzNdAj&uniplatform=NZKPT&language=CHS">付瑶-产气荚膜梭菌S19噬菌体的分离鉴定及重组裂解酶Lys19的结构与抗菌功能</a></li>
-      <li><a target="_blank" rel="noopener noreferrer" href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7WHSHAAKK-ZaqLvU7QdOYfX6OYGYrPTlxyrZVCoueNuk1dH3206CNGDeg31qcVIxd40WN1I6Kgt1fhp6N5SadaXeVIvzdcKziC1ULqQYR-xXrLGIiJzRib-9vBAKugD1cFG7YWp2yrFjkXkX-F1KH25Ii2zbsmJayxETiGVSpCDdXVIQ_ptxyEqN0i_uDSlrVQ=&uniplatform=NZKPT&language=CHS">欧红达-铜绿假单胞菌噬菌体的生物学特性及对小鼠肺炎模型的治疗研究</a></li>
-      <li><a target="_blank" rel="noopener noreferrer" href=""></a></li>
-
-
-    </ul>  
-  </div>
-  <div class="right-list" style="background-color:#ee90ac;opacity: 0.8;line-height: 1.5">
-    <ul style="text-align: justify">
-     <li style="font-size: X-large;margin-bottom: 10px;color: white">研究领域相关文献</li>
-      <li style="font-size: large;margin-bottom: 10px;color: white">噬菌体与细菌相互作用</li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/1Phages%20overcome%20bacterial%20immunity%20via%20diverse%20anti-defence%20proteins.pdf">Nature-Phages overcome bacterial immunity via diverse anti-defence proteins</a> </li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/2Prokaryotic%20Gabija%20complex%20senses%20and%20executes%20nucleotide%20depletion%20and%20DNA%20cleavage%20for%20antiviral%20defense.pdf">Cell host & Microbe-Prokaryotic Gabija complex senses and executes nucleotide depletion and DNA cleavage for antiviral defense</a> </li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/3Structural%20basis%20of%20Gabija%20anti-phage%20defence%20and%20viral%20immune%20evasion.pdf">Nature-Structural basis of Gabija anti-phage defence and viral immune evasion</a> </li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/4-Bacteriophages%20inhibit%20and%20evade%20cGAS-like%20immune.pdf">Cell-Bacteriophages inhibit and evade cGAS-like immune</a> </li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/7-Bacterial%20defense%20systems%20exhibit%20synergistic%20antiphage%20activity.pdf">Cell host & Microbe-Bacterial defense systems exhibit synergistic antiphage activity</a> </li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/11-Phage%20Paride%20can%20kill%20dormant,%20antibiotic-tolerant%20cells%20of%20Pseudomonas%20aeruginosa%20by%20direct%20lytic%20replication.pdf"> Nature Communications-Phage Paride can kill dormant, antibiotic-tolerant cells of Pseudomonas aeruginosa by direct lytic replication</a> </li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/18-bacteriophage-protein-gp46-is-a-cross-species-inhibitor-of-nucleoid-associated-hu-proteins.pdf"> PNAS-Bacteriophage protein Gp46 is a cross-species inhibitor of nucleoid-associated HU proteins</a> </li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/20-%20Bacteriophage%20protein%20Dap1%20regulates.pdf">Nature Microbiology-Bacteriophage protein Dap1 regulates evasion of antiphage immunity and Pseudomonas aeruginosa virulence impacting phage therapy in mice </a> </li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/21-episymbiotic-saccharibacteria-tm7x-modulates-the-susceptibility-of-its-host-bacteria-to-phage-infection.pdf">PNAS- Episymbiotic Saccharibacteria TM7x modulates the susceptibility of its host bacteria to phage infection and promotes their coexistence </a> </li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/22-Phage%20predation%20accelerates%20the%20spread%20of%20plasmid-encoded%20antibiotic%20resistance.pdf">Nature Communications-Phage predation accelerates the spread of plasmid-encoded antibiotic resistance </a> </li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/23-Bacteria%20conjugate%20ubiquitin-like%20proteins%20to%20interfere%20with%20phage%20assembly.pdf"> Bacteria conjugate ubiquitin-like proteins to interfere with phage assembly</a> </li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/24-The%20structural%20basis%20of%20the%20activation%20and%20inhibition%20of%20DSR2%20NADase%20by%20phage%20proteins.pdf">Nature Communications-The structural basis of the activation and inhibition of DSR2NADasebyphageproteins </a> </li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/25-Phages%20reconstitute%20NAD+%20to%20counter.pdf"> Nature-Phages reconstitute NAD+ to counter bacterial immunity</a> </li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/26-A%20bacterial%20immunity%20protein%20directly%20senses%20two%20disparate%20phage%20proteins.pdf"> Cell-Animal and bacterial viruses share conserved mechanisms of immune evasion</a> </li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/27-Animal%20and%20bacterial%20virues%20share%20conserved%20mechanisms%20of%20immune%20evasion.pdf"> Nature-A bacterial immunity protein directly senses two disparate phage proteins</a> </li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/30-Birth%20of%20protein%20folds%20and%20functions%20in%20the%20virome.pdf"> Nature- Birth of protein folds and functions in the virome</a> </li>
-
-
-      <li style="font-size: large;margin-bottom: 10px;color: white">噬菌体相关抗菌蛋白</li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/12-Structural%20and%20functional%20insights%20into%20a%20novel.pdf"> PLOS Pathogens-Structural and functional insights into a novel two-component endolysin encoded by a single gene in Enterococcus faecalis phage</a> </li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/13-A%20bacteriophage%20endolysin%20that%20eliminates%20intracellular%20streptococci..pdf"> eLIFE- Abacteriophage endolysin that eliminates intracellular streptococci</a> </li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/14-The%20CD27L%20and%20CTP1L%20Endolysins%20Targeting%20Clostridia%20Contain%20a%20Built-in%20Trigger%20and%20Release%20Factor.pdf"> PLOS Pathogens-The CD27L and CTP1L Endolysins Targeting Clostridia Contain a Built-in Trigger and Release Factor</a> </li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/15-Crystal%20Structure%20of%20the%20CTP1L%20Endolysin%20Reveals%20How%20Its.pdf">THE JOURNAL OF BIOLOGICAL CHEMISTRY-Crystal Structure of the CTP1L Endolysin Reveals How Its Activity Is Regulated by a Secondary Translation Product </a></li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/16-x-ray-crystal-structure-of-the-streptococcal-specific-phage-lysin-plyc.pdf"> PNAS-X-ray crystal structure of the streptococcal specific phage lysin PlyC</a> </li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/"> </a> </li>
-
-
-      <li style="font-size: large;margin-bottom: 10px;color: white">噬菌体疗法</li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/"> </a> </li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/"> </a> </li>
-
-
-      <li style="font-size: large;margin-bottom: 10px;color: white">噬菌体应用</li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/28-Hybrid%20M13%20bacteriophage-based%20vaccine%20platform%20for%20personalized%20cancer%20immunotherapy.pdf"> Biomaterials-Hybrid M13 bacteriophage-based vaccine platform for personalized cancer immunotherapy </a> </li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/"> </a> </li>
-
-
-
-      <li style="font-size: large;margin-bottom: 10px;color: white">噬菌体相关综述</li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/17-Phage%20transmission%20strategies_%20are%20phages%20farming%20their%20host_.pdf"> Current Opinion in Microbiology -Phage transmission strategies: are phages farming their host? </a> </li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/19-The%20Enemy%20of%20My%20Enemy-New%20Insights%20Regarding%20Bacteriophage-Mammalian%20Cell%20Interactions.pdf">Trends in Microbiology-The Enemy of My Enemy: New Insights Regarding Bacteriophage–Mammalian Cell Interactions </a> </li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/29-The%20highly%20diverse%20antiphage%20defence%20systems%20of%20bacteria.pdf"> Nature Reviews Microbiology-The highly diverse antiphage defence systems of bacteria</a> </li>
-      <li><a target="_blank" rel="noopener noreferrer" href="article/relative/"> </a> </li>
-
-    
+<!-- Main Content -->
+<div class="main-container">
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar">
+    <h3><i class="fas fa-folder"></i> Categories</h3>
+    <ul class="sidebar-menu">
+      <li><a href="link.html">Journal</a></li>
+      <li><a href="link-tool.html">Tool</a></li>
+      <li><a href="link-database.html">Database</a></li>
+      <li><a href="link-about.html">About</a></li>
+      <li><a href="Link-literature.html" class="active">Literature</a></li>
     </ul>
-  </div>
-</div>
+  </aside>
+  <!-- Literature Content -->
+  <main class="content">
+    <h1 class="page-title">Literature Resource </h1>
+    <p style="color: black; margin-bottom: 25px; font-size: 18px; line-height: 1.6;">
+      Access curated academic resources—including research group theses and field-related literature—to advance your research.​​
+    </p>
 
+    <div class="literature-container">
+      <!-- 课题组毕业论文 -->
+      <div class="literature-section">
+        <div class="section-header">
+          <i class="fas fa-graduation-cap"></i> Dissertation
+        </div>
+        <div class="literature-list">
+          <h3 class="category-title">Doctor</h3>
+          <div class="literature-item">
+            <a href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7VsqOpps2C83OhGco-PwsrN8CLNZyReLYshIEG8FP-JmuoWAa9kOlIa8zfG7tbhUpGtP06K_02OiRJTyzyJjr8mwuDPtfekAbS3D5YxVuWwrvYvKgNXmQyK7ahja5Rjz1M-QgokuyMg8RtTbUTFe6LwbyUS5pWpl7swDnLDx2rcgYcRFfG1UKH4&uniplatform=NZKPT&language=CHS" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              顾敬敏-金黄色葡萄球菌噬菌体GH15及其裂解酶三维结构与分子作用机制研究
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7V7NktRKfjtVOzBAP6_p5Rh23exwKu8VNxeEkgOIOZICFnuSSvquR9hMlxq9xA6OvkJrFsOmY0TWazUdOgFYR0GlkpxWSMZ8kXUhhjr6xZkLhXQ9qA3jdYD4LK2U7qT5LehcW310fjqxk0DXlpMtULL33we3aLAqXZ2K8n5KS5bwFEZ8XAzvPrChzf9AA-ImlM=&uniplatform=NZKPT&language=CHS" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              冀亚路-腹泻断奶仔猪肠道噬菌体组特征及其相关耐药和裂解酶基因研究
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7XMf3Y9l6GVKbY-RtN3nFhczN7oTIfGV09x5BR-KPj1BUO4IDseq1u_bphH9NJsGHiazCvMasTKU5XTy2CXgvOaOCZUDukemE_lsTPgpUjTg_QstWq3LqSxW5w2quohHSDMKlFpjulZS-hrBkRcHPr7Ie87aPBq7mnCx_KeCXptVC0vquFwMX7qnl0fpQC-HSk=&uniplatform=NZKPT&language=CHS" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              蔡若鹏-噬菌体GH-K3的生物学特性及其诱导肺炎克雷伯菌产生噬菌体抗性的机制
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7UPN_eKnuZrano9bvOBUQBfe-8NCPtGrLAmhbqdGO3Px5e4S6VerMInLI084_6tj4Hx20ahvitIz2gNHgSreS2uvnkTuI4rMFyw5H8SxirTmMpypnraI4N-u-Nm8rEgm5o3QSkhIEGRbs9tSO6uhckSWMzFyPK9BEwvNIFCs36fK3CGSmW4Erna&uniplatform=NZKPT&language=CHS" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              刘潇-基于噬菌体裂解酶LysGH15快速检测金黄色葡萄球菌方法的建立与应用评价
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7WhI0H75WPpSDdZuEx_GxsQeomT1iPGv9Nkyo12N6oqIoERcsVvXZbbHB1yno8IM_S9SCMuxQ-9xU2jO8tPj4a-Xw4adqSm1s60TIB5EtxCbkLMcW1snpG4h04jrqsAlleEPNx9ltYHg_YtPcpS4KyZ7-rwdJMlo7YPHeVjOwPY__naomwk0--V&uniplatform=NZKPT&language=CHS" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              袭恒豫-绿色气球菌噬菌体裂解酶AVPL的生物学特性及其抗菌作用机制
+            </a>
+          </div>
+
+          <h3 class="category-title">Master</h3>
+          <div class="literature-item">
+            <a href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7XrCoeHjN-YzJEsGucaE9SHHp_3CyazOqEgeZHG2eOlCKsK4VeJap_uX1Gc4pWx-cZ4z6arW9JYtLdR6FfD_rT1b3eISVJ6Dg5f6smN5Rs0SyjrgdX8KPAT-k6O_LKDlQawviO4e9ADVPZ_gV2e6Z006Ry5EEQ4hANiZOsHbRhmIUOwo5FoTV-eFE4wHo0vKwc=&uniplatform=NZKPT&language=CHS" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              黄春正-裂解酶LysLF1的生物学特性及其抗链球菌的效果评价
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7UGYs-j_DgLDWPXpXx6iiG4EfjoZE8Vuo_RpnkrYdKJRuMgnsiwD2FhwL5DSaq4V562sxuZawHRXEtYnXB8Emzm-0kvJxyJaPYsT_4hVmvtmhCZkVjunkRqVnRn5vEUboqeVWP3Imf-8KAar9Gd-y394wU0lp1emMlSe0bBGrKzVkcblYQZuhqj&uniplatform=NZKPT&language=CHS" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              路艳-铜绿假单胞菌单链RNA噬菌体Ppa61的生物学特性及其治疗效果评价
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7WjLC0K9huvFSZQYrXyMhL-B6vNSfjmB7H-u8TJR4Qf8qJHxbcDb06ADsBRlhDGCU3La9ohTB2wpT-eyS6PrRmLLCUDiQwgC1i6U1RHpNBSUmopvzt1eCna5uQg2fqeqMDbkrrKXeqoVpcvISAmmqG_Ci9EfIMBB0nIpwqXz7QcYd_plKjU9peDs9Jdwr_hQu0=&uniplatform=NZKPT&language=CHS" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              袭恒豫-绿色气球菌噬菌体AVP与其裂解酶的生物学特性及对小鼠乳腺炎模型的实验性治疗
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7U-it48QnM4Kw6mZNpPLOeTy9CF4IMufeimtG2unJ3sCOCEiB3cGJbVnoFPhCxBL5DnkaY3tLvaVElrQ2T2LlxLzHulZ4-VALrysgq3fvrGLtinFz6UePEaZ63nt_eA95hUnWDrhVifyV0GWy5n7WXCfNgT1iz5tygnJ1QPVZ2NfIEX2N9YnIhiXVoM0DVFUlg=&uniplatform=NZKPT&language=CHS" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              冀亚路-金黄色葡萄球菌噬菌体VB-SavM-JYL01的生物学特性及其对兔坏死性肺炎实验治疗的研究
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7XMyaN5DZZMMio7GSrytVR1J9pkvcwNAefp_tlmprSZY6rXlhhtztYjitGFJ28kyYj5eimm_qh3pEMZwWJIqhz3pBTVLkaX0dvF-Ia73JgKxlYBdkmUO2LDuggfcWpnGDYhG-xPz5fvPtRMoESzeU2XwiNWSNxQ13jWSI1L72L2_xFCweYEhogh&uniplatform=NZKPT&language=CHS" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              赵日虹-K1型肺炎克雷伯菌噬菌体vB＿KpnP＿ZK1及其解聚酶的生物学特性研究
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7Wdzh0S-EkB26WAcc6qd8kZhfQ5RFm28NJVntA3ViSKB4M08XJMPyHU9eStxVuFJoislQMXch6HSXWzlA8Rc2_2jZ3C3-BKUnv7bERA8Sn4Wqt5IebbKEqFqAPCJuPbr6lqz1_EiQVpk-3d3wBB6U2EyxEsfCiuhSFibO0wRYt9ckd1lzzzNdAj&uniplatform=NZKPT&language=CHS" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              张梅梅-鼠伤寒沙门菌裂解性噬菌体的分离鉴定及其宿主菌抗性机制分析
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7WHSHAAKK-ZaqLvU7QdOYfX6OYGYrPTlxyrZVCoueNuk1dH3206CNGDeg31qcVIxd40WN1I6Kgt1fhp6N5SadaXeVIvzdcKziC1ULqQYR-xXrLGIiJzRib-9vBAKugD1cFG7YWp2yrFjkXkX-F1KH25Ii2zbsmJayxETiGVSpCDdXVIQ_ptxyEqN0i_uDSlrVQ=&uniplatform=NZKPT&language=CHS" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              康汉莉-联合磁珠与裂解酶LysGH15检测金黄色葡萄球菌方法的建立与评价
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7WHSHAAKK-ZaqLvU7QdOYfX6OYGYrPTlxyrZVCoueNuk1dH3206CNGDeg31qcVIxd40WN1I6Kgt1fhp6N5SadaXeVIvzdcKziC1ULqQYR-xXrLGIiJzRib-9vBAKugD1cFG7YWp2yrFjkXkX-F1KH25Ii2zbsmJayxETiGVSpCDdXVIQ_ptxyEqN0i_uDSlrVQ=&uniplatform=NZKPT&language=CHS" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              付瑶-产气荚膜梭菌S19噬菌体的分离鉴定及重组裂解酶Lys19的结构与抗菌功能
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="https://kns.cnki.net/kcms2/article/abstract?v=RguDcq0jw7WHSHAAKK-ZaqLvU7QdOYfX6OYGYrPTlxyrZVCoueNuk1dH3206CNGDeg31qcVIxd40WN1I6Kgt1fhp6N5SadaXeVIvzdcKziC1ULqQYR-xXrLGIiJzRib-9vBAKugD1cFG7YWp2yrFjkXkX-F1KH25Ii2zbsmJayxETiGVSpCDdXVIQ_ptxyEqN0i_uDSlrVQ=&uniplatform=NZKPT&language=CHS" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              欧红达-铜绿假单胞菌噬菌体的生物学特性及对小鼠肺炎模型的治疗研究
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 研究领域相关文献 -->
+      <div class="literature-section">
+        <div class="section-header">
+          <i class="fas fa-microscope"></i> Related Literature
+        </div>
+        <div class="literature-list">
+          <h3 class="category-title">Interaction between bacteriophages and bacteria</h3>
+          <div class="literature-item">
+            <a href="article/relative/1Phages%20overcome%20bacterial%20immunity%20via%20diverse%20anti-defence%20proteins.pdf" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              Nature-Phages overcome bacterial immunity via diverse anti-defence proteins
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="article/relative/2Prokaryotic%20Gabija%20complex%20senses%20and%20executes%20nucleotide%20depletion%20and%20DNA%20cleavage%20for%20antiviral%20defense.pdf" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              Cell host & Microbe-Prokaryotic Gabija complex senses and executes nucleotide depletion and DNA cleavage for antiviral defense
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="article/relative/3Structural%20basis%20of%20Gabija%20anti-phage%20defence%20and%20viral%20immune%20evasion.pdf" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              Nature-Structural basis of Gabija anti-phage defence and viral immune evasion
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="article/relative/4-Bacteriophages%20inhibit%20and%20evade%20cGAS-like%20immune.pdf" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              Cell-Bacteriophages inhibit and evade cGAS-like immune
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="article/relative/7-Bacterial%20defense%20systems%20exhibit%20synergistic%20antiphage%20activity.pdf" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              Cell host & Microbe-Bacterial defense systems exhibit synergistic antiphage activity
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="article/relative/11-Phage%20Paride%20can%20kill%20dormant,%20antibiotic-tolerant%20cells%20of%20Pseudomonas%20aeruginosa%20by%20direct%20lytic%20replication.pdf" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              Nature Communications-Phage Paride can kill dormant, antibiotic-tolerant cells of Pseudomonas aeruginosa by direct lytic replication
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="article/relative/18-bacteriophage-protein-gp46-is-a-cross-species-inhibitor-of-nucleoid-associated-hu-proteins.pdf" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              PNAS-Bacteriophage protein Gp46 is a cross-species inhibitor of nucleoid-associated HU proteins
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="article/relative/20-%20Bacteriophage%20protein%20Dap1%20regulates.pdf" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              Nature Microbiology-Bacteriophage protein Dap1 regulates evasion of antiphage immunity and Pseudomonas aeruginosa virulence impacting phage therapy in mice
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="article/relative/21-episymbiotic-saccharibacteria-tm7x-modulates-the-susceptibility-of-its-host-bacteria-to-phage-infection.pdf" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              PNAS- Episymbiotic Saccharibacteria TM7x modulates the susceptibility of its host bacteria to phage infection and promotes their coexistence
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="article/relative/22-Phage%20predation%20accelerates%20the%20spread%20of%20plasmid-encoded%20antibiotic%20resistance.pdf" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              Nature Communications-Phage predation accelerates the spread of plasmid-encoded antibiotic resistance
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="article/relative/23-Bacteria%20conjugate%20ubiquitin-like%20proteins%20to%20interfere%20with%20phage%20assembly.pdf" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              Bacteria conjugate ubiquitin-like proteins to interfere with phage assembly
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="article/relative/24-The%20structural%20basis%20of%20the%20activation%20and%20inhibition%20of%20DSR2%20NADase%20by%20phage%20proteins.pdf" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              Nature Communications-The structural basis of the activation and inhibition of DSR2NADasebyphageproteins
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="article/relative/25-Phages%20reconstitute%20NAD+%20to%20counter.pdf" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              Nature-Phages reconstitute NAD+ to counter bacterial immunity
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="article/relative/26-A%20bacterial%20immunity%20protein%20directly%20senses%20two%20disparate%20phage%20proteins.pdf" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              Cell-Animal and bacterial viruses share conserved mechanisms of immune evasion
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="article/relative/27-Animal%20and%20bacterial%20virues%20share%20conserved%20mechanisms%20of%20immune%20evasion.pdf" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              Nature-A bacterial immunity protein directly senses two disparate phage proteins
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="article/relative/30-Birth%20of%20protein%20folds%20and%20functions%20in%20the%20virome.pdf" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              Nature- Birth of protein folds and functions in the virome
+            </a>
+          </div>
+
+          <h3 class="category-title">Phage-derived antimicrobial proteins</h3>
+          <div class="literature-item">
+            <a href="article/relative/12-Structural%20and%20functional%20insights%20into%20a%20novel.pdf" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              PLOS Pathogens-Structural and functional insights into a novel two-component endolysin encoded by a single gene in Enterococcus faecalis phage
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="article/relative/13-A%20bacteriophage%20endolysin%20that%20eliminates%20intracellular%20streptococci..pdf" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              eLIFE- Abacteriophage endolysin that eliminates intracellular streptococci
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="article/relative/14-The%20CD27L%20and%20CTP1L%20Endolysins%20Targeting%20Clostridia%20Contain%20a%20Built-in%20Trigger%20and%20Release%20Factor.pdf" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              PLOS Pathogens-The CD27L and CTP1L Endolysins Targeting Clostridia Contain a Built-in Trigger and Release Factor
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="article/relative/15-Crystal%20Structure%20of%20the%20CTP1L%20Endolysin%20Reveals%20How%20Its.pdf" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              THE JOURNAL OF BIOLOGICAL CHEMISTRY-Crystal Structure of the CTP1L Endolysin Reveals How Its Activity Is Regulated by a Secondary Translation Product
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="article/relative/16-x-ray-crystal-structure-of-the-streptococcal-specific-phage-lysin-plyc.pdf" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              PNAS-X-ray crystal structure of the streptococcal specific phage lysin PlyC
+            </a>
+          </div>
+
+          <h3 class="category-title">Phage therapy</h3>
+          <div class="literature-item">
+            <a href="" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+
+            </a>
+          </div>
+
+          <h3 class="category-title">Phage applications</h3>
+          <div class="literature-item">
+            <a href=" " target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+
+            </a>
+          </div>
+
+          <h3 class="category-title">Bacteriophage reviews</h3>
+          <div class="literature-item">
+            <a href="article/relative/17-Phage%20transmission%20strategies_%20are%20phages%20farming%20their%20host_.pdf" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              Current Opinion in Microbiology -Phage transmission strategies: are phages farming their host?
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="article/relative/19-The%20Enemy%20of%20My%20Enemy-New%20Insights%20Regarding%20Bacteriophage-Mammalian%20Cell%20Interactions.pdf" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              Trends in Microbiology-The Enemy of My Enemy: New Insights Regarding Bacteriophage–Mammalian Cell Interactions
+            </a>
+          </div>
+
+          <div class="literature-item">
+            <a href="article/relative/29-The%20highly%20diverse%20antiphage%20defence%20systems%20of%20bacteria.pdf" target="_blank" class="literature-link">
+              <i class="fas fa-file-pdf"></i>
+              Nature Reviews Microbiology-The highly diverse antiphage defence systems of bacteria
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script>
+  // Theme toggle functionality
+  const themeToggle = document.getElementById('theme-toggle');
+  const body = document.body;
+  const themeIcon = themeToggle.querySelector('i');
+
+  // Check for saved theme preference or prefer color scheme
+  const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const savedTheme = localStorage.getItem('theme');
+
+  // Set initial theme
+  if (savedTheme === 'dark' || (!savedTheme && prefersDarkMode)) {
+    enableDarkMode();
+  }
+
+  themeToggle.addEventListener('click', () => {
+    if (body.classList.contains('dark-mode')) {
+      disableDarkMode();
+    } else {
+      enableDarkMode();
+    }
+  });
+
+  function enableDarkMode() {
+    body.classList.add('dark-mode');
+    themeIcon.className = 'fas fa-sun';
+    localStorage.setItem('theme', 'dark');
+  }
+
+  function disableDarkMode() {
+    body.classList.remove('dark-mode');
+    themeIcon.className = 'fas fa-moon';
+    localStorage.setItem('theme', 'light');
+  }
+</script>
 </body>
 </html>
