@@ -1,86 +1,317 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Link-Tool</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Link-Tool</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-      /* 侧边导航菜单 */
-    .sidebar {
+    :root {
+      --primary: #2c6eb5;
+      --primary-dark: #1a4a8d;
+      --secondary: #3fa796;
+      --accent: #f2a341;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+      --light-gray: #e9ecef;
+      --border-radius: 12px;
+      --box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      --transition: all 0.3s ease;
+    }
+    * {
       margin: 0;
       padding: 0;
-      width: 200px;
-      background-color: #f1f1f1;
-      position: fixed;
-      height: 100%;
-      overflow: auto;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    /* 侧边栏链接 */
-    .sidebar a {
-      display: block;
-      color: black;
-      padding: 16px;
-      text-decoration: none;
+    body {
+      background: #fbfbfb;
+      color: var(--dark);
+      min-height: 100vh;
+      transition: var(--transition);
     }
-
-    /* 活动/当前链接 */
-    .sidebar a.active {
-      background-color: #4CAF50;
-      color: white;
-    }
-
-    /* 鼠标悬停链接 */
-    .sidebar a:hover:not(.active) {
-      background-color: #555;
-      color: white;
-    }
-
-    /* 页面内容。 margin-left 属性的值应该与侧边栏的 width 属性的值匹配 */
-  </style><!--左侧导航栏-->
-  <style>
-    a{
-     text-decoration: none;
-     color: black;
-     text-align: center;
-    }
-    a:hover{
-      color: #0960f6;
-    }
-    .grid-container {
+    /* Main Content Layout */
+    .main-container {
+      max-width: 2200px;
+      margin: 30px auto;
+      padding: 0 20px;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: repeat(4, 1fr);
-      grid-gap: 30px 50px; /* Row gap is 30px, column gap is 50px */
-      padding: 30px 50px; /* Top padding is 100px, left/right padding is 50px */
-      margin-left: 200px;
-      background-color: rgba(241, 241, 241, 0.7);
+      grid-template-columns: 240px 1fr;
+      gap: 30px;
     }
 
-    .grid-item {
+    /* Sidebar */
+    .sidebar {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      padding: 0;
+      transition: var(--transition);
+      height: fit-content;
+    }
+
+    .dark-mode .sidebar {
+      background-color: #1e2a45;
+    }
+
+    .sidebar h3 {
+      font-size: 18px;
+      padding: 20px;
+      color: white;
+      background-color: var(--primary);
+      margin: 0;
+    }
+
+    .dark-mode .sidebar h3 {
+      background-color: var(--primary-dark);
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar-menu li {
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    .sidebar-menu li:last-child {
+      border: none;
+    }
+
+    .sidebar-menu a {
+      display: block;
+      padding: 15px 20px;
+      text-decoration: none;
+      color: var(--dark);
+      transition: var(--transition);
+      font-weight: 500;
+    }
+
+    .dark-mode .sidebar-menu a {
+      color: var(--dark);
+    }
+
+    .sidebar-menu a:hover {
+      background-color: var(--light-gray);
+    }
+
+    .dark-mode .sidebar-menu a:hover {
+      background-color: #253253;
+    }
+
+    .sidebar-menu a.active {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .dark-mode .sidebar-menu a.active {
+      background-color: var(--primary-dark);
+    }
+
+    /* Content Area */
+    .page-title {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 25px;
+      color: var(--primary);
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .dark-mode .page-title {
+      color: var(--primary-dark);
+    }
+
+    .page-title::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 4px;
+      width: 80px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .tool-type-header {
+      background-color: white;
+      padding: 15px 20px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 35px 0 20px;
+      transition: var(--transition);
+    }
+
+    .dark-mode .tool-type-header {
+      background-color: #1e2a45;
+    }
+
+    .tool-type-header h2 {
+      margin: 0;
+      font-size: 22px;
+      color: var(--dark);
+    }
+
+    .dark-mode .tool-type-header h2 {
+      color: var(--dark);
+    }
+
+    .tool-type-header i {
+      font-size: 24px;
+      color: var(--accent);
+    }
+
+    /* Tool Cards Grid */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    .tool-card {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      transition: var(--transition);
       display: flex;
       flex-direction: column;
-      position: relative;
-      overflow: hidden; /* To hide parts of the image outside the circular area */
+      height: 100%;
     }
 
-    .grid-item img {
-      width: 150px;
-      height: 50px; /* 2/5 of the total height */
-      object-fit: cover; /* Maintain aspect ratio and cover the container */
-      margin-right: auto;
-      margin-left: auto;
+    .dark-mode .tool-card {
+      background: #1e2a45;
     }
 
-    .grid-item .text-content {
-      flex-grow: 1; /* Fill the remaining space */
-      padding: 10px;
-
-
+    .tool-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
     }
-    .grid-item:hover{
-      transform: scale(1.1);
+
+    .tool-image {
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      border-bottom: 1px solid var(--light-gray);
     }
-  </style><!--右侧links-->
+
+    .dark-mode .tool-image {
+      background: linear-gradient(135deg, #1c273f 0%, #162040 100%);
+      border-color: #27314e;
+    }
+
+    .tool-image img {
+      max-height: 90px;
+      max-width: 90%;
+      object-fit: contain;
+    }
+
+    .tool-content {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tool-title {
+      font-size:36px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--primary);
+    }
+
+    .dark-mode .tool-title {
+      color: var(--primary-dark);
+    }
+
+    .tool-description {
+      color: var(--gray);
+      margin-bottom: 20px;
+      font-size: 15px;
+      line-height: 1.5;
+      flex-grow: 1;
+    }
+
+    .dark-mode .tool-description {
+      color: var(--gray);
+    }
+
+    .tool-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .dark-mode .tool-link {
+      color: var(--primary-dark);
+    }
+
+    .tool-link:hover {
+      color: var(--accent);
+      transform: translateX(5px);
+    }
+
+    /* Footer */
+    .site-footer {
+      background-color: white;
+      padding: 30px 0;
+      text-align: center;
+      margin-top: 60px;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+      transition: var(--transition);
+    }
+
+    .dark-mode .site-footer {
+      background-color: #1a243a;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+    }
+
+    .footer-content {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+
+    .dark-mode .footer-logo {
+      color: var(--primary-dark);
+    }
+    /* Responsive Design */
+    @media (max-width: 900px) {
+      .main-container {
+        grid-template-columns: 1fr;
+        padding: 0 15px;
+      }
+
+      .sidebar {
+        margin-bottom: 20px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .tools-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
   <style>
     body, html {
       margin: 0;
@@ -101,7 +332,7 @@
 
     .image-link img {
       width: 100%; /* 图片宽度为容器宽度的1/4，减去间距以保持并列 */
-      height: 4%;
+      height:4%;
       transition: transform 0.3s ease; /* 设置图片悬浮效果的过渡动画 */
     }
 
@@ -125,7 +356,7 @@
       margin-right: auto;
     }
     body{
-      background-image: url("image/background-photo/back1.png");
+
       background-size: 100%;
     }
 
@@ -139,495 +370,541 @@
   <a href="protocol.html" class="image-link"><img src="image/index-labpage2/protocol2.png" alt="图片5"></a>
   <a href="link.html" class="image-link"><img src="image/index-labpage2/Link2.png" alt="图片6"></a>
 </div>
-<!-- 侧边栏 -->
-<div class="sidebar" style="margin-top: 10px">
-  <a href="link.html">Journal</a>
-  <a class="active" href="link-tool.html">Tool</a>
-  <a href="link-database.html">Database</a>
-  <a href="link-about.html">About</a>
-  <a href="Link-literature.html">Literature</a>
-</div>
-
-<!-- 页面内容 -->
-<!--蛋白结构-->
-<div class="right-list" style="opacity: 0.8;margin-left: 200px;margin-right: 20px">
-    <ul style="text-align: justify">
-        <li style="font-size: xx-large;margin-bottom: 10px">Protein structure tool</li>
+<!-- Main Content -->
+<div class="main-container">
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar">
+    <h3><i class="fas fa-folder"></i> Categories</h3>
+    <ul class="sidebar-menu">
+      <li><a href="link.html">Journal</a></li>
+      <li><a href="link-tool.html" class="active">Tool</a></li>
+      <li><a href="link-database.html">Database</a></li>
+      <li><a href="link-about.html">About</a></li>
+      <li><a href="Link-literature.html">Literature</a></li>
     </ul>
-</div>
-<div class="grid-container" >
+  </aside>
 
-  <!--1-1-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-     <img src="image/links/tools/Swiss%20model.png" alt="Image">
-      <div class="text-content">
-        <a target="_blank" rel="noopener noreferrer" href="https://swissmodel.expasy.org/">
-          <p>Swiss Model 蛋白结构预测</p>
+  <!-- Tools Content -->
+  <main class="content">
+    <h1 class="page-title">Research Tools </h1>
+    <p style="color: black; margin-bottom: 25px; font-size: 18px; line-height: 1.6;">
+      Explore our curated collection of research tools and resources to enhance your scientific workflow and accelerate discoveries.
+    </p>
+
+    <!-- Protein Structure Tools -->
+    <div class="tool-type-header">
+      <i class="fas fa-dna"></i>
+      <h2>Protein Structure Tool</h2>
+    </div>
+    <div class="tools-grid" >
+      <div class="tool-card" >
+        <div class="tool-image" style="background-color: rgba(209,224,246,0.94)">
+          <h3 class="tool-title">Swiss Model</h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">Automated protein structure homology modeling server</p>
+          <a href="https://swissmodel.expasy.org/" target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div> <!-- swiss model -->
+      <div class="tool-card">
+        <div class="tool-image" style="background-color: rgba(209,224,246,0.94)">
+          <h3 class="tool-title">AlphaFold3</h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">Deep learning system for protein structure prediction</p>
+          <a href="https://alphafoldserver.com/" target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div><!-- alpha fold3 -->
+      <div class="tool-card">
+        <div class="tool-image" style="background-color: rgba(209,224,246,0.94)">
+          <h3 class="tool-title">GRAMM</h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">GRAMM systematically maps the intermolecular energy landscape by predicting a spectrum of docking poses
+            corresponding to stable (deep energy minima) and transient (shallow minima) protein interactions</p>
+          <a href="https://gramm.compbio.ku.edu/" target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div><!-- GRAMMM -->
+      <div class="tool-card">
+        <div class="tool-image" style="background-color: rgba(209,224,246,0.94)">
+          <h3 class="tool-title">Saves</h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">Model reliability assessment for protein structures</p>
+          <a href="https://saves.mbi.ucla.edu/" target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div><!-- SAVES -->
+      <div class="tool-card">
+        <div class="tool-image" style="background-color: rgba(209,224,246,0.94)">
+          <h3 class="tool-title"> PSIPRED </h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description"> The PSIPRED Workbench provides a range of protein structure prediction methods </p>
+          <a href=" http://bioinf.cs.ucl.ac.uk/psipred/ " target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div><!-- PSIPRED -->
+      <div class="tool-card">
+        <div class="tool-image" style="background-color: rgba(209,224,246,0.94)">
+          <h3 class="tool-title">I-TASSER  </h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description"> a hierarchical approach to protein structure prediction and structure-based function annotation </p>
+          <a href=" https://zhanggroup.org/I-TASSER/ " target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div><!-- I-TASSER -->
+      <div class="tool-card">
+      <div class="tool-image" style="background-color: rgba(209,224,246,0.94)">
+        <h3 class="tool-title"> ZDOCK </h3>
+      </div>
+      <div class="tool-content">
+        <p class="tool-description"> An automatic protein docking server </p>
+        <a href=" https://zdock.umassmed.edu/ " target="_blank" class="tool-link">
+          Access Tool <i class="fas fa-arrow-right"></i>
         </a>
       </div>
+    </div><!-- ZDOCK -->
+      <div class="tool-card">
+      <div class="tool-image" style="background-color: rgba(209,224,246,0.94)">
+        <h3 class="tool-title"> PDBePISA </h3>
+      </div>
+      <div class="tool-content">
+        <p class="tool-description"> an interactive tool for the exploration of macromolecular interfaces </p>
+        <a href=" https://www.ebi.ac.uk/pdbe/pisa/ " target="_blank" class="tool-link">
+          Access Tool <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div><!-- PDBePISA -->
+      <div class="tool-card">
+      <div class="tool-image" style="background-color: rgba(209,224,246,0.94)">
+        <h3 class="tool-title"> PDBeFOLD </h3>
+      </div>
+      <div class="tool-content">
+        <p class="tool-description">Comparison and 3D alignment of protein structures and
+          examination of a protein structure for similarity with the whole PDB archive or SCOP archive </p>
+        <a href=" https://www.ebi.ac.uk/msd-srv/ssm/ " target="_blank" class="tool-link">
+          Access Tool <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div><!-- PDBeFOLD -->
+      <div class="tool-card">
+      <div class="tool-image" style="background-color: rgba(209,224,246,0.94)">
+        <h3 class="tool-title"> Structure Alignment </h3>
+      </div>
+      <div class="tool-content">
+        <p class="tool-description"> This tool allows the selection of protein 3D structures for alignment </p>
+        <a href=" https://www.rcsb.org/alignment " target="_blank" class="tool-link">
+          Access Tool <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div><!-- PDB Structure Alignment -->
+      <div class="tool-card">
+      <div class="tool-image" style="background-color: rgba(209,224,246,0.94)">
+        <h3 class="tool-title">Foldseek  </h3>
+      </div>
+      <div class="tool-content">
+        <p class="tool-description">Fast and accurate protein structure search   </p>
+        <a href=" https://search.foldseek.com/search " target="_blank" class="tool-link">
+          Access Tool <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div><!-- foldseek -->
+      <div class="tool-card">
+      <div class="tool-image" style="background-color: rgba(209,224,246,0.94)">
+        <h3 class="tool-title"> TM-align </h3>
+      </div>
+      <div class="tool-content">
+        <p class="tool-description">An algorithm for sequence independent protein structure comparisons  </p>
+        <a href=" https://zhanggroup.org/TM-align/ " target="_blank" class="tool-link">
+          Access Tool <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div><!-- TM-align-->
+      <div class="tool-card">
+      <div class="tool-image" style="background-color: rgba(209,224,246,0.94)">
+        <h3 class="tool-title">DALI </h3>
+      </div>
+      <div class="tool-content">
+        <p class="tool-description"> The Dali server is a network service for comparing protein structures in 3D.
+          You submit the coordinates of a query protein structure and Dali compares them against those in the Protein Data Bank (PDB) </p>
+        <a href=" http://ekhidna2.biocenter.helsinki.fi/dali/ " target="_blank" class="tool-link">
+          Access Tool <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+      </div><!-- DALI -->
+      <div class="tool-card">
+        <div class="tool-image" style="background-color: rgba(209,224,246,0.94)">
+          <h3 class="tool-title"> EaslFA </h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description"> Using information fusion model to annotate enzyme catalytic active site </p>
+          <a href=" http://easifa.iddd.group/ " target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div><!-- EaslFA -->
     </div>
-  <!--1-2-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/psipred.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="http://bioinf.cs.ucl.ac.uk/psipred/">
-        <p>Psipred-蛋白二级结构预测</p>
-      </a>
-    </div>
-  </div>
-  <!--1-3-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/tasser.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://zhanggroup.org/I-TASSER/">
-        <p>I-tasser-穿线法预测蛋白质结构与功能</p>
-      </a>
-    </div>
-  </div>
-  <!--1-4-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/saves.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://saves.mbi.ucla.edu/">
-        <p>Saves-蛋白预测模型可靠性评估</p>
-      </a>
-    </div>
-  </div>
-  <!--1-5-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/ZDACK.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://zdock.umassmed.edu/">
-        <p>ZDOCK-蛋白质四级结构预测</p>
-      </a>
-    </div>
-  </div>
-  <!--1-6-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/PDBe.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://www.ebi.ac.uk/pdbe/pisa/">
-        <p>PDBe-蛋白四级结构预测与评估</p>
-      </a>
-    </div>
-  </div>
-  <!--1-7-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/GRAMM.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://gramm.compbio.ku.edu/">
-        <p>GRAMM-蛋白质四级结构预测</p>
-      </a>
-    </div>
-  </div>
-  <!--1-8-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/pdbefold.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://www.ebi.ac.uk/msd-srv/ssm/">
-        <p>PDBe-fold</p>
-      </a>
-    </div>
-  </div>
-  <!--1-9-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/alphafold3.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://alphafoldserver.com/">
-        <p>Alphafold3</p>
-      </a>
-    </div>
-  </div>
-  <!--1-10-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/PDB-PAIRWISE.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://www.rcsb.org/alignment">
-        <p>PDB-Pairwise structure alignment</p>
-      </a>
-    </div>
-  </div>
-   <!--1-11-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/foldseek.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://search.foldseek.com/search">
-        <p>Foldseek-蛋白结构比对</p>
-      </a>
-    </div>
-  </div>  <!--1-12-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/TM%20align.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://zhanggroup.org/TM-align/">
-        <p>TM-align 蛋白结构比对</p>
-      </a>
-    </div>
-  </div>  <!--1-13-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/Dali.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="http://ekhidna2.biocenter.helsinki.fi/dali/">
-        <p>DALI-蛋白结构比对</p>
-      </a>
-    </div>
-  </div>   
-  <!--1-14-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/EaslFA.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="http://easifa.iddd.group/">
-        <p>EaslFA-酶活位点预测</p>
-      </a>
-    </div>
-  </div>
-</div>
-    
-<!--蛋白理化性质-->
-<div class="right-list" style="opacity: 0.8;margin-left: 200px;margin-right: 20px">
-  <ul style="text-align: justify">
-    <li style="font-size: xx-large;margin-bottom: 10px">Physicochemical properties of protein</li>
-  </ul>
-</div>
-<div class="grid-container" >
-  <!--2-1-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/protparam.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://www.expasy.org/resources/protparam">
-        <p>Protparam-蛋白质理化性质计算</p>
-      </a>
-    </div>
-  </div>
-  <!--2-2-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/DNA-binding.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://dnabind.szialab.org/">
-        <p>DNA结合蛋白预测</p>
-      </a>
-    </div>
-  </div>
-  <!--2-3-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/proteinshushuixingfenxi.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://www.novopro.cn/tools/protein-hydrophilicity-plot.html#:~:text=%E7%96%8F%E6%B0%B4%E6%80%A7%E5%88%86%E6%9E%90%E5%AF%B9%E4%BA%8E%E5%88%86%E6%9E%90%E8%86%9C%E8%9B%8B%E7%99%BD%E7%9A%84%E8%B7%A8%E8%86%9C%E5%8C%BA%E3%80%81%E7%90%83%E8%9B%8B%E7%99%BD%E7%9A%84%E4%BA%8C%E7%BA%A7%E7%BB%93%E6%9E%84%E3%80%81%E7%A9%BA%E9%97%B4%E7%BB%93%E6%9E%84%E9%83%BD%E5%85%B7%E6%9C%89%E9%87%8D%E8%A6%81%E7%9A%84%E6%8C%87%E5%AF%BC%E6%84%8F%E4%B9%89%E3%80%82%20%E7%96%8F%E6%B0%B4%E6%80%A7%E5%88%A9%E4%BA%8E%E8%9B%8B%E7%99%BD%E8%B4%A8%E5%90%91%E5%86%85%E9%83%A8%E6%8A%98%E5%8F%A0%E5%BD%A2%E6%88%90%E4%BA%8C%E7%BA%A7%E7%BB%93%E6%9E%84%EF%BC%8C%E8%BF%9B%E4%B8%80%E6%AD%A5%E5%BD%A2%E6%88%90%E7%BB%93%E6%9E%84%E5%9F%9F%EF%BC%8C%E4%B8%89%E7%BA%A7%E7%BB%93%E6%9E%84%E3%80%82,%E5%90%8C%E6%97%B6%E7%96%8F%E6%B0%B4%E6%80%A7%E8%BF%98%E6%9C%89%E5%88%A9%E4%BA%8E%E8%9B%8B%E7%99%BD%E5%BD%A2%E6%88%90%CE%B1%E8%9E%BA%E6%97%8B%EF%BC%8C%E4%BF%9D%E8%AF%81%E5%85%B6%E7%A8%B3%E5%AE%9A%E6%80%A7%E3%80%82%20%E5%9C%A8%E7%BB%93%E6%9E%9C%E4%B8%AD%EF%BC%8C%E6%A8%AA%E8%BD%B4%E4%BB%A3%E8%A1%A8%E8%9B%8B%E7%99%BD%E7%9A%84%E6%B0%A8%E5%9F%BA%E9%85%B8%E5%BA%8F%E5%8F%B7%EF%BC%8C%E7%BA%B5%E8%BD%B4%E4%BB%A3%E8%A1%A8%E7%96%8F%E6%B0%B4%E6%80%A7%EF%BC%8C%E8%B6%8A%E5%A4%A7%E4%BB%A3%E8%A1%A8%E8%B6%8A%E7%96%8F%E6%B0%B4%EF%BC%8C%E5%A6%82%E6%9E%9C%E4%B8%BA%E8%B4%9F%E5%80%BC%EF%BC%8C%E4%BB%A3%E8%A1%A8%E4%BA%B2%E6%B0%B4%E3%80%82">
-        <p>蛋白疏水性分析</p>
-      </a>
-    </div>
-  </div>
-  <!--2-4-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/protein%20net%20charge.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://www.protpi.ch/Calculator/ProteinTool/#Results">
-        <p>蛋白净电荷计算</p>
-      </a>
-    </div>
-  </div>
-  <!--2-5-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/APD3.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://aps.unmc.edu/prediction">
-        <p>抗菌肽预测</p>
-      </a>
-    </div>
-  </div>
-  <!--2-6-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/proteinshushuixingfenxi.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://www.novopro.cn/tools/tmhmm.html">
-        <p>蛋白跨膜区预测</p>
-      </a>
-    </div>
-  </div>
-  <!--2-7-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/signalp.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://services.healthtech.dtu.dk/services/SignalP-6.0/">
-        <p>信号肽预测</p>
-      </a>
-    </div>
-  </div>
-  <!--2-8-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/CAZYPEDIA.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://www.cazypedia.org/index.php/Main_Page">
-        <p>碳水化合物活性酶检索</p>
-      </a>
-    </div>
-  </div>
-  <!--2-9-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/soluprot.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://loschmidt.chemi.muni.cz/soluprot/">
-        <p>蛋白可溶性表达预测</p>
-      </a>
-    </div>
-  </div>
 
-</div>
-    
-<!--序列处理-->
-<div class="right-list" style="opacity: 0.8;margin-left: 200px;margin-right: 20px">
-  <ul style="text-align: justify">
-    <li style="font-size: xx-large;margin-bottom: 10px">Sequence processing tool</li>
-  </ul>
-</div>
-<div class="grid-container" >
-  <!--3-1-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/NCBI-Blast.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://blast.ncbi.nlm.nih.gov/Blast.cgi">
-        <p>NCBI-Blast</p>
-      </a>
+    <!-- Protein Properties Tools -->
+    <div class="tool-type-header">
+      <i class="fas fa-atom"></i>
+      <h2>Protein Properties Tools</h2>
     </div>
-  </div>
-  <!--3-2-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/double%20sequence%20align.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://www.ebi.ac.uk/jdispatcher/psa">
-        <p>双序列比对</p>
-      </a>
-    </div>
-  </div>
-  <!--3-3-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/double%20sequence%20align.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://www.ebi.ac.uk/jdispatcher/msa">
-        <p>多序列比对</p>
-      </a>
-    </div>
-  </div>
-  <!--3-4-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/softberry.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="http://www.softberry.com/berry.phtml?topic=tssw&group=programs&subgroup=promoter">
-        <p>启动子预测</p>
-      </a>
-    </div>
-  </div>
-  <!--3-5-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/tcoffee.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://tcoffee.crg.eu/">
-        <p>Tcoffee-序列比对</p>
-      </a>
-    </div>
-  </div>
-  <!--3-6-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/MEME.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://meme-suite.org/meme/">
-        <p>MEME Suite</p>
-      </a>
-    </div>
-  </div>
-  <!--3-7-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/sequencemanipulation.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://www.bioinformatics.org/sms/">
-        <p>序列处理工具包</p>
-      </a>
-    </div>
-  </div>
-  <!--3-8-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/dotlet.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://dotlet.vital-it.ch/">
-        <p>Dotlet-打点法序列对比</p>
-      </a>
-    </div>
-  </div>
-  <!--3-9-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/Tmcalculate.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://www.thermofisher.cn/cn/zh/home/brands/thermo-scientific/molecular-biology/molecular-biology-learning-center/molecular-biology-resource-library/thermo-scientific-web-tools/tm-calculator.html">
-        <p>Thermo-退火温度计算</p>
-      </a>
-    </div>
-  </div>
-  <!--3-10-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/NEBase.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://nebasechanger.neb.com/">
-        <p>Q5酶突变引物设计</p>
-      </a>
-    </div>
-  </div>
-  <!--3-11-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/IRESITE.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="http://www.iresite.org/IRESite_web.php?page=blastsearch&search_type=blast_iress">
-        <p>IREsite（内部核糖体结合位点）</p>
-      </a>
-    </div>
-  </div>
-</div>
-    
-<!--核酸工具-->
-<div class="right-list" style="opacity: 0.8;margin-left: 200px;margin-right: 20px">
-  <ul style="text-align: justify">
-    <li style="font-size: xx-large;margin-bottom: 10px">Nucleic acid tool</li>
-  </ul>
-</div>
-<div class="grid-container" >
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-image" style="background-color: rgba(239,158,177,0.94)">
+          <h3 class="tool-title">Protparam</h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">Compute various physical and chemical parameters for a given protein sequence</p>
+          <a href="https://www.expasy.org/resources/protparam" target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div> <!-- protparam -->
+      <div class="tool-card">
+        <div class="tool-image" style="background-color: rgba(239,158,177,0.94)">
+          <h3 class="tool-title">Hydrophobicity Analysis</h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">Protein hydrophobicity analysis and prediction</p>
+          <a href="https://www.novopro.cn/tools/protein-hydrophilicity-plot.html" target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div><!-- 疏水性 -->
+      <div class="tool-card">
+        <div class="tool-image" style="background-color: rgba(239,158,177,0.94)">
+          <h3 class="tool-title">SignalP</h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">Predict the presence of signal peptides and the location of their cleavage sites in proteins from Archaea,
+            Gram-positive Bacteria, Gram-negative Bacteria and Eukarya</p>
+          <a href="https://services.healthtech.dtu.dk/services/SignalP-6.0/" target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div><!-- SIGNAL -->
+      <div class="tool-card">
+        <div class="tool-image" style="background-color: rgba(239,158,177,0.94)">
+          <h3 class="tool-title">SoluProt</h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">Prediction of soluble protein expression in Escherichia coli</p>
+          <a href="https://loschmidt.chemi.muni.cz/soluprot/" target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div><!-- soluprot -->
+      <div class="tool-card">
+        <div class="tool-image" style="background-color: rgba(239,158,177,0.94)">
+          <h3 class="tool-title">CAZypedia </h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">CAZypedia has been initiated as a community-driven resource to assemble a comprehensive encyclopedia of the "CAZymes,"
+            the carbohydrate-active enzymes and associated carbohydrate-binding modules involved in the synthesis and degradation of complex carbohydrates </p>
+          <a href="https://www.cazypedia.org/index.php/Main_Page " target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div><!-- CAZYPEDIA -->
+      <div class="tool-card">
+        <div class="tool-image" style="background-color: rgba(239,158,177,0.94)">
+          <h3 class="tool-title">DeepTMHMM </h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">DeepTMHMM is a deep learning protein language model-based algorithm that can detect
+            and predict the topology of both alpha helical and beta barrels proteins over all domains of life </p>
+          <a href="https://services.healthtech.dtu.dk/services/DeepTMHMM-1.0/" target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div><!-- DeepTMHMM -->
+      <div class="tool-card">
+        <div class="tool-image" style="background-color: rgba(239,158,177,0.94)">
+          <h3 class="tool-title">AMP Predictor </h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">Antimicrobial peptide calculator and predictor </p>
+          <a href="https://aps.unmc.edu/prediction " target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div><!-- AMP -->
+      <div class="tool-card">
+        <div class="tool-image" style="background-color: rgba(239,158,177,0.94)">
+          <h3 class="tool-title"> Prot pi</h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">Protein Tool calculates isoelectric point and net charge of proteins,
+            as well as the exact mass and the absorption coefficient using the amino acid sequence </p>
+          <a href="https://www.protpi.ch/Calculator/ProteinTool/#Results " target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div><!-- Prot pi -->
+      <div class="tool-card">
+        <div class="tool-image" style="background-color: rgba(239,158,177,0.94)">
+          <h3 class="tool-title"> DNABIND</h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">This server predicts whether a protein is DNA-binding from its structure and/or sequence </p>
+          <a href=" https://dnabind.szialab.org/" target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div><!-- dnabind -->
+      <div class="tool-card">
+        <div class="tool-image" style="background-color: rgba(239,158,177,0.94)">
+          <h3 class="tool-title">HH pred </h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">HHpred is a method for sequence database searching and structure prediction that is
+            as easy to use as BLAST or PSI-BLAST and that is at the same time much more sensitive in finding remote homologs </p>
+          <a href="https://toolkit.tuebingen.mpg.de/tools/hhpred " target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div><!-- HHpred -->
 
-  <!--4-1-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/softberry.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="http://www.softberry.com/berry.phtml?topic=tssw&group=programs&subgroup=promoter">
-        <p>启动子预测</p>
-      </a>
     </div>
-  </div>
-  <!--4-2-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/Tmcalculate.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://www.thermofisher.cn/cn/zh/home/brands/thermo-scientific/molecular-biology/molecular-biology-learning-center/molecular-biology-resource-library/thermo-scientific-web-tools/tm-calculator.html">
-        <p>Thermo-退火温度计算</p>
-      </a>
-    </div>
-  </div>
-  <!--4-3-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/NEBase.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://nebasechanger.neb.com/">
-        <p>Q5酶突变引物设计</p>
-      </a>
-    </div>
-  </div>
-  <!--4-4-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/IRESITE.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="http://www.iresite.org/IRESite_web.php?page=blastsearch&search_type=blast_iress">
-        <p>IREsite（内部核糖体结合位点预测）</p>
-      </a>
-    </div>
-  </div>
-</div>
-    
-<!--杂七杂八的工具-->
-<div class="right-list" style="opacity: 0.8;margin-left: 200px;margin-right: 20px">
-  <ul style="text-align: justify">
-    <li style="font-size: xx-large;margin-bottom: 10px">Something interesting</li>
-  </ul>
-</div>
-<div class="grid-container" >
 
-  <!--5-1-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/gif%20tool.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://www.58gif.com/">
-        <p>GIF图片处理</p>
-      </a>
+    <!-- Sequence Processing Tools -->
+    <div class="tool-type-header">
+      <i class="fas fa-code"></i>
+      <h2>Sequence Processing Tools</h2>
     </div>
-  </div>
-  <!--5-2-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/ChatGPT%204.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://chatgpt.com/">
-        <p>Chat GPT</p>
-      </a>
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-image"  style="background-color: rgba(214,241,181,0.87)">
+          <h3 class="tool-title">NCBI BLAST</h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">BLAST finds regions of similarity between biological sequences. The program compares
+            nucleotide or protein sequences to sequence databases and calculates the statistical significance</p>
+          <a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi" target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-image"  style="background-color: rgba(214,241,181,0.87)">
+          <h3 class="tool-title">T-Coffee</h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">A collection of tools for Computing, Evaluating and Manipulating Multiple Alignments of DNA, RNA, Protein Sequences and Structures</p>
+          <a href="https://tcoffee.crg.eu/" target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-image"   style="background-color: rgba(214,241,181,0.87)">
+          <h3 class="tool-title">MEME Suite</h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">The MEME Suite allows you to discover novel motifs incollections of unaligned nucleotide or proteinsequences,
+            and to perform a wide variety of other motifbased analyses</p>
+          <a href="https://meme-suite.org/meme/" target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-image"  style="background-color: rgba(214,241,181,0.87)">
+          <h3 class="tool-title">Dotlet</h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">Dot matrix sequence comparison tool</p>
+          <a href="https://dotlet.vital-it.ch/" target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-image"  style="background-color: rgba(214,241,181,0.87)">
+          <h3 class="tool-title">Pairwise Alignment </h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">Pairwise Sequence Alignment is used to identify regions of similarity that may indicate functional,
+            structural and/or evolutionary relationships between two biological sequences (protein or nucleic acid) </p>
+          <a href="https://www.ebi.ac.uk/jdispatcher/psa " target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-image"  style="background-color: rgba(214,241,181,0.87)">
+          <h3 class="tool-title">Multiple Alignment </h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">Multiple Sequence Alignment (MSA) is generally the
+            alignment of three or more biological sequences (protein or nucleic acid) of similar length </p>
+          <a href="https://www.ebi.ac.uk/jdispatcher/msa " target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
     </div>
-  </div>
-  <!--5-3-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/kexuehui.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://meeting.sciencenet.cn/#:~:text=%E7%A7%91%E5%AD%A6%E7%BD%91%E2%80%94%E4%BC%9A%E8%AE%AE.%20%E4%BC%9A%E8%AE%AE">
-        <p>科学网-学术会议检索</p>
-      </a>
+
+    <!-- Additional Research Tools -->
+    <div class="tool-type-header">
+      <i class="fas fa-tools"></i>
+      <h2>Nucleic Acid Tools</h2>
     </div>
-  </div>
-  <!--5-4-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/zlibary.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://zh.z-lib.gs/#:~:text=Z-Library">
-        <p>Z-library</p>
-      </a>
-    </div>
-  </div>
-  <!--5-5-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/TABD.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://bioinfo-mml.sjtu.edu.cn/TADB3/index.php">
-        <p>TA-finder</p>
-      </a>
-    </div>
-  </div>
-  <!--5-6-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/CD-finder.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://defensefinder.mdmlab.fr/">
-        <p>噬菌体防御系统 DS-finder</p>
-      </a>
-    </div>
-  </div>
-  <!--5-7-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/keyan4399.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://yanweb.top/">
-        <p>科研废物导航</p>
-      </a>
-    </div>
-  </div>
-    <!--5-8-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/proteintools.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://loschmidt.chemi.muni.cz/portal/">
-        <p>某实验开发的蛋白工具及数据集合</p>
-      </a>
-    </div>
-  </div>  
-  <!--5-9-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/Phage%20scope.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://phagescope.deepomics.org/">
-        <p>Phage Scope</p>
-      </a>
-    </div>
-  </div>
-  <!--5-10-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/tools/PHASTEST.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://phastest.ca/">
-          <p>PHASTEST 噬菌体基因组注释</p>
-      </a>
-    </div>
-  </div>
-    
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-image"  style="background-color: rgba(181,241,236,0.87)">
+          <h3 class="tool-title">BPROM </h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description"> BPROM is bacterial sigma70 promoter recognition program with about 80% accuracy and specificity. It is best used in regions immediately
+            upstream from ORF start for improved gene and operon prediction in bacteria</p>
+          <a href="http://www.softberry.com/berry.phtml?topic=bprom&group=programs&subgroup=gfindb" target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-image"  style="background-color: rgba(181,241,236,0.87)">
+          <h3 class="tool-title">NEBaseChanger </h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">NEBaseChanger assists in the design of primers for site-directed mutagenesis
+            experiments using the Q5 Site-Directed Mutagenesis Kit </p>
+          <a href="https://nebasechanger.neb.com/" target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-image"  style="background-color: rgba(181,241,236,0.87)">
+          <h3 class="tool-title"> IRESite</h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">Try to find whether your sequence is similar to any annotated functional/defective IRES region </p>
+          <a href="http://www.iresite.org/IRESite_web.php?page=blastsearch&search_type=blast_iress" target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-image"  style="background-color: rgba(181,241,236,0.87)">
+          <h3 class="tool-title"> PromoterHunter</h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">Tool for promoter search in prokaryotic genomes </p>
+          <a href="http://www.phisite.org/main/index.php?nav=tools&nav_sel=hunter" target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-image"  style="background-color: rgba(181,241,236,0.87)">
+          <h3 class="tool-title">Phage Promoter  </h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">a tool for locating promoters in phage genomes, using machine learning methods </p>
+          <a href="https://galaxy.bio.di.uminho.pt/" target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-image"  style="background-color: rgba(181,241,236,0.87)">
+          <h3 class="tool-title">PROMOTERS & TERMINATORS </h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description"> </p>
+          <a href="http://molbiol-tools.ca/Promoters.htm" target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-image"  style="background-color: rgba(181,241,236,0.87)">
+          <h3 class="tool-title">VIPTree </h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description">The ViPTree server generates a "proteomic tree" of viral genome
+            sequences based on genome-wide sequence similarities computed by tBLASTx </p>
+          <a href="https://www.genome.jp/viptree/#:~:text=The%20ViPTree%20server%20generates%20a%20%22%20proteomic%20tree,based%20on%20genome-wide%20sequence%20similarities%20computed%20by%20tBLASTx." target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-image"  style="background-color: rgba(181,241,236,0.87)">
+          <h3 class="tool-title">ProKsee</h3>
+        </div>
+        <div class="tool-content">
+          <p class="tool-description"> An expert system for genome assembly, annotation and visualization, featuring interactive circular and linear genome maps</p>
+          <a href="https://proksee.ca/" target="_blank" class="tool-link">
+            Access Tool <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+
+      </div>
+
+
+  </main>
 </div>
-    
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-logo">
+      <i class="fas fa-flask"></i> Research ToolHub
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Theme toggle functionality
+  const themeToggle = document.getElementById('theme-toggle');
+  const body = document.body;
+  const themeIcon = themeToggle.querySelector('i');
+
+  // Check for saved theme preference or prefer color scheme
+  const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const savedTheme = localStorage.getItem('theme');
+
+  // Set initial theme
+  if (savedTheme === 'dark' || (!savedTheme && prefersDarkMode)) {
+    enableDarkMode();
+  }
+
+  themeToggle.addEventListener('click', () => {
+    if (body.classList.contains('dark-mode')) {
+      disableDarkMode();
+    } else {
+      enableDarkMode();
+    }
+  });
+
+  function enableDarkMode() {
+    body.classList.add('dark-mode');
+    themeIcon.className = 'fas fa-sun';
+    localStorage.setItem('theme', 'dark');
+  }
+
+  function disableDarkMode() {
+    body.classList.remove('dark-mode');
+    themeIcon.className = 'fas fa-moon';
+    localStorage.setItem('theme', 'light');
+  }
+</script>
 </body>
 </html>
