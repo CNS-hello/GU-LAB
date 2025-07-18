@@ -1,187 +1,634 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
-  <meta charset="utf-8">
-  <title>Protocol</title>
-  <style type="text/css">
-    /* 设置所有元素的边距和内边距为0，并设置box-sizing为border-box，使元素的宽度和高度包括边框和内边距 */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box
-    }
-    /* 设置容器的相对定位，居中显示，设置transform-origin为preserve-3d */
-    .container {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transform-origin: preserve-3d;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protocol</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    /* 设置box的宽度、高度、相对定位、过渡效果、设置-webkit-box-reflect为下方1px的线性渐变 */
-    .container .box {
-      width: 300px;
-      height: 300px;
-      position: relative;
-      transition: .5s;
-      -webkit-box-reflect: below 1px linear-gradient(transparent, #0002);
-    }
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            min-height: 100vh;
+            padding: 20px;
+            font-family: 'Noto Sans SC', sans-serif;
+            color: #334155;
+            line-height: 1.6;
+        }
 
-    /* 设置box的绝对定位，宽度、高度为100% */
-    .container .box img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
+        /* 协议内容容器 */
+        .protocol-content-container {
+            max-width:2000px;
+            margin: 40px auto;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.06), 0 4px 6px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
 
-    /* 设置鼠标悬停时，非悬停元素的边距为-20px，设置filter为drop-shadow(0 0 25px #000) drop-shadow(0 0 25px #000)，设置transform为perspective(500px) rotateY(45deg) scale(0.95) */
-    .container:hover> :not(:hover) {
-      margin: 0 -20px;
-      filter: drop-shadow(0 0 25px #000) drop-shadow(0 0 25px #000);
-      transform: perspective(500px) rotateY(45deg) scale(0.95);
-    }
+        header {
+            background: linear-gradient(115deg, #1e3a8a, #1d4ed8);
+            color: #ffffff;
+            padding: 50px 40px 40px;
+            text-align: center;
+            position: relative;
+        }
 
-    /* 设置鼠标悬停时，box的兄弟元素的transform为perspective(500px) rotateY(-45deg) scale(0.95) */
-    .container .box:hover~.box {
-      transform: perspective(500px) rotateY(-45deg) scale(0.95);
-    }
+        h1 {
+            font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            margin-bottom: 25px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        }
+        .category-title {
+            font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+            font-size: 1.62rem;
+            color: #1e293b;
+            margin: 45px 0 22px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #2563eb;
+            font-weight: 600;
+            position: relative;
+            letter-spacing: -0.3px;
+        }
 
-    /* 设置鼠标悬停时，box的transform为perspective(500px) rotateY(0) scale(1.2) */
-    .container .box:hover {
-      transform: perspective(500px) rotateY(0) scale(1.2);
-    }
-  </style>
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-    }
-    .image-container {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding-top: 30px; /* 距离网页顶部xxx个像素 */
-    }
+        .category-title::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 120px;
+            height: 2px;
+            background: #f59e0b;
+        }
 
-    .image-link {
-      text-decoration: none; /* 去除超链接下划线 */
-      margin: 0 0; /* 为图片之间设置间距，这里设置较小以近似"左右连接"效果，根据图片实际情况可能需要调整 */
-      width: 20%;
-    }
+        ol {
+            list-style-type: none;
+            counter-reset: list-counter;
+            padding: 0;
+            margin-left: 10px;
+        }
 
-    .image-link img {
-      width: 100%; /* 图片宽度为容器宽度的1/4，减去间距以保持并列 */
-      height: 4%;
-      transition: transform 0.3s ease; /* 设置图片悬浮效果的过渡动画 */
-    }
+        ol li {
+            counter-increment: list-counter;
+            margin-bottom: 20px;
+            padding: 20px 25px;
+            background: #f8fafc;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border-left: 3px solid #2563eb;
+            box-shadow: 0 3px 12px rgba(30, 41, 59, 0.03);
+            font-size: 1.08rem;
+        }
 
-    .image-link:hover img {
-      transform: scale(1.1); /* 鼠标悬停时放大图片，可以调整放大的比例 */
-    }
+        ol li:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 18px rgba(30, 41, 59, 0.06);
+            background: #f1f5f9;
+            border-left-color: #f59e0b;
+        }
 
-    /* 针对第一个和最后一个图片链接，去除左右的间距 */
-    .image-container .image-link:first-child {
-      margin-left: 0;
-    }
+        ol li:before {
+            content: counter(list-counter);
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            background: #2563eb;
+            color: white;
+            border-radius: 8px;
+            text-align: center;
+            line-height: 36px;
+            font-weight: 600;
+            margin-right: 18px;
+            font-size: 1.1rem;
+            font-family: 'Roboto', sans-serif;
+        }
 
-    .image-container .image-link:last-child {
-      margin-right: 0;
-    }
+        a {
+            text-decoration: none;
+            color: #1e293b;
+            font-size: 1.15rem;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            font-family: 'Source Serif Pro', serif;
+            letter-spacing: -0.1px;
+        }
 
-    /* 针对图片容器本身设置左右间距 */
-    .image-container {
-      max-width: calc(100% - 16px); /* 设置容器宽度为视口的100%减去左右各8像素的间距 */
-      margin-left: auto;
-      margin-right: auto;
-    }
-    body{
-      background-image: url("image/background-photo/back1.png");
-      background-size: 100%;
-    }
+        a:hover {
+            color: #dc2626;
+        }
 
-  </style><!--导航栏-->
-  <style>
-    a{
-      text-decoration: none;color: black;
-    }
-    a:hover{
-      color: #0960f6;font-size: large;
-    }
-    ul li{
-      margin-bottom: 10px;
-    }
-  </style><!--文本链接-->
+        .icon {
+            margin-right: 12px;
+            font-size: 1.45rem;
+            min-width: 28px;
+            text-align: center;
+        }
+
+        .pdf-icon {
+            color: #dc2626;
+        }
+
+        .video-icon {
+            color: #2563eb;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: all 0.25s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(30, 58, 138, 0.1);
+            border-color: #93c5fd;
+        }
+
+        .category-card h3 {
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.35rem;
+            color: #1e3a8a;
+            margin-bottom: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .category-card h3 .icon {
+            font-size: 1.4rem;
+            margin-right: 12px;
+        }
+
+        .category-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .category-card li {
+            margin-bottom: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .category-card a {
+            font-size: 1.05rem;
+            font-weight: 400;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(to right, #f8fafc, #f1f5f9);
+            color: #475569;
+            font-size: 0.98rem;
+            border-top: 1px solid #e2e8f0;
+            font-weight: 300;
+        }
+        @media (max-width: 900px) {
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .protocol-content-container {
+                margin: 20px auto;
+                border-radius: 12px;
+            }
+
+            header {
+                padding: 35px 25px;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* 打印样式优化 */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .protocol-content-container {
+                box-shadow: none;
+                border: none;
+                margin: 0;
+                max-width: 100%;
+            }
+
+            header {
+                background: #1e40af;
+            }
+
+            .search-box, footer {
+                display: none;
+            }
+
+            ol li {
+                page-break-inside: avoid;
+            }
+        }
+    </style><!--来自元宝-->
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 30px;
+        }
+
+        .image-link {
+            text-decoration: none;
+            margin: 0 0;
+            width: 20%;
+        }
+
+        .image-link img {
+            width: 100%;
+            height: 4%;
+            transition: transform 0.3s ease;
+        }
+
+        .image-link:hover img {
+            transform: scale(1.1);
+        }
+
+        .image-container .image-link:first-child {
+            margin-left: 0;
+        }
+
+        .image-container .image-link:last-child {
+            margin-right: 0;
+        }
+
+        .image-container {
+            max-width: calc(100% - 16px);
+            margin-left: auto;
+            margin-right: auto;
+        }
+        body{
+            background-image: url("image/background-photo/back1.png");
+            background-size: 100%;
+        }
+
+    </style><!--导航栏-->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        /* 协议轮播容器 */
+        .protocol-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform-style: preserve-3d; /* 修正：移动到此属性 */
+            transform-origin: center; /* 默认中心点，根据需求调整 */
+        }
+
+        .protocol-container .box {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            transition: .5s;
+            -webkit-box-reflect: below 1px linear-gradient(transparent, #0002);
+        }
+
+        .protocol-container .box img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .protocol-container:hover> :not(:hover) {
+            margin: 0 -20px;
+            filter: drop-shadow(0 0 25px #000) drop-shadow(0 0 25px #000);
+            transform: perspective(500px) rotateY(45deg) scale(0.95);
+        }
+
+        .protocol-container .box:hover~.box {
+            transform: perspective(500px) rotateY(-45deg) scale(0.95);
+        }
+
+        .protocol-container .box:hover {
+            transform: perspective(500px) rotateY(0) scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            .protocol-container .box {
+                width: 180px;
+                height: 180px;
+            }
+            .protocol-container:hover> :not(:hover) {
+                margin: 0 -10px;
+            }
+        }
+    </style><!--protocol web栏-->
 </head>
 <body>
+<!-- 导航栏 -->
 <div class="image-container">
-  <a href="index.html" class="image-link"><img src="image/index-labpage2/home3.png" alt="图片1"></a> <!-- 替换为您的图片地址 -->
-  <a href="people.html" class="image-link"><img src="image/index-labpage2/team.png" alt="图片2"></a>
-  <a href="publication.html" class="image-link"><img src="image/index-labpage2/publication3.png" alt="图片3"></a>
-  <a href="protocol.html" class="image-link"><img src="image/index-labpage2/protocol2.png" alt="图片5"></a>
-  <a href="link.html" class="image-link"><img src="image/index-labpage2/Link2.png" alt="图片6"></a>
+    <a href="index.html" class="image-link"><img src="image/index-labpage2/home3.png" alt="Home"></a>
+    <a href="people.html" class="image-link"><img src="image/index-labpage2/team.png" alt="Team"></a>
+    <a href="publication.html" class="image-link"><img src="image/index-labpage2/publication3.png" alt="Publications"></a>
+    <a href="protocol.html" class="image-link"><img src="image/index-labpage2/protocol2.png" alt="Protocols"></a>
+    <a href="link.html" class="image-link"><img src="image/index-labpage2/Link2.png" alt="Links"></a>
 </div>
-<!-- 设置容器的class为container -->
-<div class="container" style="margin-top: 200px">
-  <!-- 设置box的class为box，并设置img的src为1.webp -->
-  <div class="box">
-    <a target="_blank" rel="noopener noreferrer" href="https://www.jove.com/cn/">
-    <img src="image/protocols-image/jove.png" alt="" /></a>
-  </div>
-  <!-- 设置box的class为box，并设置img的src为2.webp -->
-  <div class="box">
-    <a target="_blank" rel="noopener noreferrer" href="https://currentprotocols.onlinelibrary.wiley.com/">
-    <img src="image/protocols-image/current-protocol.png" alt="" /></a>
-  </div>
-  <!-- 设置box的class为box，并设置img的src为3.webp -->
-  <div class="box">
-    <a target="_blank" rel="noopener noreferrer" href="https://experiments.springernature.com/">
-    <img src="image/protocols-image/springer.png" alt="" /></a>
-  </div>
-  <!-- 设置box的class为box，并设置img的src为4.webp -->
-  <div class="box">
-    <a target="_blank" rel="noopener noreferrer" href="https://cshprotocols.cshlp.org/">
-    <img src="image/protocols-image/cold.png" alt="" /></a>
-  </div>
-  <!-- 设置box的class为box，并设置img的src为5.webp -->
-  <div class="box">
-    <a target="_blank" rel="noopener noreferrer" href="https://link.springer.com/">
-    <img src="image/protocols-image/nature-protocol.png" alt="" /></a>
-  </div>
-  <!-- 设置box的class为box，并设置img的src为6.webp -->
-  <div class="box">
-    <a target="_blank" rel="noopener noreferrer" href="https://www.protocols.io/">
-    <img src="image/protocols-image/protocol-exchange.png" alt="" /></a>
-  </div>
-  <!-- 设置box的class为box，并设置img的src为7.webp -->
-  <div class="box">
-    <a target="_blank" rel="noopener noreferrer" href="https://cn.bio-protocol.org/en">
-    <img src="image/protocols-image/bio-protocol.png" alt="" /></a>
-  </div>
+
+<!-- 协议轮播效果容器 -->
+<div class="protocol-container" style="margin-top: 200px">
+    <div class="box">
+        <a target="_blank" rel="noopener noreferrer" href="https://www.jove.com/cn/">
+            <img src="image/protocols-image/jove.png" alt="JoVE" />
+        </a>
+    </div>
+    <div class="box">
+        <a target="_blank" rel="noopener noreferrer" href="https://currentprotocols.onlinelibrary.wiley.com/">
+            <img src="image/protocols-image/current-protocol.png" alt="Current Protocols" />
+        </a>
+    </div>
+    <div class="box">
+        <a target="_blank" rel="noopener noreferrer" href="https://experiments.springernature.com/">
+            <img src="image/protocols-image/springer.png" alt="Springer Protocols" />
+        </a>
+    </div>
+    <div class="box">
+        <a target="_blank" rel="noopener noreferrer" href="https://cshprotocols.cshlp.org/">
+            <img src="image/protocols-image/cold.png" alt="Cold Spring Harbor Protocols" />
+        </a>
+    </div>
+    <div class="box">
+        <a target="_blank" rel="noopener noreferrer" href="https://www.nature.com/nprot/">
+            <img src="image/protocols-image/nature-protocol.png" alt="Nature Protocols" />
+        </a>
+    </div>
+    <div class="box">
+        <a target="_blank" rel="noopener noreferrer" href="https://www.protocols.io/">
+            <img src="image/protocols-image/protocol-exchange.png" alt="Protocols.io" />
+        </a>
+    </div>
+    <div class="box">
+        <a target="_blank" rel="noopener noreferrer" href="https://cn.bio-protocol.org/en">
+            <img src="image/protocols-image/bio-protocol.png" alt="Bio-Protocol" />
+        </a>
+    </div>
 </div>
-<div style="width: 80%;height: 500px;background-color: #ffffff;margin-left: auto;
-     margin-right: auto;margin-top: 200px;opacity: 0.8;overflow-y: scroll;margin-bottom: 50px">
-  <ul style="text-align: justify">
-    <li><a  target="_blank" rel="noopener noreferrer" href="protocol/PROTOCOL-1%20the%20isolation%20and%20purification%20of%20phage.pdf">噬菌体的分离与纯化（PDF）</a></li>
-    <li><a  target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/video/BV1Wh4y1c7F9/">噬菌体的分离与纯化（视频）</a></li>
-    <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol-2Agarose%20Gel%20Electrophoresis.pdf" >琼脂糖凝胶电泳（PDF）</a></li>
-    <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol-3%20ÄKTA™%20pure%20specification.pdf" >AKTA使用说明书（PDF）</a></li>
-    <li><a  target="_blank" rel="noopener noreferrer" href="https://pan.baidu.com/s/1V5zYXNXMmltK4tkIkloFuA" >AKTA使用视频（百度网盘-提取码：lysi）</a></li>
-    <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol5-plasmid%20connection%20and%20transform.pdf" >质粒连接与转化（无缝克隆 PDF）</a></li>
-    <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol-4%20sosoo-specification.pdf" >Sosoo 说明书（PDF）</a></li>
-    <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol6-DNAMAN_Guide.pdf" >DNAMAN user guide（PDF）</a></li>
-    <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol7%20D7010%20Seamless%20Cloning%20Kit.pdf" >碧云天无缝克隆说明书（PDF）</a></li>
-    <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protoco8-size%20exclusion%20chromatography.pdf" >尺寸排阻层析（PDF）</a></li>
-    <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol9-western%20blotting.pdf" >Western Blotting（PDF）</a></li>
-    <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol10-ion%20exchange%20chromatography.pdf" >离子交换层析（PDF）</a></li>
-    <li><a  target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/video/BV1fL411G7G8/?vd_source=b0b83711f2adefdd1edcde3067429dc2" >测序原理及基因组组装注释（视频）</a></li>
-    <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol12-restrict%20DNAse.pdf" >常见核酸内切酶及其保护性碱基（PDF）</a></li>
-    <li><a  target="_blank" rel="noopener noreferrer" href="protocol/protocol13%20TAKARA-Prime%20star.pdf" >TAKARA Prime star（PDF）</a></li>
+
+<!-- 协议内容容器 -->
+<div class="protocol-content-container">
+    <div class="category-grid">
+        <div class="category-card">
+            <h3><span class="icon">🔬</span> 噬菌体技术</h3>
+            <ul>
+                <li>
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/video/BV1Wh4y1c7F9/">
+                        噬菌体基因编辑
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" rel="noopener noreferrer" href="protocol/PROTOCOL-1%20the%20isolation%20and%20purification%20of%20phage.pdf">
+                        噬菌体的分离与纯化
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" rel="noopener noreferrer" href="protocol/protocol13%20phage%20wendingxing.pdf">
+                        噬菌体稳定性的测定
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/video/BV1Wh4y1c7F9/">
+                        噬菌体吸附率的测定
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/video/BV1Wh4y1c7F9/">
+                        噬菌体一步生长曲线的测定
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/video/BV1Wh4y1c7F9/">
+                        噬菌体最佳感染复数的测定
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="category-card">
+            <h3><span class="icon">🧪</span> 色谱技术</h3>
+            <ul>
+                <li>
+                    <a target="_blank" rel="noopener noreferrer" href="protocol/protocol-3%20ÄKTA™%20pure%20specification.pdf">
+                        AKTA使用说明书
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" rel="noopener noreferrer" href="https://pan.baidu.com/s/1V5zYXNXMmltK4tkIkloFuA">
+                        AKTA使用视频（Code：lysi）
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" rel="noopener noreferrer" href="protocol/protoco8-size%20exclusion%20chromatography.pdf">
+                        尺寸排阻层析
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" rel="noopener noreferrer" href="protocol/protocol10-ion%20exchange%20chromatography.pdf">
+                        离子交换层析
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" rel="noopener noreferrer" href="">
+                        肝素亲和层析
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="category-card">
+            <h3><span class="icon">🧬</span> 分子生物学</h3>
+            <ul>
+                <li>
+                    <a target="_blank" rel="noopener noreferrer" href="protocol/protocol5-plasmid%20connection%20and%20transform.pdf">
+                        质粒连接与转化
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" rel="noopener noreferrer" href="protocol/protocol7%20D7010%20Seamless%20Cloning%20Kit.pdf">
+                        无缝克隆说明书
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" rel="noopener noreferrer" href="protocol/protocol13%20TAKARA-Prime%20star.pdf">
+                        TAKARA Prime star
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" rel="noopener noreferrer" href="protocol/protocol12-restrict%20DNAse.pdf">
+                        核酸内切酶保护碱基
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="category-card">
+            <h3><span class="icon">⚛️</span> 结构生物学</h3>
+            <ul>
+                <li>
+                    <a target="_blank" rel="noopener noreferrer" href="protocol/protocol7%20D7010%20Seamless%20Cloning%20Kit.pdf">
+                        蛋白质结晶
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" rel="noopener noreferrer" href="protocol/protocol12-restrict%20DNAse.pdf">
+                        Pymol入门教程
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" rel="noopener noreferrer" href="protocol/protocol12-restrict%20DNAse.pdf">
+                        蛋白结构相似性搜索
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" rel="noopener noreferrer" href="protocol/protocol13%20TAKARA-Prime%20star.pdf">
+                        蛋白与底物互作位点的预测
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" rel="noopener noreferrer" href="protocol/protocol5-plasmid%20connection%20and%20transform.pdf">
+                        AlphaFold3预测蛋白质结构
+                    </a>
+                </li>
 
 
-  </ul>
+            </ul>
+        </div>
+        <div class="category-card">
+            <h3><span class="icon">🦠</span> 微生物学</h3>
+            <ul>
+                <li>
+                    <a target="_blank" rel="noopener noreferrer" href="protocol/protocol5-plasmid%20connection%20and%20transform.pdf">
+                        细菌基因编辑
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" rel="noopener noreferrer" href="protocol/protocol7%20D7010%20Seamless%20Cloning%20Kit.pdf">
+                        细菌革兰染色
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+        <div class="category-card">
+            <h3><span class="icon">🐭</span>实验动物学</h3>
+            <ul>
+                <li>
+                    <a target="_blank" rel="noopener noreferrer" href=" ">
+                        动物感染模型
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" rel="noopener noreferrer" href=" ">
+                        小鼠眼球采血
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+
+    <h3 class="category-title">实验技术</h3>
+    <ol>
+        <li>
+            <a target="_blank" rel="noopener noreferrer" href="protocol/protocol-2Agarose%20Gel%20Electrophoresis.pdf">
+                <span class="icon pdf-icon">📄</span>
+                琼脂糖凝胶电泳技术指南（PDF）
+            </a>
+        </li>
+        <li>
+            <a target="_blank" rel="noopener noreferrer" href="protocol/protocol9-western%20blotting.pdf">
+                <span class="icon pdf-icon">📄</span>
+                Western Blotting实验流程详解（PDF）
+            </a>
+        </li>
+    </ol>
+
+    <h3 class="category-title">软件与特殊设备说明书</h3>
+    <ol>
+        <li>
+            <a target="_blank" rel="noopener noreferrer" href="protocol/protocol-4%20sosoo-specification.pdf">
+                <span class="icon pdf-icon">📄</span>
+                Sosoo仪器操作说明书
+            </a>
+        </li>
+        <li>
+            <a target="_blank" rel="noopener noreferrer" href="protocol/protocol6-DNAMAN_Guide.pdf">
+                <span class="icon pdf-icon">📄</span>
+                DNAMAN软件使用指南
+            </a>
+        </li>
+        <li>
+            <a target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/video/BV1fL411G7G8/?vd_source=b0b83711f2adefdd1edcde3067429dc2">
+                <span class="icon video-icon">▶️</span>
+                测序原理及基因组组装注释
+            </a>
+        </li>
+    </ol>
+    <h3 class="category-title">常用试剂说明书</h3>
+    <ol>
+        <li>
+            <a target="_blank" rel="noopener noreferrer" href="protocol/protocol-4%20sosoo-specification.pdf">
+                <span class="icon pdf-icon">📄</span>
+                Sosoo仪器操作说明书
+            </a>
+        </li>
+        <li>
+            <a target="_blank" rel="noopener noreferrer" href="protocol/protocol6-DNAMAN_Guide.pdf">
+                <span class="icon pdf-icon">📄</span>
+                DNAMAN软件使用指南
+            </a>
+        </li>
+        <li>
+            <a target="_blank" rel="noopener noreferrer" href="https://www.bilibili.com/video/BV1fL411G7G8/?vd_source=b0b83711f2adefdd1edcde3067429dc2">
+                <span class="icon video-icon">▶️</span>
+                测序原理及基因组组装注释
+            </a>
+        </li>
+    </ol>
 </div>
 </body>
 </html>
