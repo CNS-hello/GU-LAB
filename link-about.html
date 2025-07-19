@@ -1,87 +1,323 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>Link-About</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>link about</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* 侧边导航菜单 */
-    .sidebar {
+    :root {
+      --primary: #2c6eb5;
+      --primary-dark: #1a4a8d;
+      --secondary: #3fa796;
+      --accent: #f2a341;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+      --light-gray: #e9ecef;
+      --border-radius: 12px;
+      --box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      --transition: all 0.3s ease;
+    }
+
+    * {
       margin: 0;
       padding: 0;
-      width: 200px;
-      background-color: #f1f1f1;
-      position: fixed;
-      height: 100%;
-      overflow: auto;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    /* 侧边栏链接 */
-    .sidebar a {
-      display: block;
-      color: black;
-      padding: 16px;
-      text-decoration: none;
+    body {
+      background:white;
+      color: var(--dark);
+      min-height: 100vh;
+      transition: var(--transition);
+      background-size: cover;
+      background-attachment: fixed;
     }
 
-    /* 活动/当前链接 */
-    .sidebar a.active {
-      background-color: #4CAF50;
-      color: white;
-    }
-
-    /* 鼠标悬停链接 */
-    .sidebar a:hover:not(.active) {
-      background-color: #555;
-      color: white;
-    }
-
-    /* 页面内容。 margin-left 属性的值应该与侧边栏的 width 属性的值匹配 */
-  </style><!--左侧导航栏-->
-  <style>
-    a{
-      text-decoration: none;
-      color: black;
-      text-align: center;
-    }
-    a:hover{
-      color: deepskyblue;
-    }
-    .grid-container {
+    /* Main Content Layout */
+    .main-container {
+      max-width: 2200px;
+      margin: 30px auto;
+      padding: 0 20px;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: repeat(4, 1fr);
-      grid-gap: 30px 50px; /* Row gap is 30px, column gap is 50px */
-      padding: 30px 50px; /* Top padding is 100px, left/right padding is 50px */
-      margin-left: 200px;
-      background-color: rgba(241, 241, 241, 0.7);
+      grid-template-columns: 240px 1fr;
+      gap: 30px;
     }
 
-    .grid-item {
+    /* Sidebar */
+    .sidebar {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      padding: 0;
+      transition: var(--transition);
+      height: fit-content;
+    }
+
+    .dark-mode .sidebar {
+      background-color: #1e2a45;
+    }
+
+    .sidebar h3 {
+      font-size: 18px;
+      padding: 20px;
+      color: white;
+      background-color: var(--primary);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dark-mode .sidebar h3 {
+      background-color: var(--primary-dark);
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar-menu li {
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    .sidebar-menu li:last-child {
+      border: none;
+    }
+
+    .sidebar-menu a {
+      display: block;
+      padding: 15px 20px;
+      text-decoration: none;
+      color: var(--dark);
+      transition: var(--transition);
+      font-weight: 500;
+    }
+
+    .dark-mode .sidebar-menu a {
+      color: var(--dark);
+    }
+
+    .sidebar-menu a:hover {
+      background-color: var(--light-gray);
+    }
+
+    .dark-mode .sidebar-menu a:hover {
+      background-color: #253253;
+    }
+
+    .sidebar-menu a.active {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .dark-mode .sidebar-menu a.active {
+      background-color: var(--primary-dark);
+    }
+
+    /* Content Area */
+    .page-title {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 25px;
+      color: var(--primary);
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .dark-mode .page-title {
+      color: var(--primary-dark);
+    }
+
+    .page-title::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 4px;
+      width: 80px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .resources-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+      gap: 25px;
+    }
+
+    .resource-card {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      transition: var(--transition);
       display: flex;
       flex-direction: column;
+      height: 100%;
+    }
+
+    .dark-mode .resource-card {
+      background-color: #1e2a45;
+    }
+
+    .resource-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    }
+
+    .resource-image {
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      padding: 15px;
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    .dark-mode .resource-image {
+      background: #253253;
+      border-color: #2d3748;
+    }
+
+    .resource-image img {
+      max-height: 100px;
+      max-width: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .resource-content {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .resource-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--primary);
+    }
+
+    .dark-mode .resource-title {
+      color: var(--primary-dark);
+    }
+
+    .resource-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary);
+      font-weight: 500;
+      text-decoration: none;
+      transition: var(--transition);
+      margin-top: 15px;
+    }
+
+    .dark-mode .resource-link {
+      color: var(--primary-dark);
+    }
+
+    .resource-link:hover {
+      color: var(--accent);
+    }
+
+    .resource-link i {
+      transition: var(--transition);
+    }
+
+    .resource-link:hover i {
+      transform: translateX(3px);
+    }
+
+    .section-header {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 40px 0 20px;
+      color: var(--primary);
       position: relative;
-      overflow: hidden; /* To hide parts of the image outside the circular area */
+      padding-left: 15px;
     }
 
-    .grid-item img {
-      width: 150px;
-      height: 150px; /* 2/5 of the total height */
-      object-fit: cover; /* Maintain aspect ratio and cover the container */
-      margin-right: auto;
-      margin-left: auto;
-      border-radius: 150px;
+    .dark-mode .section-header {
+      color: var(--primary-dark);
     }
 
-    .grid-item .text-content {
-      flex-grow: 1; /* Fill the remaining space */
-      padding: 10px;
-      border-radius: 0 0 50% 50% / 50%; /* Make the bottom corners circular */
+    .section-header::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 24px;
+      width: 6px;
+      background: var(--accent);
+      border-radius: 3px;
     }
-    .grid-item:hover{
-      transform: scale(1.1);
+
+    /* Footer */
+    .site-footer {
+      background-color: white;
+      padding: 30px 0;
+      text-align: center;
+      margin-top: 60px;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+      transition: var(--transition);
     }
-  </style><!--右侧links-->
-    <style>
+
+    .dark-mode .site-footer {
+      background-color: #1a243a;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+    }
+
+    .footer-content {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+
+    .dark-mode .footer-logo {
+      color: var(--primary-dark);
+    }
+
+
+    /* Responsive Design */
+    @media (max-width: 900px) {
+      .main-container {
+        grid-template-columns: 1fr;
+        padding: 0 15px;
+      }
+
+      .sidebar {
+        margin-bottom: 30px;
+      }
+
+      .resources-container {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      }
+    }
+
+    @media (max-width: 600px) {
+      .nav-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+  </style>
+  <style>
     body, html {
       margin: 0;
       padding: 0;
@@ -90,26 +326,25 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding-top: 30px; /* 距离网页顶部xxx个像素 */
+      padding-top: 30px;
     }
 
     .image-link {
-      text-decoration: none; /* 去除超链接下划线 */
-      margin: 0 0; /* 为图片之间设置间距，这里设置较小以近似"左右连接"效果，根据图片实际情况可能需要调整 */
+      text-decoration: none;
+      margin: 0 0;
       width: 20%;
     }
 
     .image-link img {
-      width: 100%; /* 图片宽度为容器宽度的1/4，减去间距以保持并列 */
-      height:4%;
-      transition: transform 0.3s ease; /* 设置图片悬浮效果的过渡动画 */
+      width: 100%;
+      height: 4%;
+      transition: transform 0.3s ease;
     }
 
     .image-link:hover img {
-      transform: scale(1.1); /* 鼠标悬停时放大图片，可以调整放大的比例 */
+      transform: scale(1.1);
     }
 
-    /* 针对第一个和最后一个图片链接，去除左右的间距 */
     .image-container .image-link:first-child {
       margin-left: 0;
     }
@@ -118,14 +353,13 @@
       margin-right: 0;
     }
 
-    /* 针对图片容器本身设置左右间距 */
     .image-container {
-      max-width: calc(100% - 16px); /* 设置容器宽度为视口的100%减去左右各8像素的间距 */
+      max-width: calc(100% - 16px);
       margin-left: auto;
       margin-right: auto;
     }
     body{
-      background-image: url("image/background-photo/back1.png");
+      background-color: white;
       background-size: 100%;
     }
 
@@ -139,91 +373,190 @@
   <a href="protocol.html" class="image-link"><img src="image/index-labpage2/protocol2.png" alt="图片5"></a>
   <a href="link.html" class="image-link"><img src="image/index-labpage2/Link2.png" alt="图片6"></a>
 </div>
-<!-- 侧边栏 -->
-<div class="sidebar" style="margin-top: 10px">
-  <a href="link.html">Journal</a>
-  <a href="link-tool.html">Tool</a>
-  <a href="link-database.html">Database</a>
-  <a class="active" href="link-about.html">About</a>
-  <a href="Link-literature.html">Literature</a>
+<!-- Main Content -->
+<div class="main-container">
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar">
+    <h3><i class="fas fa-folder"></i> Categories</h3>
+    <ul class="sidebar-menu">
+      <li><a href="link.html">Journal</a></li>
+      <li><a href="link-tool.html">Tool</a></li>
+      <li><a href="link-database.html">Database</a></li>
+      <li><a href="link-about.html" class="active">About</a></li>
+      <li><a href="Link-literature.html">Literature</a></li>
+    </ul>
+  </aside>
+
+  <!-- Resources Content -->
+  <main class="content">
+    <h1 class="page-title">实验室资源</h1>
+    <p style="color:black; margin-bottom: 25px; font-size: 18px; line-height: 1.6;">
+      吉林大学相关资源链接，为实验室成员提供便捷访问入口。
+    </p>
+
+    <h2 class="section-header">学院与学校资源</h2>
+    <div class="resources-container">
+      <!-- 吉林大学动物医学学院 -->
+      <div class="resource-card">
+        <div class="resource-image">
+          <img src="image/links/about/vet.jpg" alt="吉林大学动物医学学院">
+        </div>
+        <div class="resource-content">
+          <h3 class="resource-title">吉林大学动物医学学院</h3>
+          <p>动物医学学院官方网站，提供学院新闻、教学科研等信息。</p>
+          <a href="https://dwyx.jlu.edu.cn/" target="_blank" class="resource-link">
+            访问网站 <i class="fas fa-external-link-alt"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- 吉林大学官网 -->
+      <div class="resource-card">
+        <div class="resource-image">
+          <img src="image/links/about/jilinuniversity.jpg" alt="吉林大学官网">
+        </div>
+        <div class="resource-content">
+          <h3 class="resource-title">吉林大学</h3>
+          <p>吉林大学官方网站，提供学校新闻、通知公告等信息。</p>
+          <a href="https://www.jlu.edu.cn/" target="_blank" class="resource-link">
+            访问网站 <i class="fas fa-external-link-alt"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- 吉林大学研究生院 -->
+      <div class="resource-card">
+        <div class="resource-image">
+          <img src="image/links/about/yanjiushengyuan.png" alt="吉林大学研究生院">
+        </div>
+        <div class="resource-content">
+          <h3 class="resource-title">吉林大学研究生院</h3>
+          <p>研究生院官方网站，提供研究生培养、招生等信息。</p>
+          <a href="https://yjsy.jlu.edu.cn/index.htm" target="_blank" class="resource-link">
+            访问网站 <i class="fas fa-external-link-alt"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- 人畜共患传染病重症诊治全国重点实验室 -->
+      <div class="resource-card">
+        <div class="resource-image">
+          <img src="image/links/about/renchu.png" alt="人畜共患传染病重症诊治全国重点实验室">
+        </div>
+        <div class="resource-content">
+          <h3 class="resource-title">人畜共患传染病重症诊治全国重点实验室</h3>
+          <p>国家重点实验室官方网站，提供实验室研究方向和成果等信息。</p>
+          <a href="https://szid.tjh.com.cn/index.html" target="_blank" class="resource-link">
+            访问网站 <i class="fas fa-external-link-alt"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-header">学生服务</h2>
+    <div class="resources-container">
+      <!-- 吉林大学学生邮箱 -->
+      <div class="resource-card">
+        <div class="resource-image">
+          <img src="image/links/about/studentemail.png" alt="吉林大学学生邮箱">
+        </div>
+        <div class="resource-content">
+          <h3 class="resource-title">吉林大学学生邮箱</h3>
+          <p>学生邮箱系统，提供邮件收发服务。</p>
+          <a href="https://mails.jlu.edu.cn/index.php" target="_blank" class="resource-link">
+            访问邮箱 <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- 吉林大学研究生管理系统 -->
+      <div class="resource-card">
+        <div class="resource-image">
+          <img src="image/links/about/yanjiushengzonghegunalixitong.png" alt="吉林大学研究生管理系统">
+        </div>
+        <div class="resource-content">
+          <h3 class="resource-title">吉林大学研究生管理系统</h3>
+          <p>研究生管理系统，提供学籍、培养等信息管理。</p>
+          <a href="https://cas.jlu.edu.cn/tpass/login?service=https%3A%2F%2Fyjs.jlu.edu.cn%2Fgsapp%2Fsys%2Fyjsemaphome%2Fportal%2Findex.do" target="_blank" class="resource-link">
+            访问系统 <i class="fas fa-user-graduate"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- 吉林大学研究生选课系统 -->
+      <div class="resource-card">
+        <div class="resource-image">
+          <img src="image/links/about/xuankexitong.png" alt="吉林大学研究生选课系统">
+        </div>
+        <div class="resource-content">
+          <h3 class="resource-title">吉林大学研究生选课系统</h3>
+          <p>研究生选课系统，提供课程选择和课表查询功能。</p>
+          <a href="https://yjsxk.jlu.edu.cn/yjsxkapp/sys/xsxkapp/index.html" target="_blank" class="resource-link">
+            访问系统 <i class="fas fa-book"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- 会议室预约 -->
+      <div class="resource-card">
+        <div class="resource-image">
+          <img src="image/links/about/Meeting%20romm.png" alt="会议室预约">
+        </div>
+        <div class="resource-content">
+          <h3 class="resource-title">会议室预约</h3>
+          <p>实验室会议室预约系统，方便安排会议和活动。</p>
+          <a href="https://www.h5-yes.com/meeting/login" target="_blank" class="resource-link">
+            预约会议室 <i class="fas fa-calendar-alt"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
 </div>
 
-<!-- 页面内容 -->
-<div class="grid-container" >
-  <!--1-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/about/vet.jpg" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://dwyx.jlu.edu.cn/">
-        <p>吉林大学动物医学学院</p>
-      </a>
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-logo">
+      <i class="fas fa-flask"></i> GU LAB
     </div>
   </div>
-  <!--2-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/about/jilinuniversity.jpg" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://www.jlu.edu.cn/">
-        <p>吉林大学官网</p>
-      </a>
-    </div>
-  </div>
-  <!--3-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/about/yanjiushengyuan.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://yjsy.jlu.edu.cn/index.htm">
-        <p>吉林大学研究生院</p>
-      </a>
-    </div>
-  </div>
-  <!--4-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/about/renchu.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://szid.tjh.com.cn/index.html">
-        <p>人畜共患传染病重症诊治全国重点实验室</p>
-      </a>
-    </div>
-  </div>
-  <!--5-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/about/studentemail.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://mails.jlu.edu.cn/index.php">
-        <p>吉林大学学生邮箱</p>
-      </a>
-    </div>
-  </div>
- <!--6-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/about/yanjiushengzonghegunalixitong.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://cas.jlu.edu.cn/tpass/login?service=https%3A%2F%2Fyjs.jlu.edu.cn%2Fgsapp%2Fsys%2Fyjsemaphome%2Fportal%2Findex.do">
-        <p>吉林大学研究生管理系统</p>
-      </a>
-    </div>
-  </div>
-  <!--7-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/about/xuankexitong.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://yjsxk.jlu.edu.cn/yjsxkapp/sys/xsxkapp/index.html">
-        <p>吉林大学研究生选课系统</p>
-      </a>
-    </div>
-  </div>
- <!--8-->
-  <div class="grid-item" style="margin-left: auto;margin-right: auto">
-    <img src="image/links/about/Meeting%20romm.png" alt="Image">
-    <div class="text-content">
-      <a target="_blank" rel="noopener noreferrer" href="https://www.h5-yes.com/meeting/login">
-        <p>会议室预约</p>
-      </a>
-    </div>
-  </div>
+</footer>
 
-  
-</div>
+<script>
+  // Theme toggle functionality
+  const themeToggle = document.getElementById('theme-toggle');
+  const body = document.body;
+  const themeIcon = themeToggle.querySelector('i');
+
+  // Check for saved theme preference or prefer color scheme
+  const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const savedTheme = localStorage.getItem('theme');
+
+  // Set initial theme
+  if (savedTheme === 'dark' || (!savedTheme && prefersDarkMode)) {
+    enableDarkMode();
+  }
+
+  themeToggle.addEventListener('click', () => {
+    if (body.classList.contains('dark-mode')) {
+      disableDarkMode();
+    } else {
+      enableDarkMode();
+    }
+  });
+
+  function enableDarkMode() {
+    body.classList.add('dark-mode');
+    themeIcon.className = 'fas fa-sun';
+    localStorage.setItem('theme', 'dark');
+  }
+
+  function disableDarkMode() {
+    body.classList.remove('dark-mode');
+    themeIcon.className = 'fas fa-moon';
+    localStorage.setItem('theme', 'light');
+  }
+</script>
 </body>
 </html>
