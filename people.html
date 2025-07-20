@@ -1,597 +1,935 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <title>Team</title>
-    <style>
+  <meta charset="UTF-8">
+  <title>实验室成员</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    :root {
+      --primary: #2c6eb5;
+      --primary-dark: #1a4a8d;
+      --secondary: #3fa796;
+      --accent: #f2a341;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+      --light-gray: #e9ecef;
+      --border-radius: 12px;
+      --box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      --transition: all 0.3s ease;
+    }
 
-        /* 照片墙容器 */
-        #photo-wall {
-            position:relative;
-            width: 100%;
-            height: 400px;
-            min-height: 200px;
-            padding-top: 50px;
-        }
+    .dark-mode {
+      --light: #121826;
+      --dark: #f8f9fa;
+      --gray: #adb5bd;
+      --light-gray: #2d3748;
+      --primary-dark: #5393d9;
+      --box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
 
-    </style><!--球体照片墙-->
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-        }
-        .image-container {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 30px; /* 距离网页顶部xxx个像素 */
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        .image-link {
-            text-decoration: none; /* 去除超链接下划线 */
-            margin: 0 0; /* 为图片之间设置间距，这里设置较小以近似"左右连接"效果，根据图片实际情况可能需要调整 */
-            width: 20%;
-        }
+    body {
+      background:white;
+      color: var(--dark);
+      min-height: 100vh;
+      transition: var(--transition);
+      background-size: cover;
+      background-attachment: fixed;
+    }
+    /* Team Section */
+    .team-section {
+      max-width: 2000px;
+      margin: 40px auto;
+      padding: 20px 20px;
+    }
 
-        .image-link img {
-            width: 100%; /* 图片宽度为容器宽度的1/4，减去间距以保持并列 */
-            height: 4%;
-            transition: transform 0.3s ease; /* 设置图片悬浮效果的过渡动画 */
-        }
+    .section-title {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      color: var(--primary);
+      position: relative;
+      padding-bottom: 10px;
+      text-align: center;
+    }
 
-        .image-link:hover img {
-            transform: scale(1.1); /* 鼠标悬停时放大图片，可以调整放大的比例 */
-        }
+    .dark-mode .section-title {
+      color: var(--primary-dark);
+    }
 
-        /* 针对第一个和最后一个图片链接，去除左右的间距 */
-        .image-container .image-link:first-child {
-            margin-left: 0;
-        }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      height: 4px;
+      width: 80px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
 
-        .image-container .image-link:last-child {
-            margin-right: 0;
-        }
+    .team-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+      margin-bottom: 60px;
+    }
 
-        /* 针对图片容器本身设置左右间距 */
-        .image-container {
-            max-width: calc(100% - 16px); /* 设置容器宽度为视口的100%减去左右各8像素的间距 */
-            margin-left: auto;
-            margin-right: auto;
-        }
-        body{
-            background-image: url("image/background-photo/back1.png");
-            background-size: 100%;
-        }
+    .team-card {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
 
-    </style><!--导航栏-->
-    <style>
-        .image-link2 {
-            text-decoration: none; /* 去除超链接下划线 */
-            margin: 0 0; /* 为图片之间设置间距，这里设置较小以近似"左右连接"效果，根据图片实际情况可能需要调整 */
-        }
+    .dark-mode .team-card {
+      background-color: #1e2a45;
+    }
 
-        .image-link2 img {
-            width: 10px; /* 图片宽度为容器宽度的1/4，减去间距以保持并列 */
-            height: 10px;
-            transition: transform 0.3s ease; /* 设置图片悬浮效果的过渡动画 */
-        }
+    .team-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    }
 
-        .image-link2:hover img {
-            transform: scale(1.1); /* 鼠标悬停时放大图片，可以调整放大的比例 */
-        }
+    .team-image {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      padding: 15px;
+      position: relative;
+    }
 
-    </style><!--单元格的属性-->
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
+    .dark-mode .team-image {
+      background: #253253;
+    }
 
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: repeat(4, 1fr);
-            grid-gap: 30px 50px; /* Row gap is 30px, column gap is 50px */
-            padding: 60px 50px; /* Top padding is 100px, left/right padding is 50px */
-        }
+    .team-image img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid white;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
 
-        .grid-item {
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden; /* To hide parts of the image outside the circular area */
-        }
+    .dark-mode .team-image img {
+      border-color: #1e2a45;
+    }
 
-        .grid-item img {
-            width: 150px;
-            height: 150px; /* 2/5 of the total height */
-            object-fit: cover; /* Maintain aspect ratio and cover the container */
-            border-radius: 50%; /* Make the image circular */
-            margin-right: auto;
-            margin-left: auto;
-        }
+    .team-content {
+      padding: 25px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
 
-        .grid-item .text-content {
-            flex-grow: 1; /* Fill the remaining space */
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.7); /* Light background for text content */
-            text-align: center;
-        }
-    </style><!--网格的属性-->
-    <style>
-        .span1{
-            font-size: large;
-            font-family: "Microsoft New Tai Lue";
-        }
-        .span2{
-            font-size: small;
-            color: #555555;
-        }
-        .span3{
-            font-size:small;
-            text-align: justify;
-            color: #555555;
-        }
-    </style><!--span的属性-->
+    .team-name {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: var(--primary);
+      text-align: center;
+    }
+
+    .dark-mode .team-name {
+      color: var(--primary-dark);
+    }
+
+    .team-position {
+      font-size: 16px;
+      color: var(--gray);
+      margin-bottom: 15px;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .team-interests {
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    .dark-mode .team-interests {
+      color: var(--gray);
+    }
+
+    .team-interests strong {
+      color: var(--dark);
+      font-weight: 600;
+    }
+
+    .dark-mode .team-interests strong {
+      color: var(--dark);
+    }
+
+    .team-contacts {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--light-gray);
+      color: var(--primary);
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .dark-mode .contact-link {
+      background: #253253;
+      color: var(--primary-dark);
+    }
+
+    .contact-link:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    .dark-mode .contact-link:hover {
+      background: var(--primary-dark);
+    }
+
+    .category-title {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 60px 0 30px;
+      color: var(--primary);
+      position: relative;
+      padding-left: 20px;
+    }
+
+    .dark-mode .category-title {
+      color: var(--primary-dark);
+    }
+
+    .category-title::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 24px;
+      width: 6px;
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    /* Footer */
+    .site-footer {
+      background-color: white;
+      padding: 40px 0;
+      text-align: center;
+      margin-top: 60px;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+      transition: var(--transition);
+    }
+
+    .dark-mode .site-footer {
+      background-color: #1a243a;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+    }
+
+    .footer-content {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+
+    .dark-mode .footer-logo {
+      color: var(--primary-dark);
+    }
+
+    .footer-text {
+      color: var(--gray);
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .dark-mode .footer-text {
+      color: var(--gray);
+    }
+
+    .copyright {
+      color: var(--gray);
+      font-size: 14px;
+      margin-top: 20px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 900px) {
+      .team-container {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+      }
+
+      #photo-wall {
+        height: 300px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .section-title {
+        font-size: 28px;
+      }
+
+      .team-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <style>
+
+    /* 照片墙容器 */
+    #photo-wall {
+      position:relative;
+      width: 100%;
+      height: 600px;
+      min-height: 200px;
+      padding-top: 50px;
+    }
+
+  </style><!--球体照片墙-->
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+    }
+    .image-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 30px; /* 距离网页顶部xxx个像素 */
+    }
+
+    .image-link {
+      text-decoration: none; /* 去除超链接下划线 */
+      margin: 0 0; /* 为图片之间设置间距，这里设置较小以近似"左右连接"效果，根据图片实际情况可能需要调整 */
+      width: 20%;
+    }
+
+    .image-link img {
+      width: 100%; /* 图片宽度为容器宽度的1/4，减去间距以保持并列 */
+      height: 4%;
+      transition: transform 0.3s ease; /* 设置图片悬浮效果的过渡动画 */
+    }
+
+    .image-link:hover img {
+      transform: scale(1.1); /* 鼠标悬停时放大图片，可以调整放大的比例 */
+    }
+
+    /* 针对第一个和最后一个图片链接，去除左右的间距 */
+    .image-container .image-link:first-child {
+      margin-left: 0;
+    }
+
+    .image-container .image-link:last-child {
+      margin-right: 0;
+    }
+
+    /* 针对图片容器本身设置左右间距 */
+    .image-container {
+      max-width: calc(100% - 16px); /* 设置容器宽度为视口的100%减去左右各8像素的间距 */
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+
+  </style><!--导航栏-->
 </head>
 <body>
 <!-- 导航栏 -->
 <div class="image-container">
-    <a href="index.html" class="image-link"><img src="image/index-labpage2/home3.png" alt="Home"></a>
-    <a href="people.html" class="image-link"><img src="image/index-labpage2/team.png" alt="Team"></a>
-    <a href="publication.html" class="image-link"><img src="image/index-labpage2/publication3.png" alt="Publications"></a>
-    <a href="protocol.html" class="image-link"><img src="image/index-labpage2/protocol2.png" alt="Protocols"></a>
-    <a href="link.html" class="image-link"><img src="image/index-labpage2/Link2.png" alt="Links"></a>
+  <a href="index.html" class="image-link"><img src="image/index-labpage2/home3.png" alt="Home"></a>
+  <a href="people.html" class="image-link"><img src="image/index-labpage2/team.png" alt="Team"></a>
+  <a href="publication.html" class="image-link"><img src="image/index-labpage2/publication3.png" alt="Publications"></a>
+  <a href="protocol.html" class="image-link"><img src="image/index-labpage2/protocol2.png" alt="Protocols"></a>
+  <a href="link.html" class="image-link"><img src="image/index-labpage2/Link2.png" alt="Links"></a>
 </div>
-
-<!-- 照片墙容器 -->
+<!-- Photo Wall -->
 <div id="photo-wall"></div>
 
-<!-- 成员网格 -->
-<div class="grid-container">
-    <!--顾敬敏-->
-    <div class="grid-item">
-        <img src="image/members/GU-photo.jpg" alt="Image">
-        <div class="text-content">
-            <p>
-                <span class="span1">顾敬敏/Jingmin Gu, PH.D.</span><br>
-                <span class="span2">Professor, Principal Investigator</span><br>
-                <span class="span3"><span style="color: black">Research interests: </span>
-                            Interaction between bacteriophages and bacteria,
-                            therapeutic phages of super-drug-resistant bacteria,
-                            bacteriophage-related antibacterial proteins, etc
-        </span>
-            </p>
-            <div>
-                <a href="index.html" class="image-link2"><img src="image/index-labpage2/home.png" alt="图片1" style="height: 40px;width: 40px"></a> <!-- 替换为您的图片地址 -->
-                <a href="mailto:jingmin0629@163.com" class="image-link2"><img src="image/index-labpage2/email.png" alt="图片2" style="height: 40px;width: 40px"></a>
-                <a href="https://dwyx.jlu.edu.cn/info/1014/1180.htm" class="image-link2"><img src="image/index-labpage2/resume.png" alt="图片3" style="height: 40px;width: 40px"></a>
-            </div>
+<!-- Team Members -->
+<div class="team-section">
+  <h3 class="category-title">在室成员</h3>
+  <div class="team-container">
+    <!-- 顾敬敏 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/GU-photo.jpg" alt="顾敬敏">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">顾敬敏/Jingmin Gu</h3>
+        <div class="team-position">Principal Investigator</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          噬菌体与细菌相互作用、耐药菌噬菌体治疗、噬菌体相关抗菌蛋白等
+        </p>
+        <div class="team-contacts">
+          <a href="index.html" class="contact-link">
+            <i class="fas fa-home"></i>
+          </a>
+          <a href="mailto:jingmin0629@163.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+          <a href="https://dwyx.jlu.edu.cn/info/1014/1180.htm" class="contact-link">
+            <i class="fas fa-user"></i>
+          </a>
         </div>
+      </div>
     </div>
-    <!--冀亚路-->
-    <div class="grid-item">
-        <img src="image/members/jiyalu2-photo.jpg" alt="Image">
-        <div class="text-content">
-            <p>
-                <span class="span1">冀亚路/Yalu Ji, PH.D.</span><br>
-                <span class="span2">Postdoc Fellow, 2023</span><br>
-                <span class="span3"><span style="color: black"> </span>
-        </span>
-            </p>
-            <div>
-                <a href="mailto:jiyalu120@163.com" class="image-link2"><img src="image/index-labpage2/email.png" alt="图片2" style="height: 40px;width: 40px"></a>
-            </div>
-        </div>
-    </div>
-    <!--陈冲-->
-    <div class="grid-item">
-        <img src="image/members/chenchong-photo.jpg" alt="Image">
-        <div class="text-content">
-            <p>
-                <span class="span1">陈冲/Chong Chen</span><br>
-                <span class="span2">Ph.D. Candidate</span><br>
-                <span class="span3"><span style="color: black"> </span>
 
-        </span>
-            </p>
-            <div>
-                <a href="mailto:937484374@qq.com" class="image-link2"><img src="image/index-labpage2/email.png" alt="图片2" style="height: 40px;width: 40px"></a>
-            </div>
+    <!-- 冀亚路 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/jiyalu2-photo.jpg" alt="冀亚路">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">冀亚路/Yalu Ji</h3>
+        <div class="team-position">Postdoc Fellow, 2023</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          噬菌体组学、耐药基因研究、肠道微生物组
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:jiyalu120@163.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
         </div>
+      </div>
     </div>
-    <!--张梅梅-->
-    <div class="grid-item">
-        <img src="image/members/zhangmeimei-photo.jpg" alt="Image">
-        <div class="text-content">
-            <p>
-                <span class="span1">张梅梅/Meimei Zhang</span><br>
-                <span class="span2">Ph.D. Candidate</span><br>
-                <span class="span3"><span style="color: black"></span>
 
-        </span>
-            </p>
-            <div>
-                <a href="mailto:hanzhang@163.com" class="image-link2"><img src="image/index-labpage2/email.png" alt="图片2" style="height: 40px;width: 40px"></a>
-            </div>
+    <!-- 张梅梅 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/zhangmeimei-photo.jpg" alt="张梅梅">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">张梅梅/Meimei Zhang</h3>
+        <div class="team-position">Ph.D. Candidate</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          沙门氏菌噬菌体毒性蛋白
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:hanzhang@163.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
         </div>
+      </div>
     </div>
-    <!--周雨晴-->
-    <div class="grid-item">
-        <img src="image/members/zhouyuqing-photo.jpg" alt="Image">
-        <div class="text-content">
-            <p>
-                <span class="span1">周雨晴/Yuqing Zhou</span><br>
-                <span class="span2">Ph.D. Candidate</span><br>
-                <span class="span3"><span style="color: black"></span>
 
-        </span>
-            </p>
-            <div>
-                <a href="mailto:jingmin0629@163.com" class="image-link2"><img src="image/index-labpage2/email.png" alt="图片2" style="height: 40px;width: 40px"></a>
-            </div>
+    <!-- 周雨晴 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/zhouyuqing-photo.jpg" alt="周雨晴">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">周雨晴/Yuqing Zhou</h3>
+        <div class="team-position">Ph.D. Candidate</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          噬菌体裂解酶、细菌检测
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:jingmin0629@163.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
         </div>
+      </div>
     </div>
-    <!--路艳-->
-    <div class="grid-item">
-        <img src="image/members/luyan-photo.jpg" alt="Image">
-        <div class="text-content">
-            <p>
-                <span class="span1">路艳/Yan Lu</span><br>
-                <span class="span2">Ph.D. Candidate</span><br>
-                <span class="span3"><span style="color: black"> </span>
-        </span>
-            </p>
-            <div>
-                <a href="mailto:850462855@qq.com" class="image-link2"><img src="image/index-labpage2/email.png" alt="图片2" style="height: 40px;width: 40px"></a>
-            </div>
-        </div>
-    </div>
-    <!--邱操-->
-    <div class="grid-item">
-        <img src="image/members/qiucao-photo.jpg" alt="Image">
-        <div class="text-content">
-            <p>
-                <span class="span1">邱操/Cao Qiu</span><br>
-                <span class="span2">Ph.D. Candidate</span><br>
-                <span class="span3"><span style="color: black"> </span>
-        </span>
-            </p>
-            <div>
-                <a href="mailto:qiucao2021@163.com" class="image-link2"><img src="image/index-labpage2/email.png" alt="图片2" style="height: 40px;width: 40px"></a>
-            </div>
-        </div>
-    </div>
-    <!--宋利然-->
-    <div class="grid-item">
-        <img src="image/members/songliran-photo.jpg" alt="Image">
-        <div class="text-content">
-            <p>
-                <span class="span1">宋利然/liran Song</span><br>
-                <span class="span2">Graduate Student</span><br>
-                <span class="span3"><span style="color: black"></span>
 
-        </span>
-            </p>
-            <div>
-                <a href="mailto:1964064510@qq.com" class="image-link2"><img src="image/index-labpage2/email.png" alt="图片2" style="height: 40px;width: 40px"></a>
-            </div>
+    <!-- 路艳 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/luyan-photo.jpg" alt="路艳">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">路艳/Yan Lu</h3>
+        <div class="team-position">Ph.D. Candidate</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+         铜绿假单胞菌与噬菌体的相互作用
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:850462855@qq.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
         </div>
+      </div>
     </div>
-    <!--宁晖-->
-    <div class="grid-item">
-        <img src="image/members/ninghui-photo.jpg" alt="Image">
-        <div class="text-content">
-            <p>
-                <span class="span1">宁晖/Hui Ning</span><br>
-                <span class="span2">Graduate Student</span><br>
-                <span class="span3"><span style="color: black"></span>
 
-        </span>
-            </p>
-            <div>
-                <a href="mailto:15754674768@163.com" class="image-link2"><img src="image/index-labpage2/email.png" alt="图片2" style="height: 40px;width: 40px"></a>
-            </div>
+    <!-- 邱操 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/qiucao-photo.jpg" alt="邱操">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">邱操/Cao Qiu</h3>
+        <div class="team-position">Ph.D. Candidate</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          噬菌体防御系统
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:qiucao2021@163.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
         </div>
+      </div>
     </div>
-    <!--李晓楠-->
-    <div class="grid-item">
-        <img src="image/members/lixiaonan-photo.png" alt="Image">
-        <div class="text-content">
-            <p>
-                <span class="span1">李晓楠/Xiaonan Li</span><br>
-                <span class="span2">Graduate Student</span><br>
-                <span class="span3"><span style="color: black"></span>
 
-        </span>
-            </p>
-            <div>
-                <a href="mailto:lixn0224@163.com" class="image-link2"><img src="image/index-labpage2/email.png" alt="图片2" style="height: 40px;width: 40px"></a>
-            </div>
+    <!-- 宋利然 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/songliran-photo.jpg" alt="宋利然">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">宋利然/Liran Song</h3>
+        <div class="team-position">Graduate Student</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          噬菌体抗菌蛋白
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:1964064510@qq.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
         </div>
+      </div>
     </div>
-    <!--王丽-->
-    <div class="grid-item">
-        <img src="image/members/wangli-photo.jpg" alt="Image">
-        <div class="text-content">
-            <p>
-                <span class="span1">王丽/Li Wang</span><br>
-                <span class="span2">Graduate Student</span><br>
-                <span class="span3"><span style="color: black"></span>
 
-        </span>
-            </p>
-            <div>
-                <a href="mailto:1350670958@qq.com " class="image-link2"><img src="image/index-labpage2/email.png" alt="图片2" style="height: 40px;width: 40px"></a>
-            </div>
+    <!-- 宁晖 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/ninghui-photo.jpg" alt="宁晖">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">宁晖/Hui Ning</h3>
+        <div class="team-position">Graduate Student</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          微生物组学
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:15754674768@163.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
         </div>
+      </div>
     </div>
-    <!--马益明-->
-    <div class="grid-item">
-        <img src="image/members/mayiming-photo.jpg" alt="Image">
-        <div class="text-content">
-            <p>
-                <span class="span1">马益明/Yiming Ma</span><br>
-                <span class="span2">Graduate Student</span><br>
-                <span class="span3"><span style="color: black"></span>
 
-        </span>
-            </p>
-            <div>
-                <a href="mailto:2478845916@qq.com" class="image-link2"><img src="image/index-labpage2/email.png" alt="图片2" style="height: 40px;width: 40px"></a>
-            </div>
+    <!-- 李晓楠 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/lixiaonan-photo.png" alt="李晓楠">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">李晓楠/Xiaonan Li</h3>
+        <div class="team-position">Graduate Student</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          噬菌体防御系统
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:lixn0224@163.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
         </div>
+      </div>
     </div>
-    <!--杨航-->
-    <div class="grid-item">
-        <img src="image/members/yanghang-photo.jpg" alt="Image">
-        <div class="text-content">
-            <p>
-                <span class="span1">杨航/Hang Yang</span><br>
-                <span class="span2">Graduate Student</span><br>
-                <span class="span3"><span style="color: black"></span>
 
-        </span>
-            </p>
-            <div>
-                <a href="mailto:820459039@qq.com" class="image-link2"><img src="image/index-labpage2/email.png" alt="图片2" style="height: 40px;width: 40px"></a>
-            </div>
+    <!-- 王丽 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/wangli-photo.jpg" alt="王丽">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">王丽/Li Wang</h3>
+        <div class="team-position">Graduate Student</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          金黄色葡萄球菌与噬菌体的相互作用
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:1350670958@qq.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
         </div>
+      </div>
     </div>
-    <!--丁薇-->
-    <div class="grid-item">
-        <img src="image/members/dingwei-photo.jpg" alt="Image">
-        <div class="text-content">
-            <p>
-                <span class="span1">丁薇/Wei Ding</span><br>
-                <span class="span2">Graduate Student</span><br>
-                <span class="span3"><span style="color: black"></span>
 
-        </span>
-            </p>
-            <div>
-                <a href="mailto:dingweivi@163.com" class="image-link2"><img src="image/index-labpage2/email.png" alt="图片2" style="height: 40px;width: 40px"></a>
-            </div>
+    <!-- 马益明 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/mayiming-photo.jpg" alt="马益明">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">马益明/Yiming Ma</h3>
+        <div class="team-position">Graduate Student</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          噬菌体与材料交叉应用
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:2478845916@qq.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
         </div>
+      </div>
     </div>
+
+    <!-- 杨航 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/yanghang-photo.jpg" alt="杨航">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">杨航/Hang Yang</h3>
+        <div class="team-position">Graduate Student</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          噬菌体防御系统
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:820459039@qq.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 丁薇 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/dingwei-photo.jpg" alt="丁薇">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">丁薇/Wei Ding</h3>
+        <div class="team-position">Graduate Student</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          细菌检测
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:dingweivi@163.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="category-title">毕业成员</h3>
+  <div class="team-container">
+    <!-- 赵日虹 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/zhaorihong-photo.jpg" alt="赵日虹">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">赵日虹/Rihong Zhao</h3>
+        <div class="team-position">Ph.D.</div>
+        <div class="team-contacts">
+          <a href="mailto:jingmin0629@163.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 张博威 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/zhangbowei-photo.jpg" alt="张博威">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">张博威/Bowei Zhang</h3>
+        <div class="team-position">Master</div>
+        <div class="team-contacts">
+          <a href="mailto:457510281@qq.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 覃荔 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/qinli-photo.jpg" alt="覃荔">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">覃荔/Li Qin</h3>
+        <div class="team-position">Master</div>
+        <div class="team-contacts">
+          <a href="mailto:1286539809@qq.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 姜珊杉 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/jiangshanshan-photo.jpg" alt="姜珊杉">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">姜珊杉/Shanshan Jiang</h3>
+        <div class="team-position">Master</div>
+        <div class="team-contacts">
+          <a href="mailto:qflss33@163.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="category-title">访问学者</h3>
+  <div class="team-container">
+    <!-- 示例访问学者1 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="https://via.placeholder.com/150" alt="访问学者">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name"></h3>
+        <div class="team-position">欢迎交流访问</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:example@university.edu" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 示例访问学者2 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="https://via.placeholder.com/150" alt="访问学者">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name"></h3>
+        <div class="team-position">欢迎交流访问</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:example@university.edu" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="right-list" style="opacity: 0.8;margin-left: 200px;margin-right: 20px">
-    <ul style="text-align: justify">
-        <li style="font-size: xx-large;margin-bottom: 10px">Graduate</li>
-    </ul>
-</div>
-<div class="grid-container">
-    <!--赵日虹-->
-    <div class="grid-item">
-        <img src="image/members/zhaorihong-photo.jpg" alt="Image">
-        <div class="text-content">
-            <p>
-                <span class="span1">赵日虹/Rihong Zhao</span><br>
-                <span class="span2">Ph.D.  </span><br>
-                <span class="span3"><span style="color: black"> </span>
-        </span>
-            </p>
-            <div>
-                <a href="mailto:jingmin0629@163.com" class="image-link2"><img src="image/index-labpage2/email.png" alt="图片2" style="height: 40px;width: 40px"></a>
-            </div>
-        </div>
-    </div>
-    <!--张博威-->
-    <div class="grid-item">
-        <img src="image/members/zhangbowei-photo.jpg" alt="Image">
-        <div class="text-content">
-            <p>
-                <span class="span1">张博威/Bowei Zhang</span><br>
-                <span class="span2">Master</span><br>
-                <span class="span3"><span style="color: black"></span>
 
-        </span>
-            </p>
-            <div>
-                <a href="mailto:457510281@qq.com" class="image-link2"><img src="image/index-labpage2/email.png" alt="图片2" style="height: 40px;width: 40px"></a>
-            </div>
-        </div>
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-logo">
+      <i class="fas fa-flask"></i> GU LAB
     </div>
-    <!--覃荔-->
-    <div class="grid-item">
-        <img src="image/members/qinli-photo.jpg" alt="Image">
-        <div class="text-content">
-            <p>
-                <span class="span1">覃荔/Li Qin</span><br>
-                <span class="span2">Master</span><br>
-                <span class="span3"><span style="color: black"></span>
+  </div>
+</footer>
 
-        </span>
-            </p>
-            <div>
-                <a href="mailto:1286539809@qq.com" class="image-link2"><img src="image/index-labpage2/email.png" alt="图片2" style="height: 40px;width: 40px"></a>
-            </div>
-        </div>
-    </div>
-    <!--姜珊杉-->
-    <div class="grid-item">
-        <img src="image/members/jiangshanshan-photo.jpg" alt="Image">
-        <div class="text-content">
-            <p>
-                <span class="span1">姜珊杉/Shanshan Jiang</span><br>
-                <span class="span2">Master</span><br>
-                <span class="span3"><span style="color: black"></span>
-
-        </span>
-            </p>
-            <div>
-                <a href="mailto:qflss33@163.com" class="image-link2"><img src="image/index-labpage2/email.png" alt="图片2" style="height: 40px;width: 40px"></a>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Three.js 照片墙实现 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-    // 配置参数
-    const PHOTO_WALL_CONFIG = {
-        PHOTO_COUNT: 60,
-        PHOTO_SIZE: 5,
-        SPHERE_RADIUS: 22,
-        ANIM_SPEED: 0.1,
-        CAMERA_DISTANCE:40
-    };
+  // Photo Wall Implementation
+  const PHOTO_WALL_CONFIG = {
+    PHOTO_COUNT: 60,
+    PHOTO_SIZE: 5,
+    SPHERE_RADIUS: 22,
+    ANIM_SPEED: 0.1,
+    CAMERA_DISTANCE: 40
+  };
 
-    let scene, camera, renderer, photosGroup;
-    let isDragging = false;
-    let mouseX = 0, mouseY = 0;
+  let scene, camera, renderer, photosGroup;
+  let isDragging = false;
+  let mouseX = 0, mouseY = 0;
 
-    function initPhotoWall() {
-        // 获取容器元素
-        const container = document.getElementById('photo-wall');
+  function initPhotoWall() {
+    // 获取容器元素
+    const container = document.getElementById('photo-wall');
 
-        // 初始化Three.js场景
-        scene = new THREE.Scene();
-        camera = new THREE.PerspectiveCamera(
+    // 确保容器存在且有尺寸
+    if (!container || container.clientWidth === 0 || container.clientHeight === 0) {
+      console.error("Photo wall container not found or has zero dimensions");
+      return;
+    }
+
+    // 初始化Three.js场景
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(
             75,
             container.clientWidth / container.clientHeight,
             0.1,
             1000
+    );
+
+    renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true // 透明背景
+    });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container.appendChild(renderer.domElement);
+
+    // 创建照片组
+    photosGroup = new THREE.Group();
+    scene.add(photosGroup);
+
+    // 生成球面位置
+    const positions = [];
+    const goldenRatio = (1 + Math.sqrt(5)) / 2;
+    for (let i = 0; i < PHOTO_WALL_CONFIG.PHOTO_COUNT; i++) {
+      const theta = 2 * Math.PI * i / goldenRatio;
+      const phi = Math.acos(1 - 2 * (i + 0.5) / PHOTO_WALL_CONFIG.PHOTO_COUNT);
+      positions.push(new THREE.Vector3(
+              PHOTO_WALL_CONFIG.SPHERE_RADIUS * Math.cos(theta) * Math.sin(phi),
+              PHOTO_WALL_CONFIG.SPHERE_RADIUS * Math.sin(theta) * Math.sin(phi),
+              PHOTO_WALL_CONFIG.SPHERE_RADIUS * Math.cos(phi)
+      ));
+    }
+
+    // 创建照片
+    const textureLoader = new THREE.TextureLoader();
+    for (let i = 0; i < PHOTO_WALL_CONFIG.PHOTO_COUNT; i++) {
+      textureLoader.load(`https://picsum.photos/200/200?random=${i}`, (texture) => {
+        const geometry = new THREE.PlaneGeometry(
+                PHOTO_WALL_CONFIG.PHOTO_SIZE,
+                PHOTO_WALL_CONFIG.PHOTO_SIZE
+        );
+        const material = new THREE.MeshBasicMaterial({
+          map: texture,
+          side: THREE.DoubleSide,
+          transparent: true
+        });
+        const photo = new THREE.Mesh(geometry, material);
+
+        // 初始动画位置
+        photo.position.set(
+                (Math.random() - 0.5) * 50,
+                (Math.random() - 0.5) * 50,
+                (Math.random() - 0.5) * 50
         );
 
-        renderer = new THREE.WebGLRenderer({
-            antialias: true,
-            alpha: true // 透明背景
-        });
-        renderer.setSize(container.clientWidth, container.clientHeight);
-        container.appendChild(renderer.domElement);
+        // 存储目标位置
+        photo.userData = {
+          target: positions[i],
+          arrived: false
+        };
 
-        // 创建照片组
-        photosGroup = new THREE.Group();
-        scene.add(photosGroup);
-
-        // 生成球面位置
-        const positions = [];
-        const goldenRatio = (1 + Math.sqrt(5)) / 2;
-        for(let i = 0; i < PHOTO_WALL_CONFIG.PHOTO_COUNT; i++) {
-            const theta = 2 * Math.PI * i / goldenRatio;
-            const phi = Math.acos(1 - 2 * (i + 0.5) / PHOTO_WALL_CONFIG.PHOTO_COUNT);
-            positions.push(new THREE.Vector3(
-                PHOTO_WALL_CONFIG.SPHERE_RADIUS * Math.cos(theta) * Math.sin(phi),
-                PHOTO_WALL_CONFIG.SPHERE_RADIUS * Math.sin(theta) * Math.sin(phi),
-                PHOTO_WALL_CONFIG.SPHERE_RADIUS * Math.cos(phi)
-            ));
-        }
-
-        // 创建照片
-        const textureLoader = new THREE.TextureLoader();
-        for(let i = 0; i < PHOTO_WALL_CONFIG.PHOTO_COUNT; i++) {
-            textureLoader.load(`https://picsum.photos/200/200?random=${i}`, (texture) => {
-                const geometry = new THREE.PlaneGeometry(
-                    PHOTO_WALL_CONFIG.PHOTO_SIZE,
-                    PHOTO_WALL_CONFIG.PHOTO_SIZE
-                );
-                const material = new THREE.MeshBasicMaterial({
-                    map: texture,
-                    side: THREE.DoubleSide,
-                    transparent: true
-                });
-                const photo = new THREE.Mesh(geometry, material);
-
-                // 初始动画位置
-                photo.position.set(
-                    (Math.random() - 0.5) * 50,
-                    (Math.random() - 0.5) * 50,
-                    (Math.random() - 0.5) * 50
-                );
-
-                // 存储目标位置
-                photo.userData = {
-                    target: positions[i],
-                    arrived: false
-                };
-
-                photosGroup.add(photo);
-            });
-        }
-
-        // 设置相机
-        camera.position.z = PHOTO_WALL_CONFIG.CAMERA_DISTANCE;
-
-        // 事件监听
-        container.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-
-        document.addEventListener('mouseup', () => isDragging = false);
-        document.addEventListener('mousemove', (e) => {
-            if(isDragging) {
-                const deltaX = e.clientX - mouseX;
-                const deltaY = e.clientY - mouseY;
-                photosGroup.rotation.y += deltaX * 0.005;
-                photosGroup.rotation.x += deltaY * 0.005;
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-            }
-        });
-
-        // 响应式处理
-        window.addEventListener('resize', () => {
-            const container = document.getElementById('photo-wall');
-            camera.aspect = container.clientWidth / container.clientHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(container.clientWidth, container.clientHeight);
-        });
+        photosGroup.add(photo);
+      });
     }
 
-    // 动画循环
-    function animate() {
-        requestAnimationFrame(animate);
+    // 设置相机
+    camera.position.z = PHOTO_WALL_CONFIG.CAMERA_DISTANCE;
 
-        // 照片移动动画
-        let allArrived = true;
-        photosGroup.children.forEach(photo => {
-            if(!photo.userData.arrived) {
-                const distance = photo.position.distanceTo(photo.userData.target);
-                if(distance > 0.1) {
-                    photo.position.lerp(photo.userData.target, PHOTO_WALL_CONFIG.ANIM_SPEED);
-                    allArrived = false;
-                } else {
-                    photo.userData.arrived = true;
-                }
-            }
-            photo.lookAt(camera.position);
-        });
+    // 事件监听
+    container.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
 
-        // 自动旋转
-        if(!isDragging && allArrived) {
-            photosGroup.rotation.y += 0.002;
+    document.addEventListener('mouseup', () => isDragging = false);
+    document.addEventListener('mousemove', (e) => {
+      if (isDragging) {
+        const deltaX = e.clientX - mouseX;
+        const deltaY = e.clientY - mouseY;
+        photosGroup.rotation.y += deltaX * 0.005;
+        photosGroup.rotation.x += deltaY * 0.005;
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      }
+    });
+
+    // 响应式处理
+    window.addEventListener('resize', () => {
+      const container = document.getElementById('photo-wall');
+      if (!container) return;
+
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+  }
+
+  // 动画循环
+  function animate() {
+    requestAnimationFrame(animate);
+
+    // 照片移动动画
+    let allArrived = true;
+    if (photosGroup && photosGroup.children) {
+      photosGroup.children.forEach(photo => {
+        if (!photo.userData.arrived) {
+          const distance = photo.position.distanceTo(photo.userData.target);
+          if (distance > 0.1) {
+            photo.position.lerp(photo.userData.target, PHOTO_WALL_CONFIG.ANIM_SPEED);
+            allArrived = false;
+          } else {
+            photo.userData.arrived = true;
+          }
         }
-
-        renderer.render(scene, camera);
+        if (camera) {
+          photo.lookAt(camera.position);
+        }
+      });
     }
 
-    // 初始化照片墙
+    // 自动旋转
+    if (!isDragging && allArrived && photosGroup) {
+      photosGroup.rotation.y += 0.002;
+    }
+
+    if (renderer && scene && camera) {
+      renderer.render(scene, camera);
+    }
+  }
+
+  // 确保DOM加载完成后再初始化
+  document.addEventListener('DOMContentLoaded', () => {
     initPhotoWall();
     animate();
+  });
 </script>
 </body>
 </html>
