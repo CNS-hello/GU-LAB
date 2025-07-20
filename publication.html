@@ -2,7 +2,142 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Publication</title>
+  <title>Publications</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2c6eb5;
+      --primary-dark: #1a4a8d;
+      --secondary: #3fa796;
+      --accent: #f2a341;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+      --light-gray: #e9ecef;
+      --border-radius: 12px;
+      --box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      --transition: all 0.3s ease;
+    }
+    body, html {
+      margin: 0;
+      padding: 0;
+      background:white;
+      background-size: cover;
+      background-attachment: fixed;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* 出版物列表样式 - 优化的部分 */
+    .publications-container {
+      max-width: 1800px;
+      margin: 400px auto;
+      margin-bottom: 100px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      padding: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .publications-header {
+      text-align: center;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .publications-header h2 {
+      font-size: 32px;
+      color: #2c6eb5;
+      margin-bottom: 10px;
+    }
+
+    .publications-header::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(to right, #2c6eb5, #3fa796);
+      border-radius: 2px;
+    }
+
+    .publication-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .publication-item {
+      position: relative;
+      margin-bottom: 20px;
+      padding: 20px 30px 20px 100px;
+      background: white;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      border-left: 5px solid #3fa796;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .publication-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      border-left-color: #f2a341;
+    }
+
+    .publication-year {
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      background: linear-gradient(135deg, #2c6eb5, #1a4a8d);
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      padding: 8px 15px;
+      border-radius: 30px;
+      box-shadow: 0 4px 8px rgba(44, 110, 181, 0.3);
+    }
+
+    .publication-link {
+      text-decoration: none;
+      color: #333;
+      display: block;
+      font-size: 18px;
+      line-height: 1.6;
+      transition: color 0.3s;
+    }
+
+    .publication-link:hover {
+      color: #0960f6;
+    }
+
+    .publication-journal {
+      font-style: italic;
+      color: #666;
+      font-size: 16px;
+      display: block;
+      margin-top: 8px;
+    }
+
+    .badge-new {
+      position: relative;
+    }
+
+    .badge-new::after {
+      content: "NEW";
+      position: absolute;
+      top: -12px;
+      right: -10px;
+      background-color: #f2a341;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+  </style><!--出版物列表-->
   <style>
     body, html {
       margin: 0;
@@ -12,26 +147,25 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding-top: 30px; /* 距离网页顶部xxx个像素 */
+      padding-top: 30px;
     }
 
     .image-link {
-      text-decoration: none; /* 去除超链接下划线 */
-      margin: 0 0; /* 为图片之间设置间距，这里设置较小以近似"左右连接"效果，根据图片实际情况可能需要调整 */
+      text-decoration: none;
+      margin: 0 0;
       width: 20%;
     }
 
     .image-link img {
-      width: 100%; /* 图片宽度为容器宽度的1/4，减去间距以保持并列 */
+      width: 100%;
       height: 4%;
-      transition: transform 0.3s ease; /* 设置图片悬浮效果的过渡动画 */
+      transition: transform 0.3s ease;
     }
 
     .image-link:hover img {
-      transform: scale(1.1); /* 鼠标悬停时放大图片，可以调整放大的比例 */
+      transform: scale(1.1);
     }
 
-    /* 针对第一个和最后一个图片链接，去除左右的间距 */
     .image-container .image-link:first-child {
       margin-left: 0;
     }
@@ -40,14 +174,13 @@
       margin-right: 0;
     }
 
-    /* 针对图片容器本身设置左右间距 */
     .image-container {
-      max-width: calc(100% - 16px); /* 设置容器宽度为视口的100%减去左右各8像素的间距 */
+      max-width: calc(100% - 16px);
       margin-left: auto;
       margin-right: auto;
     }
     body{
-      background-image: url("image/background-photo/back7.png");
+      background-color: white;
       background-size: 100%;
     }
 
@@ -61,6 +194,7 @@
       align-items: center;
       perspective: 900px;
       transform-style: preserve-3d;
+      padding-top: 200px;
     }
     #box {
       position: relative;
@@ -86,78 +220,364 @@
       height: 300px;
     }
   </style><!--图片墙-->
-  <style>
-    a{
-      text-decoration: none;color: black;
-    }
-    a:hover{
-      color: #0960f6;scale(1.5);
-    }
-    ul li{
-      margin-bottom: 15px;
-    }
-  </style><!--文本链接-->
+  <style>/* Footer */
+  .site-footer {
+    background-color: white;
+    padding: 30px 0;
+    text-align: center;
+    margin-top: 60px;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    transition: var(--transition);
+  }
+
+  .dark-mode .site-footer {
+    background-color: #1a243a;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+  }
+
+  .footer-content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .footer-logo {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--primary);
+  }
+
+  .dark-mode .footer-logo {
+    color: var(--primary-dark);
+  }</style>
 </head>
 <body>
-
-<!-- 最上面的 div -->
+<!-- 导航栏 -->
 <div class="image-container">
-  <a href="index.html" class="image-link"><img src="image/index-labpage2/home3.png" alt="图片1"></a> <!-- 替换为您的图片地址 -->
-  <a href="people.html" class="image-link"><img src="image/index-labpage2/team.png" alt="图片2"></a>
-  <a href="publication.html" class="image-link"><img src="image/index-labpage2/publication3.png" alt="图片3"></a>
-  <a href="protocol.html" class="image-link"><img src="image/index-labpage2/protocol2.png" alt="图片5"></a>
-  <a href="link.html" class="image-link"><img src="image/index-labpage2/Link2.png" alt="图片6"></a>
+  <a href="index.html" class="image-link"><img src="image/index-labpage2/home3.png" alt="Home"></a>
+  <a href="people.html" class="image-link"><img src="image/index-labpage2/team.png" alt="Team"></a>
+  <a href="publication.html" class="image-link"><img src="image/index-labpage2/publication3.png" alt="Publications"></a>
+  <a href="protocol.html" class="image-link"><img src="image/index-labpage2/protocol2.png" alt="Protocols"></a>
+  <a href="link.html" class="image-link"><img src="image/index-labpage2/Link2.png" alt="Links"></a>
 </div>
 
-<!-- 中部图片墙 -->
-<div id="imageWall" style="height: 500px">
+<!-- 图片墙 -->
+<div id="imageWall">
   <div id="box">
-
-    <div> <a target="_blank" rel="noopener noreferrer" href="https://journals.plos.org/plospathogens/article?id=10.1371/journal.ppat.1004109" class="photo-link"><img src="image/background-photo/2.png" alt="图片1"></a></div>
-    <div> <a target="_blank" rel="noopener noreferrer" href="https://journals.asm.org/doi/10.1128/aem.00461-24" class="photo-link"><img src="image/background-photo/1.png" alt="图片1"></a></div>
-    <div> <a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S0048969722074046" class="photo-link"><img src="image/background-photo/3.png" alt="图片1"></a></div>
-    <div> <a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S0956566321008368" class="photo-link"><img src="image/background-photo/4.png" alt="图片1"></a></div>
-    <div> <a target="_blank" rel="noopener noreferrer" href="https://pubs.rsc.org/en/content/articlepdf/2022/fo/d2fo00699e" class="photo-link"><img src="image/background-photo/5.png" alt="图片1"></a></div>
-    <div> <a target="_blank" rel="noopener noreferrer" href="https://www.mdpi.com/1422-0067/24/23/16670" class="photo-link"><img src="image/background-photo/6.png" alt="图片1"></a></div>
-    <div> <a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S0048969724002109?via%3Dihub" class="photo-link"><img src="image/background-photo/7.png" alt="图片1"></a></div>
-    <div> <a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S0378113522000955" class="photo-link"><img src="image/background-photo/9.png" alt="图片1"></a></div>
-    <div> <a target="_blank" rel="noopener noreferrer" href="https://journals.asm.org/doi/epub/10.1128/spectrum.05304-22" class="photo-link"><img src="image/background-photo/1.png" alt="图片1"></a></div>
-    <div> <a target="_blank" rel="noopener noreferrer" href="https://journals.asm.org/doi/10.1128/aem.01197-23" class="photo-link"><img src="image/background-photo/10.png" alt="图片1"></a></div>
+    <div> <a target="_blank" rel="noopener noreferrer" href="https://journals.plos.org/plospathogens/article?id=10.1371/journal.ppat.1004109" class="photo-link"><img src="image/background-photo/2.png" alt="Publication"></a></div>
+    <div> <a target="_blank" rel="noopener noreferrer" href="https://journals.asm.org/doi/10.1128/aem.00461-24" class="photo-link"><img src="image/background-photo/1.png" alt="Publication"></a></div>
+    <div> <a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S0048969722074046" class="photo-link"><img src="image/background-photo/3.png" alt="Publication"></a></div>
+    <div> <a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S0956566321008368" class="photo-link"><img src="image/background-photo/4.png" alt="Publication"></a></div>
+    <div> <a target="_blank" rel="noopener noreferrer" href="https://pubs.rsc.org/en/content/articlepdf/2022/fo/d2fo00699e" class="photo-link"><img src="image/background-photo/5.png" alt="Publication"></a></div>
+    <div> <a target="_blank" rel="noopener noreferrer" href="https://www.mdpi.com/1422-0067/24/23/16670" class="photo-link"><img src="image/background-photo/6.png" alt="Publication"></a></div>
+    <div> <a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S0048969724002109?via%3Dihub" class="photo-link"><img src="image/background-photo/7.png" alt="Publication"></a></div>
+    <div> <a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S2090123225000530?via%3Dihub " class="photo-link"><img src="image/background-photo/9.png" alt="Publication"></a></div>
+    <div> <a target="_blank" rel="noopener noreferrer" href="https://journals.asm.org/doi/epub/10.1128/spectrum.05304-22" class="photo-link"><img src="image/background-photo/1.png" alt="Publication"></a></div>
+    <div> <a target="_blank" rel="noopener noreferrer" href="https://journals.asm.org/doi/10.1128/aem.01197-23" class="photo-link"><img src="image/background-photo/10.png" alt="Publication"></a></div>
   </div>
 </div>
 
-<!-- 最下面的列表 div -->
-<div style="width: 90%;height: 500px;background-color: #ffffff;margin-left: auto;
-     margin-right: auto;margin-top: 50px;opacity: 0.8;overflow-y: scroll;margin-bottom: 50px;position: relative">
- <ul style="text-align: justify;font-size: x-large;font-family: 'Cambria Math';">
-    <li><a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S2090123225000530?via%3Dihub">Detection of Staphylococcus aureus via IgY-based immunomagnetic separation and a phage lysin LysGH15-based colloidal gold immunochromatographic assay. Journal of Advanced Research. 2025</a>
-    <li><a target="_blank" rel="noopener noreferrer" href="https://pubmed.ncbi.nlm.nih.gov/39981314/">Therapeutic efficacy of LysGH15 against necrotising pneumonia caused by Staphylococcus aureus in a rabbit model.Front Vet Sci. 2024</a>
-    <li><a target="_blank" rel="noopener noreferrer" href="https://journals.asm.org/doi/10.1128/aem.00461-24">Biological characterization of the phage lysin AVPL and its efficiency against Aerococcus viridans-induced mastitis in a murine model. Appl Environ Microbiol. 2024</a>
-    <li><a target="_blank" rel="noopener noreferrer" href="https://journals.asm.org/doi/10.1128/aem.01197-23">A novel phage putative depolymerase, Depo16, has specific activity against K1 capsular-type Klebsiella pneumoniae. Appl Environ Microbiol . 2024</a>
-    <li><a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S0048969724002109?via%3Dihub">The pig intestinal phageome is an important reservoir and transfer vector for virulence genes. Science of The Total Environment. 2024</a>
-    <li><a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S0022030223004551?via%3Dihub">Potential of phage EF-N13 as an alternative treatment strategy for mastitis infections caused by multidrug-resistant Enterococcus faecalis. Journal of Dairy Science. 2023</a>
-    <li><a target="_blank" rel="noopener noreferrer" href="https://www.mdpi.com/1422-0067/24/23/16670">Aerococcus viridans Phage Lysin AVPL Had Lytic Activity against Streptococcus suis in a Mouse Bacteremia Model. Int. J. Mol. Sci. 2023.</a>
-    <li><a target="_blank" rel="noopener noreferrer" href="https://journals.asm.org/doi/10.1128/spectrum.05304-22">Structural biology and functional features of phage-derived depolymerase Depo32 on Klebsiella pneumoniae with K2 serotype capsular polysaccharides. Microbiol Spectr. 2023</a>
-    <li><a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S0048969722074046">Metagenomics analysis reveals potential pathways and drivers of piglet gut phage-mediated transfer of ARGs. Sci Total Environ. 2023 </a>
-    <li><a target="_blank" rel="noopener noreferrer" href="https://pubs.rsc.org/en/content/articlelanding/2022/fo/d2fo00699e"> A phage cocktail combined with the enteric probiotic Lactobacillus reuteri ameliorated mouse colitis caused by S.typhimurium. Food Funct. 2022 </a> </li>
-    <li><a target="_blank" rel="noopener noreferrer" href="https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2022.944495/full">The Combination of Phages and Faecal Microbiota Transplantation Can Effectively Treat Mouse Colitis Caused by Salmonella enterica Serovar Typhimurium. Front Microbiol. 2022 </a> </li>
-    <li><a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S0378113522000955">A novel lysin Ply1228 provides efficient protection against Streptococcus suis type 2 infection in a murine bacteremia model. Vet Microbiol. 2022 </a> </li>
-    <li><a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S0956566321008368">Rapid and sensitive detection of Staphylococcus aureus using biolayer interferometry technology combined with phage lysin LysGH15. Biosens Bioelectron. 2022 </a> </li>
-    <li><a target="_blank" rel="noopener noreferrer" href="https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2021.674068/full">Combination Therapy of Phage vB_KpnM_P-KP2 and Gentamicin Combats Acute Pneumonia Caused by K47 Serotype Klebsiella pneumoniae. Front. Microbiol. 2021</a> </li>
-    <li><a target="_blank" rel="noopener noreferrer" href="https://www.liebertpub.com/doi/10.1089/fpd.2020.2833">The Phage Holin HolGH15 Exhibits Potential As an Antibacterial Agent to Control Listeria monocytogenes. Foodborne Pathog Dis. 2021 </a> </li>
-    <li><a target="_blank" rel="noopener noreferrer" href="https://europepmc.org/article/PMC/7642090">Therapeutic Efficacy of Phage PIZ SAE-01E2 Against Abortion Caused by Salmonella abortus equi in Mice. Appl Environ Microbiol. 2020 </a> </li>
-    <li><a target="_blank" rel="noopener noreferrer" href="https://www.frontiersin.org/articles/10.3389/fvets.2020.00588/full">Bacteriophage Protects Against Aerococcus viridans Infection in a Murine Mastitis Model. Front Vet Sci. 2020 </a> </li>
-    <li><a target="_blank" rel="noopener noreferrer" href="https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2020.00351/full">The Yersinia Phage X1 Administered Orally Efficiently Protects a Murine Chronic Enteritis Model Against Yersinia enterocolitica Infection. Front. Microbiol. 2020 </a> </li>
-    <li><a target="_blank" rel="noopener noreferrer" href="https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2019.01189/full">Three Capsular PolysaccharideSynthesis-RelatedGlucosyltransferases,GT-1, GT-2and WcaJ, Are Associated WithVirulence and Phage Sensitivityof Klebsiella pneumoniae.Front. Microbiol. 2019</a> </li>
-    <li><a target="_blank" rel="noopener noreferrer" href="https://www.mdpi.com/1999-4915/11/2/104">The characteristics and genome analysis of vB_AviM_AVP, the first phage infecting Aerococcus viridans.Viruses. 2019  </a> </li>
-    <li><a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S037811351831321X">Preventive effect of the phage VB-SavM-JYL01 on rabbit necrotizing pneumonia caused by Staphylococcus aureus.Vet Microbiol. 2019  </a> </li>
-    <li><a target="_blank" rel="noopener noreferrer" href="https://journals.asm.org/doi/full/10.1128/aem.01585-18">A smooth-type, phage-resistant Klebsiella pneumoniae mutant strain reveals OmpC is indispensable for GH-K3 infection.Appl Environ Microbiol. 2018  </a> </li>
-    <li><a target="_blank" rel="noopener noreferrer" href="https://journals.plos.org/plospathogens/article?id=10.1371/journal.ppat.1004109">Structural and biochemical characterization reveals LysGH15 as an unprecedented "EF-hand-like" calcium-binding phage lysin.PLoS Pathog. 2014  </a> </li>
-  </ul>
-</div>
+<!-- 优化后的出版物列表 -->
+<div class="publications-container">
+  <div class="publications-header">
+    <h2>Research Publications</h2>
+  </div>
 
+  <ul class="publication-list">
+    <!-- 2025 -->
+    <li class="publication-item badge-new">
+      <span class="publication-year">2025</span>
+      <a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S2090123225000530?via%3Dihub" class="publication-link">
+        Detection of Staphylococcus aureus via IgY-based immunomagnetic separation and a phage lysin LysGH15-based colloidal gold immunochromatographic assay.
+        <span class="publication-journal">Journal of Advanced Research</span>
+      </a>
+    </li>
+
+    <!-- 2024 -->
+    <li class="publication-item">
+      <span class="publication-year">2024</span>
+      <a target="_blank" rel="noopener noreferrer" href="https://pubmed.ncbi.nlm.nih.gov/39981314/" class="publication-link">
+        Therapeutic efficacy of LysGH15 against necrotising pneumonia caused by Staphylococcus aureus in a rabbit model.
+        <span class="publication-journal">Front Vet Sci</span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year">2024</span>
+      <a target="_blank" rel="noopener noreferrer" href="https://journals.asm.org/doi/10.1128/aem.00461-24" class="publication-link">
+        Biological characterization of the phage lysin AVPL and its efficiency against Aerococcus viridans-induced mastitis in a murine model.
+        <span class="publication-journal">Appl Environ Microbiol</span>
+      </a>
+    </li>
+
+    <li class="publication-item ">
+      <span class="publication-year">2024</span>
+      <a target="_blank" rel="noopener noreferrer" href="https://journals.asm.org/doi/10.1128/aem.01197-23" class="publication-link">
+        A novel phage putative depolymerase, Depo16, has specific activity against K1 capsular-type Klebsiella pneumoniae.
+        <span class="publication-journal">Appl Environ Microbiol</span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year">2024</span>
+      <a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S0048969724002109?via%3Dihub" class="publication-link">
+        The pig intestinal phageome is an important reservoir and transfer vector for virulence genes.
+        <span class="publication-journal">Science of The Total Environment</span>
+      </a>
+    </li>
+
+    <!-- 2023 -->
+    <li class="publication-item">
+      <span class="publication-year">2023</span>
+      <a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S0022030223004551?via%3Dihub" class="publication-link">
+        Potential of phage EF-N13 as an alternative treatment strategy for mastitis infections caused by multidrug-resistant Enterococcus faecalis.
+        <span class="publication-journal">Journal of Dairy Science</span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year">2023</span>
+      <a target="_blank" rel="noopener noreferrer" href="https://www.mdpi.com/1422-0067/24/23/16670" class="publication-link">
+        Aerococcus viridans Phage Lysin AVPL Had Lytic Activity against Streptococcus suis in a Mouse Bacteremia Model.
+        <span class="publication-journal">Int. J. Mol. Sci</span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year">2023</span>
+      <a target="_blank" rel="noopener noreferrer" href="https://journals.asm.org/doi/10.1128/spectrum.05304-22" class="publication-link">
+        Structural biology and functional features of phage-derived depolymerase Depo32 on Klebsiella pneumoniae with K2 serotype capsular polysaccharides.
+        <span class="publication-journal">Microbiol Spectr</span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year">2023</span>
+      <a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S0048969722074046" class="publication-link">
+        Metagenomics analysis reveals potential pathways and drivers of piglet gut phage-mediated transfer of ARGs.
+        <span class="publication-journal">Sci Total Environ</span>
+      </a>
+    </li>
+
+    <!-- 2022 -->
+    <li class="publication-item">
+      <span class="publication-year">2022</span>
+      <a target="_blank" rel="noopener noreferrer" href="https://pubs.rsc.org/en/content/articlelanding/2022/fo/d2fo00699e" class="publication-link">
+        A phage cocktail combined with the enteric probiotic Lactobacillus reuteri ameliorated mouse colitis caused by S.typhimurium.
+        <span class="publication-journal">Food Funct</span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year">2022</span>
+      <a target="_blank" rel="noopener noreferrer" href="https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2022.944495/full" class="publication-link">
+        The Combination of Phages and Faecal Microbiota Transplantation Can Effectively Treat Mouse Colitis Caused by Salmonella enterica Serovar Typhimurium.
+        <span class="publication-journal">Front Microbiol</span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year">2022</span>
+      <a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S0378113522000955" class="publication-link">
+        A novel lysin Ply1228 provides efficient protection against Streptococcus suis type 2 infection in a murine bacteremia model.
+        <span class="publication-journal">Vet Microbiol</span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year">2022</span>
+      <a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S0956566321008368" class="publication-link">
+        Rapid and sensitive detection of Staphylococcus aureus using biolayer interferometry technology combined with phage lysin LysGH15.
+        <span class="publication-journal">Biosens Bioelectron</span>
+      </a>
+    </li>
+
+    <!-- 较早年份 -->
+    <li class="publication-item">
+      <span class="publication-year">2021</span>
+      <a target="_blank" rel="noopener noreferrer" href="https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2021.674068/full" class="publication-link">
+        Combination Therapy of Phage vB_KpnM_P-KP2 and Gentamicin Combats Acute Pneumonia Caused by K47 Serotype Klebsiella pneumoniae.
+        <span class="publication-journal">Front. Microbiol</span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year">2021</span>
+      <a target="_blank" rel="noopener noreferrer" href="https://www.liebertpub.com/doi/10.1089/fpd.2020.2833" class="publication-link">
+        The Phage Holin HolGH15 Exhibits Potential As an Antibacterial Agent to Control Listeria monocytogenes.
+        <span class="publication-journal">Foodborne Pathog Dis</span>
+      </a>
+    </li>
+
+    <!-- 其它年份以此类推... -->
+    <li class="publication-item">
+      <span class="publication-year">2020 </span>
+      <a target="_blank" rel="noopener noreferrer" href="https://europepmc.org/article/PMC/7642090 " class="publication-link">
+        Therapeutic Efficacy of Phage PIZ SAE-01E2 Against Abortion Caused by Salmonella abortus equi in Mice.
+        <span class="publication-journal"> Appl Environ Microbiol </span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year">2020 </span>
+      <a target="_blank" rel="noopener noreferrer" href=" https://www.frontiersin.org/articles/10.3389/fvets.2020.00588/full" class="publication-link">
+        Bacteriophage Protects Against Aerococcus viridans Infection in a Murine Mastitis Model.
+        <span class="publication-journal"> Front Vet Sci </span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year"> 2020</span>
+      <a target="_blank" rel="noopener noreferrer" href="https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2020.00351/full " class="publication-link">
+        The Yersinia Phage X1 Administered Orally Efficiently Protects a Murine Chronic Enteritis Model Against Yersinia enterocolitica Infection.
+        <span class="publication-journal"> Front. Microbiol. </span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year">2019 </span>
+      <a target="_blank" rel="noopener noreferrer" href="https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2019.01189/full " class="publication-link">
+        Three Capsular PolysaccharideSynthesis-RelatedGlucosyltransferases,GT-1, GT-2and WcaJ, Are Associated WithVirulence and Phage Sensitivityof Klebsiella pneumoniae.
+        <span class="publication-journal">Front. Microbiol.  </span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year"> 2019</span>
+      <a target="_blank" rel="noopener noreferrer" href="https://www.mdpi.com/1999-4915/11/2/104 " class="publication-link">
+        The characteristics and genome analysis of vB_AviM_AVP, the first phage infecting Aerococcus viridans.
+        <span class="publication-journal"> Viruses </span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year">2019 </span>
+      <a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S037811351831321X" class="publication-link">
+        Preventive effect of the phage VB-SavM-JYL01 on rabbit necrotizing pneumonia caused by Staphylococcus aureus.
+        <span class="publication-journal"> Vet Microbiol. </span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year">2018 </span>
+      <a target="_blank" rel="noopener noreferrer" href="https://journals.asm.org/doi/full/10.1128/aem.01585-18 " class="publication-link">
+        A smooth-type, phage-resistant Klebsiella pneumoniae mutant strain reveals OmpC is indispensable for GH-K3 infection.
+        <span class="publication-journal"> Appl Environ Microbiol. </span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year">2018 </span>
+      <a target="_blank" rel="noopener noreferrer" href="https://journals.asm.org/doi/10.1128/aem.00886-18#:~:text=In%20this%20study%2C%20we%20observed%20the%20ability%20of,aureus%2C%20Staphylococcus%20epidermidis%2C%20Staphylococcus%20haemolyticus%2C%20and%20Staphylococcus%20hominis. " class="publication-link">
+        Antibacterial Effects of Phage Lysin LysGH15 on Planktonic Cells and Biofilms of Diverse Staphylococci.
+        <span class="publication-journal"> Appl Environ Microbiol. </span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year"> 2018</span>
+      <a target="_blank" rel="noopener noreferrer" href="https://www.mdpi.com/1999-4915/10/5/244 " class="publication-link">
+        An Ointment Consisting of the Phage Lysin LysGH15 and Apigenin for Decolonization of Methicillin-Resistant Staphylococcus aureus from Skin Wounds.
+        <span class="publication-journal"> Viruses </span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year">2017 </span>
+      <a target="_blank" rel="noopener noreferrer" href=https://pubmed.ncbi.nlm.nih.gov/28536572/ " class="publication-link">
+        The Bacteriophage EF-P29 Efficiently Protects against Lethal Vancomycin-Resistant Enterococcus faecalis and Alleviates Gut Microbiota Imbalance in a Murine Bacteremia Model.
+        <span class="publication-journal"> Front Microbiol. </span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year">2016 </span>
+      <a target="_blank" rel="noopener noreferrer" href=" https://pubmed.ncbi.nlm.nih.gov/27385518/" class="publication-link">
+        LysGH15 kills Staphylococcus aureus without being affected by the humoral immune response or inducing inflammation.
+        <span class="publication-journal"> Sci Rep
+. </span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year">2016 </span>
+      <a target="_blank" rel="noopener noreferrer" href="https://pubmed.ncbi.nlm.nih.gov/27283850/ " class="publication-link">
+        Therapeutic effect of Pseudomonas aeruginosa phage YH30 on mink hemorrhagic pneumonia.
+        <span class="publication-journal"> Vet Microbiol. </span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year"> 2016</span>
+      <a target="_blank" rel="noopener noreferrer" href="https://www.sciencedirect.com/science/article/pii/S0042682216300010 " class="publication-link">
+        Characterization of Enterococcus faecium bacteriophage IME-EFm5 and its endolysin LysEFm5.
+        <span class="publication-journal"> Virology </span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year"> 2015</span>
+      <a target="_blank" rel="noopener noreferrer" href="https://pubmed.ncbi.nlm.nih.gov/26475103/ " class="publication-link">
+        Combination Therapy of LysGH15 and Apigenin as a New Strategy for Treating Pneumonia Caused by Staphylococcus aureus.
+        <span class="publication-journal"> Appl Environ Microbiol.</span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year">2014</span>
+      <a target="_blank" rel="noopener noreferrer" href=" https://journals.plos.org/plospathogens/article?id=10.1371/journal.ppat.1004109" class="publication-link">
+        Structural and biochemical characterization reveals LysGH15 as an unprecedented "EF-hand-like" calcium-binding phage lysin.
+        <span class="publication-journal"> PLoS Pathog.  </span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year"> 2013</span>
+      <a target="_blank" rel="noopener noreferrer" href="https://pubmed.ncbi.nlm.nih.gov/23255621/ " class="publication-link">
+        Genomic characterization of lytic Staphylococcus aureus phage GH15: providing new clues to intron shift in phages.
+        <span class="publication-journal"> J Gen Virol
+. </span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year">2012 </span>
+      <a target="_blank" rel="noopener noreferrer" href=" https://pubmed.ncbi.nlm.nih.gov/22843868/" class="publication-link">
+        Complete genome sequence of Staphylococcus aureus bacteriophage GH15.
+        <span class="publication-journal"> J Virol. </span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year">2012 </span>
+      <a target="_blank" rel="noopener noreferrer" href="https://pubmed.ncbi.nlm.nih.gov/22396736/" class="publication-link">
+        A method for generation phage cocktail with great therapeutic potential.
+        <span class="publication-journal"> PLoS One </span>
+      </a>
+    </li>
+
+    <li class="publication-item">
+      <span class="publication-year">2011 </span>
+      <a target="_blank" rel="noopener noreferrer" href="https://pubmed.ncbi.nlm.nih.gov/21048011/" class="publication-link">
+        LysGH15, a novel bacteriophage lysin, protects a murine bacteremia model efficiently against lethal methicillin-resistant Staphylococcus aureus infection.
+        <span class="publication-journal"> J Clin Microbiol. </span>
+      </a>
+    </li>
+  </ul>
+
+</div>
+<div>  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <i class="fas fa-flask"></i> GU LAB
+      </div>
+    </div>
+  </footer>
+</div>
 <script>
-  setTimeout(init,100);
+  // 图片墙旋转功能
+  setTimeout(init, 100);
   function init(){
     var obox = document.getElementById('box'),
             aDiv = obox.getElementsByTagName('div');
@@ -203,10 +623,7 @@
       };
       return false;
     };
-
-
   }
 </script>
-
 </body>
 </html>
