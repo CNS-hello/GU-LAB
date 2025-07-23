@@ -521,7 +521,7 @@
         </a>
     </div>
     <div class="lab-header">
-        <h1 class="lab-name">WELCOME</h1>
+        <h1 id="disappearing-text" class="lab-name">WELCOME</h1>
     </div>
 </div>
 <!-- 主要内容区域 -->
@@ -613,5 +613,21 @@
 <footer class="footer">
     <p>© 2025 GU LAB</p>
 </footer>
+<script>
+    // 获取元素
+    var element = document.getElementById('disappearing-text');
+
+    // 设置5秒后执行消失操作
+    setTimeout(function() {
+        // 方式1：隐藏元素（保留空间）
+        //element.style.display = 'none';
+
+        // 方式2：让元素透明（保留空间）
+        element.style.opacity = '0';
+
+        // 方式3：移除元素（不保留空间）
+        // element.parentNode.removeChild(element);
+    }, 2000); // 5000毫秒 = 5秒
+</script>
 </body>
 </html>
