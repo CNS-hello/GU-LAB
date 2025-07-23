@@ -7,6 +7,7 @@
     <meta name="description" content="这是一个用于吉林大学顾敬敏教授课题组的文化展示页面，无商业用途，网页设计参考了诸多开源素材，如有侵权请及时联系">
     <meta name="keywords" content="顾敬敏，吉林大学动物医学学院，噬菌体，裂解酶，超级细菌，phage,LysGH15，解聚酶 ">
     <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body, html {
             margin: 0;
@@ -32,6 +33,7 @@
             width:100%; /* 图片宽度为容器宽度的1/4，减去间距以保持并列 */
             height: 4%;
             transition: transform 0.3s ease; /* 设置图片悬浮效果的过渡动画 */
+            margin-top: 0.8%;
         }
 
         .image-link:hover img {
@@ -55,18 +57,561 @@
         }
         body{
             background-image: url("image/background-photo/index-backdrop.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+            overflow-x: hidden;
+        }
+        </style><!-- 导航栏 -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+
+
+        /* 实验室名称和标语 */
+        .lab-header {
+            text-align: center;
+            padding: 15% 0 3%;
+            animation: fadeInDown 1.5s ease-out;
+            height: 20%;
+        }
+
+        .lab-name {
+            font-size: 5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 0 5px 15px rgb(187, 205, 232);
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .lab-tagline {
+            font-size: 3rem;
+            font-weight: 300;
+            max-width: 2000px;
+            margin: 0 auto;
+            line-height: 2;
+            color: #86e186;
+        }
+
+        /* 板块容器 */
+
+        .sections-container2 {
+            max-width: 2000px;
+            margin: 10% auto;
+            padding-top: 10% ;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+
+        }
+        .sections-container3 {
+            max-width: 2000px;
+            margin: 2% auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            padding-bottom: 10%;
+
+        }
+        /* 研究方向板块 */
+        .research-section {
+            background: rgb(255, 255, 255);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgb(81, 159, 248);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .research-section:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(44, 110, 181, 0.4);
+        }
+
+        .research-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #4facfe, #00f2fe);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .research-section:hover::before {
+            transform: scaleX(1);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 25px;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 15px;
+            color: #4facfe;
+            font-size: 2.2rem;
+        }
+
+        .research-items {
+            display: grid;
+            gap: 20px;
+        }
+
+        .research-item {
+            background: rgba(190, 234, 187, 0.51);
+            padding: 20px;
+            border-radius: 15px;
+            transition: all 0.4s ease;
+            transform: translateX(-20px);
+            opacity: 0;
+            animation: slideIn 0.6s forwards;
+        }
+
+        .research-item:nth-child(1) { animation-delay: 0.2s; }
+        .research-item:nth-child(2) { animation-delay: 0.4s; }
+        .research-item:nth-child(3) { animation-delay: 0.6s; }
+        .research-item:nth-child(4) { animation-delay: 0.8s; }
+
+        .research-item:hover {
+            background: rgb(255, 255, 255);
+            transform: translateY(-5px);
+        }
+
+        .research-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #4facfe;
+            display: flex;
+            align-items: center;
+        }
+
+        .research-item h3 i {
+            margin-right: 10px;
+        }
+
+        .research-item p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #1a1a1b;
+        }
+
+        /* 基金板块 */
+        .funding-section {
+            background: rgba(213, 226, 243, 0.8);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(241, 190, 190, 0.5);
+            transition: transform 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .funding-section:hover {
+            transform: scale(1.02);
+        }
+
+        .funding-items {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .funding-item {
+            background: linear-gradient(135deg, rgba(44, 110, 181, 0.3), rgba(31, 65, 114, 0.01));
+            padding: 20px;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 0.6s forwards;
+        }
+
+        .funding-item:nth-child(1) { animation-delay: 0.3s; }
+        .funding-item:nth-child(2) { animation-delay: 0.6s; }
+        .funding-item:nth-child(3) { animation-delay: 0.9s; }
+
+        .funding-item:hover {
+            background: linear-gradient(135deg, rgba(44, 110, 181, 0.5), rgba(31, 65, 114, 0.18));
+            box-shadow: 0 10px 25px rgba(44, 110, 181, 0.4);
+        }
+
+        .funding-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, #4facfe, #00f2fe);
+        }
+
+        .funding-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #00f2fe;
+            display: flex;
+            align-items: center;
+        }
+
+        .funding-title i {
+            margin-right: 10px;
+        }
+
+        .funding-details {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #151414;
+        }
+
+        /* 实验室地点板块 */
+        .location-section {
+            background: rgba(214, 241, 181, 0.63);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            grid-column: span 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .location-section:hover {
+            box-shadow: 0 20px 40px rgba(0, 242, 254, 0.3);
+        }
+
+        .location-content {
+            display: flex;
+            width: 100%;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        .location-info {
+            flex: 1;
+            padding: 20px;
+            background: rgba(213, 237, 186, 0.63);
+            border-radius: 15px;
+        }
+
+        .location-map {
+            flex: 1;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url("image/background-photo/map.jpg");
             background-size: cover;
         }
-        </style>
+
+        .location-map::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://api.mapbox.com/styles/v1/mapbox/dark-v10/static/-83.077,42.280,14,0,0/600x300?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmZjBkMTgifQ.-g_vE53SD2WrJ6tFX7QHmA') no-repeat center center;
+            background-size: cover;
+            opacity: 0.8;
+        }
+
+        .location-map::after {
+            content: 'College of Veterinary Medicine';
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(181, 241, 236, 0.13);
+            color: #131313;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1.1rem;
+        }
+
+        .location-details {
+            margin-bottom: 25px;
+        }
+
+        .location-details h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #00f2fe;
+            display: flex;
+            align-items: center;
+        }
+
+        .location-details h3 i {
+            margin-right: 10px;
+        }
+
+        .location-details p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 10px;
+            color: #171515;
+        }
+
+        .contact-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+        }
+
+        .contact-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.6);
+        }
+
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;
+            background: rgb(255, 255, 255);
+            font-size: 2rem;
+            color: #131313;
+        }
+
+        .footer p {
+            margin: 10px 0;
+        }
+
+        .footer a {
+            color: #4facfe;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #00f2fe;
+            text-decoration: underline;
+        }
+
+        /* 动画 */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1100px) {
+            .sections-container {
+                grid-template-columns: 1fr;
+            }
+
+            .location-section {
+                grid-column: span 1;
+            }
+
+            .location-content {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .image-link {
+                width: 15%;
+                margin: 0 1%;
+            }
+
+            .lab-name {
+                font-size: 2.5rem;
+            }
+
+            .lab-tagline {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .image-link {
+                width: 18%;
+            }
+
+            .image-link::after {
+                font-size: 10px;
+                bottom: -20px;
+            }
+
+            .lab-name {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="image-container">
-    <a href="index.html" class="image-link"><img src="image/index-labpage2/home3.png" alt="图片1"></a> <!-- 替换为您的图片地址 -->
-    <a href="people.html" class="image-link"><img src="image/index-labpage2/team.png" alt="图片2"></a>
-    <a href="publication.html" class="image-link"><img src="image/index-labpage2/publication3.png" alt="图片3"></a>
-
-    <a href="protocol.html" class="image-link"><img src="image/index-labpage2/protocol2.png" alt="图片5"></a>
-    <a href="link.html" class="image-link"><img src="image/index-labpage2/Link2.png" alt="图片6"></a>
+<div >
+    <div style="height: 100%" class="image-container">
+        <a href="index.html" class="image-link" data-title="首页">
+            <img src="image/index-labpage2/home3.png" alt="首页">
+        </a>
+        <a href="people.html" class="image-link" data-title="团队成员">
+            <img src="image/index-labpage2/team.png" alt="团队">
+        </a>
+        <a href="publication.html" class="image-link" data-title="研究成果">
+            <img src="image/index-labpage2/publication3.png" alt="出版物">
+        </a>
+        <a href="protocol.html" class="image-link" data-title="实验方法">
+            <img src="image/index-labpage2/protocol2.png" alt="实验方法">
+        </a>
+        <a href="link.html" class="image-link" data-title="资源链接">
+            <img src="image/index-labpage2/Link2.png" alt="资源链接">
+        </a>
+    </div>
+    <div class="lab-header">
+        <h1 class="lab-name">WELCOME</h1>
+    </div>
 </div>
+<!-- 主要内容区域 -->
+<div class="sections-container2">
+    <!-- 研究方向板块 -->
+    <section class="research-section">
+        <h2 class="section-title"><i class="fas fa-flask"></i>RESEARCH</h2>
+        <div class="research-items">
+            <div class="research-item">
+                <h3><i class="fas fa-dna"></i>Mechanism of Bacteriophage-Bacteria Interaction</h3>
+                <p>Evolutionary Arms Race: Bacteria develop defense systems (CRISPR-Cas, restriction-modification, abortive infection, surface receptor mutation). Phages co-evolve counter-defenses
+                    (anti-CRISPR proteins, receptor binding mutations, overcoming restriction).</p>
+                <p>Dependency: Phages rely entirely on host energy, ribosomes, nucleotides, and amino acids for replication.</p>
+                <p>Complexity:Specific mechanisms vary significantly between phage families and bacterial hosts (Gram-positive vs. Gram-negative, structure differences).</p>
+            </div>
+            <div class="research-item">
+                <h3><i class="fas fa-shield-virus"></i>Phage Therapy for Drug-Resistant Bacteria</h3>
+                <p>Phage therapy leverages bacteria-killing viruses (bacteriophages) to combat multidrug-resistant (MDR) bacterial infections where antibiotics fail. These highly specific phages infect target bacteria, replicate within them, and lyse host cells, releasing new phage particles to amplify treatment locally. Clinical successes include curing life-threatening infections like those caused by MDR Pseudomonas aeruginosa and Acinetobacter baumannii, particularly in compassionate-use cases. Engineered phage cocktails and CRISPR-enhanced phages broaden efficacy against evolving resistance, while phage-derived enzybiotics (e.g., lysins) offer direct peptidoglycan degradation. Synergy with antibiotics enhances bacterial eradication and reduces resistance emergence.
+                    Despite regulatory and standardization challenges, phage therapy represents a promising, evolution-informed precision antimicrobial strategy against the global antibiotic resistance crisis.</p>
+            </div>
+            <div class="research-item">
+                <h3><i class="fas fa-vial"></i>Phage-Derived Antimicrobial Protein</h3>
+                <p>As resistance genes outpace antibiotic development, these precision protein therapeutics—tunable, evolution-informed, and minimally disruptive to microbiomes—represent a transformative
+                    frontier in anti-infective strategy. Ongoing advances in synthetic biology and delivery systems position phage-derived AMPs as cornerstone solutions for the post-antibiotic era. These peptidoglycan hydrolases, once released by phages to lyse
+                    host cells, have been repurposed as "enzybiotics." Capsule/glycan-degrading enzymes disrupt biofilms and sensitize bacteria to antibiotics. Engineered pore-forming holins and membrane-disrupting spanins show promise as precision "molecular scissors," particularly against Gram-negative ESKAPE pathogens.</p>
+            </div>
+            <div class="research-item">
+                <h3><i class="fas fa-microscope"></i>Gut Microbiome</h3>
+                <p>Research on the gut microbiome has revolutionized our understanding of its complex ecosystem, revealing profound implications for human health beyond digestion. This intricate community encompasses bacteria, archaea, fungi, eukaryotes, and crucially, the ​gut virome, dominated by ​bacteriophages (phages)​. Modern metagenomic sequencing allows deep characterization, showing that gut phages dynamically shape bacterial populations
+                    through predation, driving diversity and stability via "kill-the-winner" dynamics, while also facilitating horizontal gene transfer, including antibiotic resistance and virulence factors.</p>
+            </div>
+        </div>
+    </section>
+</div>
+<div class="sections-container3">
+    <!-- 基金板块 -->
+    <section class="funding-section">
+        <h2 class="section-title"><i class="fas fa-award"></i>FOUNDING</h2>
+        <div class="funding-items">
+            <div class="funding-item">
+                <h3 class="funding-title"><i class="fas fa-graduation-cap"></i>国家自然科学基金优秀青年科学基金项目</h3>
+                <p class="funding-details">重要人兽共患病原菌的噬菌体及其抗菌蛋白</p>
+            </div>
+            <div class="funding-item">
+                <h3 class="funding-title"><i class="fas fa-seedling"></i>国家重点研发计划</h3>
+                <p class="funding-details">铜绿假单胞菌人工噬菌体高效制剂的合成与应用</p>
+            </div>
+            <div class="funding-item">
+                <h3 class="funding-title"><i class="fas fa-university"></i>国家自然科学基金面上项目</h3>
+                <p class="funding-details">基于三维结构和分子机制构建跨肺炎克雷伯菌K1和K2荚膜型解聚酶的研究</p>
+            </div>
+            <div class="funding-item">
+                <h3 class="funding-title"><i class="fas fa-university"></i>国家自然科学基金面上项目</h3>
+                <p class="funding-details">绿色气球菌噬菌体新型裂解酶AVPL的生物学特性及其跨菌种抗葡萄球菌的分子机制</p>
+            </div>
+            <div class="funding-item">
+                <h3 class="funding-title"><i class="fas fa-university"></i>国家自然科学基金,联合基金重点项目（子课题）</h3>
+                <p class="funding-details">饲料端禁抗后仔猪重要细菌感染的生态演替及基于抗菌肽的防治机制</p>
+            </div>
+        </div>
+
+    </section>
+    <!-- 实验室地点板块 -->
+    <section class="location-section">
+        <h2 class="section-title"><i class="fas fa-map-marker-alt"></i>CONTACT</h2>
+        <div class="location-content">
+            <div class="location-info">
+                <div class="location-details">
+                    <h3><i class="fas fa-building"></i>College of Veterinary Medicine, Jilin University</h3>
+                    <p>No. 5333 Xi'an Road, Changchun, Jilin Province</p>
+                    <p>Room 604, Basis Teaching Building, Heping Campus, Jilin University</p>
+                </div>
+                <div class="location-details">
+                    <h3><i class="fas fa-phone-alt"></i>Contact Information</h3>
+                    <p>Email: jingmin0629@163.com</p>
+                    <p>Postal Code:130062</p>
+                </div>
+                <div class="location-details">
+                    <h3><i class="fas fa-clock"></i>Working Hours</h3>
+                    <p>Monday to Friday: 8:30 AM - 5:30 PM</p>
+                </div>
+                <a href="mailto:jingmin0629@163.com" class="contact-button">CONTACT</a>
+            </div>
+            <div class="location-map"  ></div>
+        </div>
+    </section>
+</div>
+<!-- 页脚 -->
+<footer class="footer">
+    <p>© 2025 GU LAB</p>
+</footer>
 </body>
 </html>
