@@ -265,32 +265,37 @@
       transform: translateX(3px);
     }
 
+    /* Footer */
+    .site-footer {
+      background-color: white;
+      padding: 30px 0;
+      text-align: center;
+      margin-top: 60px;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+      transition: var(--transition);
+    }
 
     .dark-mode .site-footer {
       background-color: #1a243a;
       box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
     }
 
+    .footer-content {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+
     .dark-mode .footer-logo {
       color: var(--primary-dark);
     }
 
-    .footer-text {
-      color: var(--gray);
-      font-size: 16px;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-
-    .dark-mode .footer-text {
-      color: var(--gray);
-    }
-
-    .copyright {
-      color: var(--gray);
-      font-size: 14px;
-      margin-top: 20px;
-    }
 
     /* Responsive Design */
     @media (max-width: 2000px) {
@@ -695,6 +700,16 @@
     </div>
   </main>
 </div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-logo">
+      <i class="fas fa-flask"></i> GU LAB
+    </div>
+  </div>
+</footer>
+
 <script>
   // Theme toggle functionality
   const themeToggle = document.getElementById('theme-toggle');
