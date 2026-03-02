@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>Research</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  body {
+    background-color: #f8f9fa;
+    padding-top: 80px; /* 为固定导航栏留出空间 */
+    min-height: 100vh;
+  }
+
+  /* 导航栏样式 - 固定在顶部 */
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 5%;
+    background-color: white;
+    border-bottom: 1px solid #eaeaea;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+  }
+
+  /* 左侧logo和实验室名称 */
+  .navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  /* 院徽容器 */
+  .emblem-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  /* 院徽图片样式 */
+  .emblem-img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    border-radius: 4px;
+  }
+
+  /* 竖线分隔符 */
+  .vertical-line {
+    width: 1px;
+    height: 100px;
+    background-color: #171717;
+  }
+
+  /* 实验室logo图片样式 */
+  .lab-logo-img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+  }
+
+  .lab-name {
+    font-family: "Segoe Script";
+    font-size: 60px;
+    font-weight: 700;
+    color: rgba(34, 34, 34, 0.92);
+    letter-spacing: 1px;
+    margin-left: 20px;
+  }
+
+  /* 右侧导航菜单 */
+  .navbar-right {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .nav-item {
+    position: relative;
+    font-size: 20px;
+    font-weight: 500;
+    color: #333;
+    text-decoration: none;
+    padding: 8px 0;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  /* 悬浮效果 */
+  .nav-item:hover {
+    color: #0077cc;
+    transform: translateY(-2px);
+  }
+
+  /* 悬浮时显示浅蓝色横线 */
+  .nav-item::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    background-color: #4da6ff;
+    transition: width 0.3s ease;
+    border-radius: 2px;
+  }
+
+  .nav-item:hover::after {
+    width: 100%;
+  }
+
+  /* 当前选中的项目 */
+  .nav-item.active {
+    color: #0077cc;
+  }
+
+  .nav-item.active::after {
+    width: 100%;
+    background-color: #4da6ff;
+  }
+
+  /* 页面内容 */
+  .header {
+    margin-bottom: 40px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+  }
+
+  .header h1 {
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  .header p {
+    color: #666;
+    font-size: 16px;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .content {
+    padding: 20px;
+  }
+
+  .section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+  }
+
+  .section h2 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 24px;
+  }
+
+  .section p {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 15px;
+  }
+
+  /* 响应式设计 */
+  @media (max-width: 1024px) {
+    .navbar {
+      padding: 12px 3%;
+    }
+
+    .navbar-right {
+      gap: 30px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .navbar {
+      flex-direction: column;
+      padding: 15px;
+      gap: 20px;
+    }
+
+    .navbar-left {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .navbar-right {
+      width: 100%;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .nav-item {
+      font-size: 15px;
+    }
+
+    .lab-name {
+      font-size: 24px;
+    }
+
+    .emblem-img, .lab-logo-img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .navbar-left {
+      flex-wrap: wrap;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .emblem-container {
+      margin-bottom: 10px;
+    }
+
+    .lab-name {
+      margin-left: 0;
+      width: 100%;
+    }
+
+    .navbar-right {
+      gap: 10px;
+    }
+
+    .nav-item {
+      font-size: 14px;
+      padding: 5px;
+    }
+  }
+</style><!-- 导航栏 -->
+<style>
+  .research-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 60px 20px;
+  }
+  .research-header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+
+  .research-header h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #1a365d;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+  }
+
+  .research-header p {
+    font-size: 1.6rem;
+    color: #222121;
+    max-width:1300px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  /* 研究项目样式 */
+  .research-project {
+    display: flex;
+    align-items: center;
+    margin-bottom: 120px;
+    gap: 60px;
+  }
+
+  /* 第一项：图片在左，文字在右 */
+  .research-project:nth-child(odd) {
+    flex-direction: row;
+  }
+
+  /* 第二项：图片在右，文字在左 */
+  .research-project:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+
+  .research-image {
+    flex: 1;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s ease;
+    height: 420px;
+  }
+
+  .research-image:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+  }
+
+  .research-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+  }
+
+  .research-content {
+    flex: 1;
+  }
+
+  .research-number {
+    display: inline-block;
+    background-color: #4da6ff;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+
+  .research-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #1a365d;
+    margin-bottom: 25px;
+    line-height: 1.3;
+  }
+
+  .research-description {
+    font-size: 1.15rem;
+    color: #4a5568;
+    line-height: 1.8;
+    margin-bottom: 30px;
+  }
+
+  .read-more-btn {
+    display: inline-flex;
+    align-items: center;
+    background-color: transparent;
+    color: #4da6ff;
+    border: 2px solid #4da6ff;
+    padding: 12px 28px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .read-more-btn:hover {
+    background-color: #4da6ff;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(77, 166, 255, 0.2);
+  }
+
+  .read-more-btn i {
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+  }
+
+  .read-more-btn:hover i {
+    transform: translateX(5px);
+  }
+
+  /* 响应式设计 */
+  @media (max-width: 1024px) {
+    .research-project {
+      gap: 40px;
+      margin-bottom: 80px;
+    }
+
+    .research-title {
+      font-size: 1.9rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .research-project {
+      flex-direction: column !important;
+      margin-bottom: 60px;
+      gap: 30px;
+    }
+
+    .research-image, .research-content {
+      width: 100%;
+    }
+
+    .research-image {
+      height: 300px;
+    }
+
+    .research-header h1 {
+      font-size: 2.8rem;
+    }
+
+    .navbar-right {
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .research-header h1 {
+      font-size: 2.2rem;
+    }
+
+    .research-title {
+      font-size: 1.7rem;
+    }
+
+    .research-description {
+      font-size: 1rem;
+    }
+
+    .nav-item {
+      font-size: 14px;
+    }
+
+    .lab-name {
+      font-size: 28px;
+    }
+  }
+</style><!-- research -->
+<style>/* Footer */
+.site-footer {
+  background-color: white;
+  padding: 30px 0;
+  text-align: center;
+  margin-top: 60px;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+  transition: var(--transition);
+}
+
+.dark-mode .site-footer {
+  background-color: #1a243a;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+}
+
+.footer-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.footer-logo {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: var(--primary);
+}
+
+
+</style>
+</head>
+<body>
+<!-- 固定在顶部的导航栏 -->
+<nav class="navbar">
+  <!-- 左侧：院徽、竖线、实验室logo和实验室名称 -->
+  <div class="navbar-left" style="padding-left: 150px">
+    <div class="emblem-container">
+      <!-- 院徽图片 -->
+      <img src="image/index-labpage2/yuanhui.jpg" alt="吉林大学动物医学学院院徽" class="emblem-img">
+      <!-- 实验室logo图片 -->
+
+    </div>
+    <div class="lab-name">The Gu Lab</div>
+  </div>
+
+  <!-- 右侧：导航菜单 -->
+  <div class="navbar-right" style="padding-right: 150px">
+    <a href="index.html" class="nav-item">Home</a>
+    <a href="Research.html" class="nav-item active">Research</a>
+    <a href="publication.html" class="nav-item">Publications</a>
+    <a href="team.html" class="nav-item">Team</a>
+    <a href="protocol.html" class="nav-item">Protocol</a>
+    <a href="link.html" class="nav-item">Link</a>
+  </div>
+</nav>
+
+<!-- research content -->
+<div class="container">
+  <!-- Research页面主体内容 -->
+  <div class="research-container">
+    <div class="research-header">
+      <h1>Research</h1>
+      <p>Our laboratory focuses on understanding the complex interactions between phages and bacteria, and leveraging this knowledge to develop novel strategies for combating bacterial infections and detecting pathogens.</p>
+    </div>
+
+    <!-- 研究方向1：细菌的免疫系统 -->
+    <div class="research-project">
+      <div class="research-image">
+        <img src="image/members/research1.jpeg" alt="细菌免疫系统研究">
+      </div>
+      <div class="research-content">
+        <div class="research-number">01</div>
+        <h2 class="research-title">The Immune System of Bacteria</h2>
+        <p class="research-description">
+          Our research has uncovered intricate aspects of the evolutionary arms race between phages and bacteria. A highlight was discovering that phage X1 can co-opt the bacterial flagellum of Yersiniafor DNA injection, a unique infection route. In response, we identified a corresponding defense mechanism where the host bacterium senses this flagellum-mediated invasion and activates a flagellum-dependent toxin-antitoxin system (Flag-TA) to initiate an abortive infection, revealing a novel
+          defense paradigm linked to the flagellar apparatus . We have also characterized receptor binding proteins, such as OmpC for phage GH-K3, to understand the molecular basis of phage susceptibility and bacterial resistance in pathogens like Klebsiella pneumoniae.
+        </p>
+        <button class="read-more-btn">Read more <i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- 研究方向2：人类先天免疫的起源 -->
+    <div class="research-project">
+      <div class="research-image">
+        <img src="image/members/research2.jpg" alt="人类先天免疫起源研究">
+      </div>
+      <div class="research-content">
+        <div class="research-number">02</div>
+        <h2 class="research-title">Phage-Based Bacterial Detection</h2>
+        <p class="research-description">
+          Our lab is pioneering the use of phage lysins as robust, antibody-alternative recognition elements for rapid pathogen detection. We engineered the lysin LysGH15 and its catalytically inactive mutant (LysGH15-C54A) to develop sensitive, specific platforms for Staphylococcus aureus. We successfully integrated IgY-coated immunomagnetic beads with a gold-based lateral flow strip (IMBs-GICA) for 35-minute detection, combined the mutant lysin with bio-layer interferometry for real-time, label-free detection in 12 minutes, and created a fluorescent fusion protein (LysGH15-C54A-EGFP) for dual-site recognition and fluorescence-based quantification within an hour.
+          These platforms demonstrate high sensitivity and successful application in clinical samples, establishing lysins as powerful tools for point-of-care diagnostics.
+        </p>
+        <button class="read-more-btn">Read more <i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- 研究方向3：病毒如何克服宿主免疫 -->
+    <div class="research-project">
+      <div class="research-image">
+        <img src="image/members/research3.jpg" alt="噬菌体组学研究">
+      </div>
+      <div class="research-content">
+        <div class="research-number">03</div>
+        <h2 class="research-title"> Gut Viromics and ARG Dissemination</h2>
+        <p class="research-description">
+          Our work in gut viromics, particularly in piglets, has established the gut phageome as a critical reservoir for antimicrobial resistance genes (ARGs) and virulence factors. We found that numerous phage contigs carry ARGs, often co-located with mobile genetic element genes, facilitating horizontal transfer. A key discovery is that diarrheal disease acts as a major driver, dynamically reshaping the phage and bacterial communities, enriching for phage sequences carrying ARGs and MGEs, and expanding the diversity of broad-host-range phages,
+          thereby exacerbating the risk of ARG spread to potential pathogens. This work underscores the ecological role of phages in antibiotic resistance dissemination within animal microbiomes.
+        </p>
+        <button class="read-more-btn">Read more <i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- 研究方向4：噬菌体治疗应用 -->
+    <div class="research-project">
+      <div class="research-image">
+        <img src="image/members/research4.jpg" alt="噬菌体治疗应用研究">
+      </div>
+      <div class="research-content">
+        <div class="research-number">04</div>
+        <h2 class="research-title">Phage Therapy Applications</h2>
+        <p class="research-description">
+          A central focus of our lab is developing biological agents to combat multidrug-resistant infections. We have demonstrated the efficacy of the lysin LysGH15 against S. aureusbiofilms and in a murine necrotizing pneumonia model. For Klebsiella pneumoniae, we isolated specific phages and characterized their depolymerases (e.g., Depo16, Depo32), which strip the protective capsule, sensitizing bacteria to phagocytosis and protecting mice from bacteremia and pneumonia. We also explore synergistic phage-antibiotic combinations. Beyond these, we identified broad-spectrum agents like lysin AVPL, effective against MDR Streptococcus suis, and Lys19, active across Clostridium perfringensand S. suis. Furthermore,
+          we pioneered a combined "phage cocktail and fecal microbiota transplantation" strategy, which effectively cleared Salmonellainfection and restored gut health, representing a novel "anti-pathogen and pro-microbiome" therapeutic approach.
+        </p>
+        <button class="read-more-btn">Read more <i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- 研究方向5：噬菌体蛋白结构解析 -->
+    <div class="research-project">
+      <div class="research-image">
+        <img src="image/members/research5.png" alt="噬菌体治疗应用研究">
+      </div>
+      <div class="research-content">
+        <div class="research-number">05</div>
+        <h2 class="research-title">Structural and Mechanistic Insights of Phage Proteins</h2>
+        <p class="research-description">
+          Our research delves into the molecular mechanisms governing the activity of phage-derived enzymes. A prime example is our detailed structural and functional analysis of the lysin LysGH15. We determined that its bacteriolytic activity is uniquely dependent on calcium ions. Structural elucidation revealed that this calcium acts as a crucial switch, stabilizing an "EF-hand-like" domain that is essential for the formation of the active, oligomeric state of the enzyme.
+          This work provides a deep understanding of the regulatory mechanism behind its potent lytic activity and informs the rational design of engineered lysins.
+        </p>
+        <button class="read-more-btn">Read more <i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script>
+    // Read more按钮交互
+    document.querySelectorAll('.read-more-btn').forEach((button, index) => {
+      button.addEventListener('click', function() {
+        // 创建详细信息模态框
+        const modal = document.createElement('div');
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 20px;
+        `;
+
+        // 根据不同的研究方向显示不同的详细信息
+        const titles = [
+          "The Immune System of Bacteria",
+          "Phage-Based Bacterial Detection",
+          "Gut Viromics and ARG Dissemination",
+          "Phage Therapy Applications",
+          "Structural and Mechanistic Insights of Phage Proteins"
+        ];
+
+        const descriptions = [
+          `Bacteria and bacteriophages (phages) have engaged in a coevolutionary arms race for billions of years, driving the diversification of bacterial immune mechanisms. This review synthesizes current knowledge on the diversity, discovery, mechanisms, and ecological implications of antiphage defense systems, as revealed by genomic and experimental studies. The bacterial antiphage arsenal comprises over 200 distinct systems, with individual genomes typically encoding 3–8 systems, highlighting the complexity and adaptability of prokaryotic immunity (Tesson et al. 2022; Georjon and Bernheim 2023)
+
+            • Bacterial antiphage systems employ multifaceted strategies to intercept phage infection at various stages. Nucleic acid-targeting systems include restriction-modification (R-M) systems, which recognize and cleave foreign phage DNA and are present in ~75–90% of bacterial genomes (Doron et al. 2018; Millman et al. 2022). CRISPR-Cas systems​ provide adaptive immunity by storing phage DNA fragments to guide targeted degradation (Sorek et al. 2018). Cyclic oligonucleotide-based systems​ (e.g., cGAS-like enzymes) produce signaling molecules that activate nucleases upon phage detection (Cohen et al. 2019; Millman et al. 2020). Non-nucleolytic strategies include abortive infection (Abi) systems, which induce host cell death or dormancy to block phage propagation, sacrificing individual cells to protect populations (Lopatina et al. 2020; LeRoux and Laub 2022). Toxin-antitoxin (TA) systems​ disrupt essential cellular processes (e.g., tRNA modification) upon phage-triggered activation (Mestre et al. 2022). Signaling molecule production systems, such as Thoeris, deplete NAD+ to halt phage replication (Garb et al. 2022). Novel mechanisms involve structural pattern recognition​ (e.g., Zorya detecting conserved phage virion components) and decoy molecule deployment​ (e.g., Panoptes producing cyclic nucleotide mimics) (Burstein et al. 2023; Vassallo et al. 2022)
+            • High-throughput methods have accelerated the identification of defense systems. Bioinformatic prediction leverages "guilt-by-association," identifying genes clustered with known defense systems or within mobile genetic elements (e.g., prophages, integrons) (Doron et al. 2018; Aravind 2000). Domain modularity analyses use conserved protein domains (e.g., DUF3265) as markers for novel systems (Makarova et al. 2013). Functional screening validates defense activity through metagenomic libraries and phage challenge assays in model bacteria (e.g., E. coli, B. subtilis) (Rodriguez-Rodriguez et al. 2025). Tools like DefenseFinder systematize annotation across microbial pangenomes (Georjon et al. 2023). These approaches have revealed systems like Gabija, DISARM, and Brig1, which utilize unique mechanisms such as GTP hydrolysis-driven DNA cleavage or recognition of arabinosyl-cytosine modifications (Garb et al. 2022; Millman et al. 2022).
+            • System synergy enhances protection, as co-occurring systems (e.g., Gabija + Druantia) target multiple phage lifecycle stages, reducing escape probability (Yirmiya et al. 2024; Wu et al. 2024). Negative associations between systems (e.g., Zorya II and ietAS) can still yield synergistic effects against specific phages (Stokar-Avihail et al. 2023). Phage evasion tactics include mutations in phage genes (e.g., DNA polymerase, tail fibers) to evade nucleic acid targeting (Doron et al. 2018), anti-defense proteins (e.g., Acr proteins inhibiting CRISPR-Cas) (Bondy-Denomy et al. 2015; Davidson et al. 2020), and chemical modifications (e.g., arabinosyl-hydroxylcytosine in phage DNA) conferring resistance to restriction enzymes (Yee et al. 2025).
+            • Defense systems cluster in genomic "islands," suggesting horizontal gene transfer facilitates rapid arsenal expansion (Sorek et al. 2018; Bernheim and Sorek 2020). This clustering enables joint transfer of multiple systems, enhancing bacterial adaptability in phage-rich environments (Georjon and Bernheim 2023). Population-level protection is exemplified by abortive infection systems, where individual cell death benefits the broader population (Bernheim and Sorek 2020). Trade-offs exist: high defense gene expression broadens protection but risks autoimmunity (e.g., nonspecific DNA cleavage) (Stokar-Avihail et al. 2023). Defense system diversity varies across bacterial taxa, driven by species-specific viromes and ecological niches (Tesson et al. 2022).
+
+            Defense systems inspire biotechnological tools. Phage-resistant engineering utilizes CRISPR-Cas and R-M systems to protect industrial fermentation processes (Gao et al. 2020). Gene editing leverages nucleases from systems like Argonautes for RNA-guided DNA targeting (Kuzmenko et al. 2020). Future research must address gaps in in situfunctionality and ecological networks beyond lab models (Georjon and Bernheim 2023). Understanding defense evolution is crucial for designing robust antimicrobial strategies, particularly as phage therapy advances (Mayo-Muñoz et al. 2024).`,
+
+          `Phage-based bacterial detection harnesses the natural specificity of bacteriophages—viruses that infect bacteria—to identify target pathogens with high precision. The fundamental principle relies on the irreversible binding of phage particles to specific receptors on the bacterial surface, an interaction that is often unique at the strain level. Following adsorption and infection, the phage typically takes over the host cell's machinery to replicate, ultimately causing lysis and the release of progeny virions. This entire biological cycle provides multiple opportunities for signal generation. Detection strategies can exploit the physical presence of the phage itself, the biochemical consequences of infection (such as the release of intracellular enzymes or ions), or the expression of reporter genes engineered into the phage genome. Crucially, because phage replication is intrinsically linked to the metabolic activity of the host, these methods predominantly detect viable cells, a significant advantage over molecular techniques like PCR that cannot distinguish between live and dead bacteria. This biological fidelity forms the cornerstone of phage-based diagnostics
+
+            • The technological platforms for phage-based detection are diverse, each translating the phage-bacteria interaction into a measurable signal through different mechanisms. Reporter phage systems involve genetically modifying phages to carry genes for easily detectable proteins, such as luciferase or fluorescent proteins; upon infecting a susceptible host, these reporter genes are expressed, producing light or fluorescence that signals the presence of the target bacterium. In phage amplification assays, a sample is incubated with a known quantity of phages, and any subsequent increase in phage titer, measured by traditional plaque assays or more rapid methods like quantitative PCR, indicates the prior presence of viable host bacteria. Furthermore, phages can be integrated directly into biosensor architectures. Whole phages or their receptor-binding proteins can be immobilized on transducer surfaces (e.g., electrodes, quartz crystal microbalances, or optical fibers). The binding of bacterial cells to these phage-coated surfaces alters physical properties—such as mass, electrical impedance, or light refraction—which is then converted into an electronic or optical readout. More recently, the fusion of phage technology with nanomaterials, like phage-conjugated gold nanoparticles or magnetic beads, has further enhanced sensitivity and facilitated sample concentration.
+            • The application of these systems spans critical fields requiring rapid and specific bacterial identification. In clinical diagnostics, phage-based methods offer the potential for same-day identification of pathogens like Mycobacterium tuberculosisor Staphylococcus aureusdirectly from patient samples, along with rapid antibiotic susceptibility testing by monitoring phage propagation in the presence of drugs. For food safety, they are deployed to screen for contaminants such as Listeria monocytogenes, Salmonella, and E. coliO157:H7 throughout the production chain, significantly reducing the time-to-result compared to culture enrichment. Environmental monitoring utilizes phages to track fecal indicator bacteria and specific pathogens in water supplies, while in biodefense, their stability and specificity make them suitable candidates for portable devices designed to detect potential biological threat agents. The common thread across these applications is the need for a fast, reliable answer to mitigate public health risks, manage outbreaks, and ensure safety.
+            • Despite their considerable promise, phage-based detection systems face several challenges that must be addressed for widespread commercialization and regulatory acceptance. A primary technical limitation stems from the very high specificity of most natural phages, which may necessitate using a cocktail of multiple phages to reliably detect all strains of a target species. The performance can also be influenced by complex sample matrices (like food or blood) that may interfere with phage adsorption or the detection signal. From a practical standpoint, the long-term stability of phage-based biosensors outside controlled laboratory conditions and the standardization of phage reagents and protocols require further development. Furthermore, the regulatory pathway for approving these biological recognition elements as diagnostic components is less established than for antibodies or nucleic acid tests, posing a hurdle for clinical adoption. Navigating these technical and regulatory landscapes is essential for translating laboratory prototypes into robust, field-deployable tools.
+
+            The future trajectory of this field is being shaped by powerful synergies with other advanced technologies. Synthetic biology enables the rational engineering of phages, allowing scientists to tailor host ranges, enhance binding affinity, and incorporate sophisticated multi-reporter gene circuits for unambiguous detection. The integration with nanotechnology continues to yield novel biosensing interfaces and signal amplification strategies, pushing detection limits towards single-cell sensitivity. Microfluidic and lab-on-a-chip platforms promise to miniaturize and automate the entire process from sample preparation to analysis, creating handheld, point-of-use devices. Additionally, the incorporation of machine learning for analyzing complex signal patterns from phage-based sensor arrays could enable highly multiplexed detection of numerous pathogens simultaneously. As these convergent innovations mature, phage-based detection is poised to evolve from a promising alternative into a mainstream, indispensable tool for microbiology, offering a powerful combination of speed, specificity, and biological relevance that is difficult to achieve with any other single methodology.`,
+
+          `The human gastrointestinal tract harbors one of the most complex and dynamic microbial ecosystems on Earth, traditionally studied through the lens of its bacterial constituents. However, a silent majority dominates this landscape in sheer numbers: the virome. Comprising an estimated 10^9 to 10^10 virus-like particles per gram of intestinal content, the gut virome is predominantly populated by bacteriophages (phages), viruses that specifically infect bacteria . This vast viral community is not a passive bystander but an active driver of microbial ecology and evolution. In the era of escalating antimicrobial resistance (AMR), understanding the intricate role of the gut virome in the dissemination of antibiotic resistance genes (ARGs) has become a critical frontier in public health research. The gut serves as a primary reservoir for ARGs, a collection known as the resistome, which can be mobilized and transferred between bacterial populations, including from commensals to pathogens, through horizontal gene transfer (HGT) . Phages, through mechanisms like transduction, act as key vectors in this dangerous genetic exchange, shuttling resistance determinants across microbial networks with implications that span clinical medicine, agriculture, and environmental science under the One Health framework.
+            • The composition of the gut virome is remarkably diverse and personalized, shaped by a confluence of host genetics, diet, age, geography, and lifestyle . While dominated by tailed phages of the order Caudoviricetes, the virome also includes smaller ssDNA phages and, intriguingly, giant viruses (nucleocytoplasmic large DNA viruses or NCLDVs) that infect eukaryotic cells, which have recently been identified as unexpected reservoirs of ARGs themselves . A landmark shift in the field came with the first experimental model of a "living gut virome," where scientists successfully induced dormant prophages—viral DNA integrated into bacterial genomes—from cultured human gut isolates. This work revealed that host-derived compounds, such as those released during gut inflammation or from dietary components like the artificial sweetener Stevia, can activate these prophages, dynamically altering the viral landscape and its potential for gene transfer . The virome exists in a constant state of predator-prey interaction with the bacteriome, employing both lytic cycles that destroy host cells and lysogenic cycles that integrate viral DNA into the bacterial chromosome, creating a stable genetic reservoir that can be reactivated later.
+            • The dynamics of ARG dissemination within the gut are influenced by a complex interplay of ecological and genetic factors. Longitudinal tracking of human gut microbiomes has revealed that HGT events are frequent and that specific functions are enriched in transferred segments, notably genes associated with mobile genetic elements (MGEs) like transposases, recombinases, and phage integrases . This creates a network of genetic exchange where certain bacterial species act as "hubs." For example, species carrying genes for molybdenum cofactor biosynthesis or those that are motile show higher connectivity in HGT networks, suggesting they are pivotal in spreading genetic traits, including resistance . The distribution of ARGs is not uniform across bacterial taxa. A global analysis of over 149,000 metagenome-assembled genomes from human guts found marked geographic variation, with Asia exhibiting the highest ARG diversity. At the phylum level, Pseudomonadota (formerly Proteobacteria) were identified as predominant ARG hosts among pathogenic bacteria, with a high prevalence of multidrug-resistant strains in regions like Africa and South America . Importantly, while the gut commensal microbiota harbors a vast diversity of ARGs, the most clinically concerning genes—such as those encoding extended-spectrum beta-lactamases (e.g., CTX-M) and carbapenemases (e.g., KPC, NDM)—remain largely restricted to specific phyla like Pseudomonadota and Bacteroidota, and have not yet widely established themselves across diverse commensal groups . This taxonomic restriction offers a crucial window for intervention.
+            • The dissemination of ARGs is not confined within the gut or even within a single host; it is a cross-boundary phenomenon. Occupational exposure creates a direct "resistome bridge." Veterinary students and livestock workers show significant shifts in their gut microbiome composition toward swine-like communities, with increased abundances of ARGs, demonstrating the transfer of resistant bacteria and their genetic elements across species barriers . This underscores the interconnectedness of human, animal, and environmental health. The role of giant viruses adds another layer of complexity to cross-kingdom gene flow. Strikingly, approximately 39.5% of giant virus genomes have been found to carry ARGs—a rate about 37 times higher than that observed in typical phage genomes . Phylogenetic evidence suggests these viruses acquire ARGs from prokaryotes, eukaryotes, and other phages, positioning them as potential super-vectors capable of facilitating genetic exchange across vastly different domains of life, further complicating the epidemiology of resistance.
+            • Advances in metagenomics, culturomics, and bioinformatics are revolutionizing our ability to study the gut virome and its role in AMR. Traditional metagenomic sequencing of viral DNA (viromics) has been complemented by innovative culturing techniques that allow researchers to isolate and induce phages from live bacterial isolates, moving from fragmented DNA sequences to functional viral entities . New computational tools like LocalHGT are enabling the accurate detection of complete HGT events, including the precise transferred sequences and breakpoints, directly from shotgun metagenomic data . These tools have revealed that HGT patterns can serve as host-specific fingerprints and have identified associations between specific transferred gene pathways and diseases like colorectal cancer and acute diarrhea . The integration of deep learning and structural calculation is even aiding in the discovery of novel, previously uncharacterized classes of ARGs, such as new β-lactam resistance genes, expanding our map of the threat landscape .
+
+            The gut virome is far more than a simple catalog of viruses; it is a dynamic, interactive network that plays a fundamental role in shaping the bacterial resistome. Through transduction and other sophisticated mechanisms, phages act as high-speed genetic shuttles, disseminating antibiotic resistance genes within and between microbial communities. This process is amplified by antibiotic selection pressure and facilitated by mobile genetic elements, with implications that ripple from the individual gut to global public health. While the field of gut viromics is still maturing, it already provides crucial insights for diagnosing resistome risks, understanding disease pathogenesis, and developing next-generation antimicrobial strategies. Future research must focus on unraveling the precise molecular mechanisms of phage-mediated gene transfer, developing tools to monitor and predict these events in real-time, and designing safe, effective interventions that can disrupt this viral highway of resistance without causing collateral damage to the essential ecological balance of the gut microbiome.`,
+
+          `The alarming global escalation of antimicrobial resistance (AMR) constitutes a critical threat to modern medicine. With traditional antibiotic pipelines dwindling and the specter of a "post-antibiotic era" looming, the urgent need for novel antibacterial strategies has catalyzed a powerful renaissance of phage therapy. This therapeutic approach, which utilizes bacteriophages (viruses that specifically infect and lyse bacteria), is re-emerging from its 20th-century origins as a highly promising, precision weapon against multidrug-resistant (MDR) infections. Phage therapy exploits the natural predator-prey dynamic, offering a fundamentally different paradigm characterized by exquisite specificity, self-amplification at the site of infection, and a generally favorable safety profile that spares the commensal microbiota, a significant drawback of broad-spectrum antibiotics.
+
+            • The therapeutic efficacy of phages hinges on their strictly lytic cycle. Obligately lytic phages achieve bacterial killing through a sequence of specific adsorption to bacterial surface receptors, injection of genetic material, hijacking of the host's reproductive machinery, and culminating in cell lysis via phage-encoded endolysins. This targeted mechanism allows for the precise elimination of the pathogenic strain while preserving the beneficial microbiome. Furthermore, phages can penetrate and disrupt biofilms—structured microbial communities that are notoriously resistant to antibiotics—and their ability to self-replicate ensures a dynamic, localized dose that responds to the bacterial load. However, this high specificity necessitates careful matching of phage to the bacterial host, and bacteria can evolve resistance through receptor modification, presenting an ongoing evolutionary arms race that therapy must anticipate.
+            • A rapidly expanding compendium of compassionate-use cases and early-phase clinical trials provides compelling evidence for the clinical potential of phage therapy, particularly against critical ESKAPE pathogens. Notable successes include the use of personalized phage cocktails to combat life-threatening infections caused by carbapenem-resistant Acinetobacter baumannii(CRAB), extensively drug-resistant Pseudomonas aeruginosa, and Klebsiella pneumoniae. For instance, clinical teams have employed strategies like iteratively personalized phage cocktail adaptation to clear persistent CRAB pneumonia. Other documented cases demonstrate efficacy in pediatric cystic fibrosis patients with refractory P. aeruginosalung infections and in chronic wound infections, showcasing application across diverse clinical presentations from pneumonia to bacteremia and soft tissue infections.
+            • To counter the limitations of narrow host range and resistance development, modern phage therapy predominantly employs two sophisticated strategies: phage cocktails and phage-antibiotic synergy (PAS). Therapeutic cocktails combine multiple phages with complementary host ranges, broadening efficacy and minimizing the chance of therapeutic failure due to bacterial resistance. The synergy with antibiotics, however, is particularly powerful. Sub-inhibitory concentrations of certain antibiotics can sensitize bacteria to phage infection by altering cell surface physiology or inducing stress responses, leading to dramatically enhanced bacterial killing. Remarkably, this combination can drive evolutionary trade-offs in bacteria; resistance mutations that allow escape from phage predation (e.g., receptor modification) often restore susceptibility to previously resisted antibiotics, a phenomenon that can be strategically exploited.
+            • A particularly promising offshoot of phage therapy is the development of phage-derived lytic enzymes, primarily endolysins and depolymerases, as standalone antimicrobial agents. Endolysins are enzymes produced by phages at the end of their replication cycle to degrade key structural components of the bacterial cell wall (peptidoglycan), leading to rapid osmotic lysis. When applied exogenously as purified recombinant proteins, these "enzybiotics" act from outside the cell, offering rapid bactericidal activity with a low propensity for resistance development. Depolymerases, another class of phage enzymes, degrade the bacterial capsule, exopolysaccharide, or biofilm matrix. By stripping away this protective layer, depolymerases not only sensitize bacteria to the host immune system and co-administered antibiotics but also directly disrupt the structural integrity of biofilms. The modular nature of these enzymes allows for protein engineering to create chimeric lysins with broadened activity spectra, positioning them as a new class of potent, sequence-specific anti-biofilm and anti-bacterial drugs.
+
+            The future trajectory of phage therapy is being shaped by convergence with cutting-edge technologies. Synthetic biology enables the rational design of next-generation "smart phages" equipped with CRISPR-Cas systems to selectively ablate antibiotic resistance genes or engineered to evade bacterial defenses. Artificial intelligence and machine learning are being harnessed to predict optimal phage cocktails and decipher complex phage-bacteria interaction networks. Concurrently, the establishment of regional and national phage biobanks and therapeutic centers aims to streamline phage isolation, characterization, and deployment. As these efforts mature alongside evolving regulatory dialogues, phage therapy is poised to transition from a salvage intervention of last resort to a standardized, synergistic component within the broader antimicrobial armamentarium, offering a beacon of hope in the relentless fight against drug-resistant pathogens.`,
+
+          `Bacteriophages, the most abundant biological entities on Earth, are sophisticated molecular machines whose life cycle is orchestrated by a diverse arsenal of specialized proteins. These proteins execute precise functions—from host recognition and genome delivery to replication, assembly, and eventual host lysis—with remarkable efficiency and specificity. The advent of high-resolution structural biology techniques, particularly cryo-electron microscopy (cryo-EM) and X-ray crystallography, has revolutionized our understanding of these nanoscale devices, moving from static snapshots to dynamic molecular movies. This review synthesizes recent structural and mechanistic insights into key phage proteins, focusing on the architectural principles that govern host attachment, genome translocation, cell wall degradation, and the ongoing evolutionary arms race with bacterial defense systems. Deciphering these blueprints is not only fundamental to virology but also critical for the rational design of next-generation phage-based therapeutics, diagnostics, and nanotechnology.
+
+            • The initial and critical step of infection is mediated by phage receptor-binding proteins (RBPs), most commonly tail fibers or spikes. These structures function as highly specific molecular keys that recognize and bind to receptors on the bacterial surface, such as lipopolysaccharides (LPS), outer membrane proteins, or pili. Recent atomic-level structures have revealed the modular architecture and adaptive mechanisms of these fibers. For instance, the temperate phage Mu employs two distinct sets of tail fibers (gp49 and gp52) to recognize different hosts, with structural comparisons showing that each fiber uses unique structural motifs for binding different LPS moieties . The well-studied T4 phage long tail fiber is a complex trimeric structure composed of gp34, gp35, gp36, and gp37, with the distal gp37 trimer forming the actual receptor-binding domain . This knowledge provides the "blueprint" for reprogramming phage host range through rational engineering of these RBPs, a key goal for expanding the utility of phage therapy . The structure of bacteriophage lambda's long, flexible tail, solved by cryo-EM, further illuminates the molecular organization of this host recognition and DNA delivery apparatus .
+            • Following irreversible adsorption, the phage must breach the bacterial cell envelope to inject its genetic material. For phages with contractile tails (like T4), this involves a dramatic conformational change where the tail sheath contracts, driving an inner tube through the cell membranes. For phages with non-contractile tails, such as siphovirus T5 or podovirus DEV, the mechanism is equally sophisticated. A landmark 2024 study on Pseudomonasphage DEV revealed a stunning "genome ejection motor" . Three proteins (gp71, gp72, gp73), pre-stored inside the capsid near the tail, are sequentially ejected upon infection. They undergo dramatic refolding: gp73 forms a pore in the outer membrane, gp72 assembles into a tube spanning the periplasm, and gp71 crosses the inner membrane and refolds into a large RNA polymerase-like motor in the cytoplasm. This motor then actively pulls the phage DNA through the constructed channels into the host cell, a process driven by ATP hydrolysis. This integrative structural analysis exemplifies how phage proteins can form transient, complex molecular machines for genome delivery.
+            • To complete the lytic cycle and release progeny virions, phages encode a suite of enzymes dedicated to degrading the host cell wall. The most prominent are endolysins and depolymerases. Endolysins are peptidoglycan hydrolases that cleave specific bonds within the cell wall. Their structures range from simple, single-domain globular proteins common in phages infecting Gram-negative bacteria to larger modular enzymes in phages of Gram-positive hosts, which combine a cell wall-binding domain (CBD) with one or more enzymatically active domains (EADs) . Structural studies, such as those on E. coliO157:H7 phage endolysins LysT84 and LysF1, have defined conserved catalytic triads and revealed how dynamic movements within the active site facilitate hydrolysis . Depolymerases, often virion-associated, are trimeric proteins that degrade the polysaccharide capsule or slime layers, facilitating phage access to the underlying cell surface receptors. Their modular trimeric structure allows for broad substrate recognition, making them potent anti-biofilm agents . A major therapeutic challenge is delivering these enzymes past the outer membrane of Gram-negative bacteria. Innovative engineering strategies, such as creating fusion proteins (Artilysins, Innolysins) that combine an endolysin with a polycationic peptide or an RBP domain, have shown promise in overcoming this barrier .
+            • One of the most powerful molecular motors in biology is the phage DNA packaging motor, which pumps the viral genome into the pre-assembled procapsid against immense internal pressure. This motor is typically a pentameric or hexameric ring ATPase (large terminase subunit) that assembles at the unique portal vertex of the capsid. High-resolution structures of motors from phages like φ29 and T4 have provided unprecedented insights . The φ29 motor incorporates a unique ring of prohead RNA (pRNA) that acts as a scaffold between the ATPase (gp16) and the portal protein . Structural and biochemical analyses suggest an "inchworm" or "revolution" mechanism for DNA translocation, where sequential ATP hydrolysis around the ring induces conformational changes in subunits, gripping and pushing the DNA substrate stepwise into the capsid . Key features include a conserved ATP-binding pocket with Walker A and B motifs, a "DNA translocating loop," and a trans-acting "arginine finger" from one subunit that coordinates hydrolysis in the adjacent subunit, ensuring directional and processive packaging . The ability of some packaging ATPases, like that from phage Asccφ28, to form functional decameric rings in solution provides a valuable system for detailed biophysical dissection .
+            •In the perpetual evolutionary arms race, bacteria have evolved diverse immune systems like CRISPR-Cas and CBASS (cyclic oligonucleotide-based antiphage signaling system). In response, phages encode anti-defense proteins (ADPs) that directly inhibit these systems. Structural biology is crucial for understanding their mechanisms. For example, the CBASS system in bacteria uses cyclic oligonucleotide (cO) signaling to trigger cell suicide upon phage infection. Phages counter this by encoding proteins that degrade the signaling molecules or inhibit the nucleotidyltransferase (CD-NTase) that produces them . Recent studies reveal sophisticated regulation of CD-NTase activity by bacterial accessory proteins (Cap2, Cap3, Cap9, Cap10) through ubiquitin-like conjugation and deconjugation mechanisms, which phages may also target . Resources like the Encyclopaedia of Viral Anti-DefencE Systems (EVADES) catalog hundreds of ADPs, and computational structural analysis suggests common strategies, such as proteins acting as DNA mimics to broadly inhibit defense systems that sense nucleic acids . Another fascinating interplay involves bacterial reverse transcriptase-based defense systems like DRT4, where a phage-encoded DNA-binding protein (ORF55) can paradoxically protect the toxic ssDNA product synthesized by DRT4, leading to cell death and potentially aborting the infection .
+            •The explosion of structural knowledge is driven by methodological advances in integrative structural biology. This field combines cryo-EM, X-ray crystallography, nuclear magnetic resonance (NMR), small-angle X-ray scattering (SAXS), and computational modeling like molecular dynamics simulations to visualize macromolecular complexes in multiple functional states . Cryo-EM, in particular, has enabled the determination of near-atomic resolution structures of massive, asymmetric complexes like entire phage tails or packaging motors that were previously intractable . For instance, the nearly complete structure of bacteriophage DT57C revealed detailed architecture of the head-tail interface and the unusual attachment of lateral tail fibers via a dodecameric collar protein . Molecular dynamics simulations further animate these static structures, predicting functional motions, such as the dynamic interplay between domains in the φ29 packaging ATPase gp16 that powers DNA translocation .
+            •The detailed structural and mechanistic understanding of phage proteins is directly fueling biotechnology and therapeutic applications. Phage display technology exploits the natural ability of coat proteins (like pIII and pVIII) to present foreign peptides, enabling library screening for high-affinity binders . Knowledge of RBP structures enables the rational engineering of phage host ranges by swapping or modifying tail fiber domains. The enzymatic precision of endolysins and depolymerases has inspired their development as standalone "enzybiotics," with protein engineering used to enhance their stability, activity spectrum, and ability to penetrate the outer membrane . Furthermore, the self-assembling, symmetrical nature of phage capsids makes them ideal platforms for nanotechnology, serving as scaffolds for vaccine antigen display, drug delivery vehicles, or templates for inorganic material synthesis . The structural insights into genome packaging motors even inspire the design of synthetic nanomotors.
+
+            In conclusion, structural biology has transformed our view of phages from simple genetic parasites into exquisitely evolved nanomachines. Each protein component is a masterpiece of molecular engineering, optimized for specific tasks within the viral life cycle. From the precise lock-and-key interaction of tail fibers to the powerful rotary action of DNA packaging motors and the tactical sabotage executed by anti-defense proteins, these structures reveal fundamental principles of molecular recognition, energy transduction, and biological conflict. As techniques continue to advance, allowing us to capture these proteins in action at ever-higher temporal and spatial resolution, we will move closer to a complete molecular movie of the phage infection cycle. This knowledge is the foundation for a new era of precision phage engineering, where we can custom-build viral agents and enzymes to combat antibiotic-resistant infections, manipulate microbiomes, and develop novel biomaterials, truly harnessing the structural wisdom of nature's most successful predators.`,
+        ];
+
+        const modalContent = `
+            <div style="background: white; padding: 50px; border-radius: 16px; max-width: 1400px; max-height: 80vh; overflow-y: auto; position: relative;">
+                <button id="closeModal" style="position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666;">&times;</button>
+                <h2 style="color: #1a365d; margin-bottom: 25px; font-size: 2rem;">${titles[index]}</h2>
+                <div style="line-height: 1.8; color: #4a5568; white-space: pre-line;">${descriptions[index]}</div>
+            </div>
+        `;
+
+        modal.innerHTML = modalContent;
+        document.body.appendChild(modal);
+
+        // 添加关闭功能
+        document.getElementById('closeModal').addEventListener('click', function() {
+          document.body.removeChild(modal);
+        });
+
+        // 点击模态框外部也关闭
+        modal.addEventListener('click', function(e) {
+          if (e.target === modal) {
+            document.body.removeChild(modal);
+          }
+        });
+      });
+    });
+
+
+  </script>
+</div>
+<div>  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <i class="fas fa-flask"></i> GU LAB
+      </div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
