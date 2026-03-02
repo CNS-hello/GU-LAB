@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Team</title>
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    :root {
+      --primary: #2c6eb5;
+      --primary-dark: #1a4a8d;
+      --secondary: #3fa796;
+      --accent: #f2a341;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+      --light-gray: #e9ecef;
+      --border-radius: 12px;
+      --box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background:white;
+      color: var(--dark);
+      min-height: 100vh;
+      transition: var(--transition);
+      background-size: cover;
+      background-attachment: fixed;
+    }
+    /* Team Section */
+    .team-section {
+      max-width: 2000px;
+      margin: 40px auto;
+      padding: 20px 20px;
+    }
+
+    .section-title {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      color: var(--primary);
+      position: relative;
+      padding-bottom: 10px;
+      text-align: center;
+    }
+
+    .dark-mode .section-title {
+      color: var(--primary-dark);
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      height: 4px;
+      width: 80px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .team-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+
+    .team-card {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .dark-mode .team-card {
+      background-color: #1e2a45;
+    }
+
+    .team-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    }
+
+    .team-image {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      padding: 15px;
+      position: relative;
+    }
+
+    .dark-mode .team-image {
+      background: #253253;
+    }
+
+    .team-image img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid white;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .dark-mode .team-image img {
+      border-color: #1e2a45;
+    }
+
+    .team-content {
+      padding: 25px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .team-name {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: var(--primary);
+      text-align: center;
+    }
+
+    .dark-mode .team-name {
+      color: var(--primary-dark);
+    }
+
+    .team-position {
+      font-size: 16px;
+      color: var(--gray);
+      margin-bottom: 15px;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .team-interests {
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    .dark-mode .team-interests {
+      color: var(--gray);
+    }
+
+    .team-interests strong {
+      color: var(--dark);
+      font-weight: 600;
+    }
+
+    .dark-mode .team-interests strong {
+      color: var(--dark);
+    }
+
+    .team-contacts {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--light-gray);
+      color: var(--primary);
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .dark-mode .contact-link {
+      background: #253253;
+      color: var(--primary-dark);
+    }
+
+    .contact-link:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    .dark-mode .contact-link:hover {
+      background: var(--primary-dark);
+    }
+
+    .category-title {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 60px 0 30px;
+      color: var(--primary);
+      position: relative;
+      padding-left: 20px;
+    }
+
+    .dark-mode .category-title {
+      color: var(--primary-dark);
+    }
+
+    .category-title::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 24px;
+      width: 6px;
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    /* Footer */
+    .site-footer {
+      background-color: white;
+      padding: 40px 0;
+      text-align: center;
+      margin-top: 60px;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+      transition: var(--transition);
+    }
+
+    .dark-mode .site-footer {
+      background-color: #1a243a;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+    }
+
+    .footer-content {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+
+    .dark-mode .footer-logo {
+      color: var(--primary-dark);
+    }
+
+    .footer-text {
+      color: var(--gray);
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .dark-mode .footer-text {
+      color: var(--gray);
+    }
+
+    .copyright {
+      color: var(--gray);
+      font-size: 14px;
+      margin-top: 20px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 900px) {
+      .team-container {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+      }
+
+      #photo-wall {
+        height: 300px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .section-title {
+        font-size: 28px;
+      }
+
+      .team-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <style>
+
+    /* 照片墙容器 */
+    #photo-wall {
+      position:relative;
+      width: 100%;
+      height: 600px;
+      min-height: 200px;
+      padding-top: 100px;
+    }
+
+  </style><!--球体照片墙-->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f8f9fa;
+      padding-top: 80px; /* 为固定导航栏留出空间 */
+      min-height: 100vh;
+    }
+
+    /* 主要内容容器 */
+    .main-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    /* 导航栏样式 - 固定在顶部 */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 5%;
+      background-color: white;
+      border-bottom: 1px solid #eaeaea;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      z-index: 1000;
+    }
+
+    /* 左侧logo和实验室名称 */
+    .navbar-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* 院徽容器 */
+    .emblem-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    /* 院徽图片样式 */
+    .emblem-img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+
+    /* 竖线分隔符 */
+    .vertical-line {
+      width: 1px;
+      height: 100px;
+      background-color: #171717;
+    }
+
+    /* 实验室logo图片样式 */
+    .lab-logo-img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+    }
+
+    .lab-name {
+      font-family: "Segoe Script";
+      font-size: 60px;
+      font-weight: 700;
+      color: rgba(34, 34, 34, 0.92);
+      letter-spacing: 1px;
+      margin-left: 20px;
+    }
+
+    /* 右侧导航菜单 */
+    .navbar-right {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .nav-item {
+      position: relative;
+      font-size: 20px;
+      font-weight: 500;
+      color: #333;
+      text-decoration: none;
+      padding: 8px 0;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    /* 悬浮效果 */
+    .nav-item:hover {
+      color: #0077cc;
+      transform: translateY(-2px);
+    }
+
+    /* 悬浮时显示浅蓝色横线 */
+    .nav-item::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 3px;
+      bottom: 0;
+      left: 0;
+      background-color: #4da6ff;
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+
+    .nav-item:hover::after {
+      width: 100%;
+    }
+
+    /* 当前选中的项目 */
+    .nav-item.active {
+      color: #0077cc;
+    }
+
+    .nav-item.active::after {
+      width: 100%;
+      background-color: #4da6ff;
+    }
+
+    /* 页面内容 */
+    .header {
+      margin-bottom: 40px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 20px;
+    }
+
+    .header h1 {
+      color: #333;
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      color: #666;
+      font-size: 16px;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+    }
+
+    .section h2 {
+      color: #333;
+      margin-bottom: 15px;
+      font-size: 24px;
+    }
+
+    .section p {
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 1024px) {
+      .navbar {
+        padding: 12px 3%;
+      }
+
+      .navbar-right {
+        gap: 30px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        padding: 15px;
+        gap: 20px;
+      }
+
+      .navbar-left {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .navbar-right {
+        width: 100%;
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .nav-item {
+        font-size: 15px;
+      }
+
+      .lab-name {
+        font-size: 24px;
+      }
+
+      .emblem-img, .lab-logo-img {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .navbar-left {
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .emblem-container {
+        margin-bottom: 10px;
+      }
+
+      .lab-name {
+        margin-left: 0;
+        width: 100%;
+      }
+
+      .navbar-right {
+        gap: 10px;
+      }
+
+      .nav-item {
+        font-size: 14px;
+        padding: 5px;
+      }
+    }
+  </style><!-- 导航栏 -->
+  <style>
+    .containerpi {
+      width: 100%;
+      max-width: 2000px;
+      align-items: center;
+      margin: 40px auto;
+      padding-top: 100px;
+      background-color: #f8f9fa;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      width: 100%;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      color: #1a365d;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      color: #666;
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* PI简介卡片样式 */
+    .pi-card {
+      width: 100%;
+      max-width: 1000px;
+      background-color: #f8f9fa;
+      border-radius: 12px;
+      overflow: hidden;
+      display: grid;
+      flex-direction: column;
+      transition: all 0.3s ease;
+    }
+
+    .pi-main-content {
+      display: flex;
+      padding: 40px;
+      gap: 40px;
+    }
+
+    /* 照片区域 */
+    .pi-photo-container {
+      flex: 0 0 280px;
+    }
+
+    .pi-photo {
+      width: 100%;
+      height: 350px;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .pi-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .pi-photo:hover img {
+      transform: scale(1.05);
+    }
+
+    .photo-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+      padding: 20px;
+      color: white;
+    }
+
+    .photo-overlay h3 {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+
+    .photo-overlay p {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    /* 个人信息区域 */
+    .pi-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .pi-name {
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: #1a365d;
+      margin-bottom: 8px;
+    }
+
+    .pi-title {
+      font-size: 1.3rem;
+      color: #2d3748;
+      margin-bottom: 30px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .pi-title:after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background-color: #3182ce;
+    }
+
+    .contact-info {
+      margin-top: 20px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 18px;
+      color: #4a5568;
+    }
+
+    .contact-icon {
+      width: 36px;
+      height: 36px;
+      background-color: #ebf8ff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      color: #3182ce;
+      font-size: 1.1rem;
+    }
+
+    .contact-text {
+      font-size: 1.1rem;
+    }
+
+    .contact-text a {
+      color: #3182ce;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .contact-text a:hover {
+      color: #2c5282;
+      text-decoration: underline;
+    }
+
+    /* 可展开的详细信息区域 */
+    .pi-details {
+      background-color: #f7fafc;
+      border-top: 1px solid #e2e8f0;
+      padding: 0 40px;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.5s ease;
+    }
+
+    .pi-details.active {
+      padding: 40px;
+      max-height: 1200px;
+    }
+
+    .details-section {
+      margin-bottom: 40px;
+    }
+
+    .details-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .details-section h3 {
+      font-size: 1.5rem;
+      color: #1a365d;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #3182ce;
+      display: flex;
+      align-items: center;
+    }
+
+    .details-section h3 i {
+      margin-right: 12px;
+      color: #3182ce;
+    }
+
+    .details-list {
+      list-style-type: none;
+    }
+
+    .details-list li {
+      margin-bottom: 15px;
+      padding-left: 28px;
+      position: relative;
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    .details-list li:before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #3182ce;
+      font-weight: bold;
+    }
+
+    .year {
+      font-weight: 600;
+      color: #2d3748;
+      display: inline-block;
+      min-width: 80px;
+    }
+
+    /* 展开/收起按钮 */
+    .read-more-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background-color: #3182ce;
+      color: white;
+      border: none;
+      padding: 16px 30px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 30px auto 0;
+      box-shadow: 0 4px 6px rgba(50, 130, 206, 0.2);
+    }
+
+    .read-more-btn:hover {
+      background-color: #2c5282;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(50, 130, 206, 0.3);
+    }
+
+    .read-more-btn i {
+      transition: transform 0.3s ease;
+    }
+
+    .read-more-btn.active i {
+      transform: rotate(180deg);
+    }
+
+    .btn-text {
+      margin-right: 8px;
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 900px) {
+      .pi-main-content {
+        flex-direction: column;
+        padding: 30px;
+      }
+
+      .pi-photo-container {
+        flex: none;
+        max-width: 300px;
+        margin: 0 auto 30px;
+      }
+
+      .pi-details.active {
+        padding: 30px;
+      }
+
+      .pi-details {
+        padding: 0 30px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .header h1 {
+        font-size: 2rem;
+      }
+
+      .pi-name {
+        font-size: 2rem;
+      }
+
+      .pi-main-content {
+        padding: 20px;
+      }
+
+      .pi-details.active {
+        padding: 20px;
+      }
+
+      .pi-details {
+        padding: 0 20px;
+      }
+
+      .contact-item {
+        flex-wrap: wrap;
+      }
+    }
+  </style><!-- PI card -->
+</head>
+<body>
+<!-- 固定在顶部的导航栏 -->
+<nav class="navbar">
+  <!-- 左侧：院徽、竖线、实验室logo和实验室名称 -->
+  <div class="navbar-left" style="padding-left: 150px">
+    <div class="emblem-container">
+      <!-- 院徽图片 -->
+      <img src="image/index-labpage2/yuanhui.jpg" alt="吉林大学动物医学学院院徽" class="emblem-img">
+      <!-- 实验室logo图片 -->
+
+    </div>
+    <div class="lab-name">The Gu Lab</div>
+  </div>
+
+  <!-- 右侧：导航菜单 -->
+  <div class="navbar-right" style="padding-right: 150px">
+    <a href="index.html" class="nav-item">Home</a>
+    <a href="research.html" class="nav-item">Research</a>
+    <a href="publication.html" class="nav-item">Publications</a>
+    <a href="team.html" class="nav-item active">Team</a>
+    <a href="protocol.html" class="nav-item">Protocol</a>
+    <a href="link.html" class="nav-item">Link</a>
+  </div>
+</nav>
+
+<!-- Photo Wall -->
+<div id="photo-wall"></div>
+<div class="containerpi">
+ <div class="pi-card">
+  <div class="pi-main-content">
+    <!-- 左侧：PI照片 -->
+    <div class="pi-photo-container">
+      <div class="pi-photo">
+        <!-- 此处使用占位图片，实际使用时可替换为PI真实照片 -->
+        <img src="image/members/GU-photo.jpg" alt="顾敬敏">
+      </div>
+    </div>
+
+    <!-- 右侧：个人信息 -->
+    <div class="pi-info">
+      <div>
+        <h2 class="pi-name">Prof. Jingmin Gu/顾敬敏</h2>
+        <div class="pi-title">Principal Investigator</div>
+
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="contact-text">
+             jingmin0629@163.com
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-phone"></i>
+            </div>
+            <div class="contact-text">
+             XXXX
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="contact-text">
+              Room 604, Basis Teaching Building, Heping Campus, Jilin University
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 详细信息区域（默认隐藏） -->
+  <div class="pi-details" id="piDetails">
+    <div class="details-section">
+      <h3><i class="fas fa-graduation-cap"></i> 教育经历</h3>
+      <ul class="details-list">
+        <li><span class="year">2015-2018</span> 博士后，哈佛大学医学院，美国</li>
+        <li><span class="year">2010-2015</span> 博士，微生物学，剑桥大学，英国</li>
+        <li><span class="year">2006-2010</span> 学士，生物科学，清华大学，中国</li>
+        <li><span class="year">2003-2006</span> 高级中学，北京四中，中国</li>
+      </ul>
+    </div>
+
+    <div class="details-section">
+      <h3><i class="fas fa-award"></i> 获奖经历</h3>
+      <ul class="details-list">
+        <li><span class="year">2022</span> 国家自然科学基金杰出青年科学基金</li>
+        <li><span class="year">2021</span> 吉林省科学技术进步一等奖</li>
+        <li><span class="year">2020</span> 中国青年科技奖</li>
+        <li><span class="year">2019</span> 国家卫生健康委员会科技进步二等奖</li>
+        <li><span class="year">2018</span> 霍英东教育基金会青年教师奖</li>
+        <li><span class="year">2017</span> 美国微生物学会青年研究员奖</li>
+      </ul>
+    </div>
+
+    <div class="details-section">
+      <h3><i class="fas fa-hand-holding-usd"></i> 基金资助</h3>
+      <ul class="details-list">
+        <li><span class="year">2023-2026</span> 国家自然科学基金重点项目：噬菌体与宿主相互作用的分子机制研究（320万元）</li>
+        <li><span class="year">2021-2024</span> 国家重点研发计划课题：新型抗菌药物的设计与开发（280万元）</li>
+        <li><span class="year">2020-2023</span> 国家自然科学基金面上项目：噬菌体抗性机制研究（85万元）</li>
+        <li><span class="year">2019-2022</span> 吉林省科技发展计划项目：动物源性细菌耐药性监测（60万元）</li>
+        <li><span class="year">2018-2021</span> 教育部新世纪优秀人才支持计划（50万元）</li>
+      </ul>
+    </div>
+
+    <div class="details-section">
+      <h3><i class="fas fa-briefcase"></i> 工作经历</h3>
+      <ul class="details-list">
+        <li><span class="year">2021-至今</span> 吉林大学动物医学学院，教授，博士生导师</li>
+        <li><span class="year">2018-2021</span> 吉林大学动物医学学院，副教授</li>
+        <li><span class="year">2015-2018</span> 哈佛大学医学院，博士后研究员</li>
+        <li><span class="year">2014-2015</span> 剑桥大学，研究助理</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 展开/收起按钮 -->
+  <button class="read-more-btn" id="readMoreBtn">
+    <span class="btn-text">Read more</span>
+    <i class="fas fa-chevron-down"></i>
+  </button>
+</div>
+</div>
+
+<!-- Team Members -->
+<div class="team-section">
+  <h3 class="category-title">Current Team</h3>
+  <div class="team-container">
+
+
+    <!-- 冀亚路 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/jiyalu2-photo.jpg" alt="冀亚路">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">冀亚路/Yalu Ji</h3>
+        <div class="team-position">Postdoc Fellow, 2023</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          噬菌体组学、耐药基因研究、肠道微生物组
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:jiyalu120@163.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 张梅梅 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/zhangmeimei-photo.jpg" alt="张梅梅">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">张梅梅/Meimei Zhang</h3>
+        <div class="team-position">Ph.D. Candidate</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          沙门氏菌噬菌体毒性蛋白
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:hanzhang@163.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- 周雨晴 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/zhouyuqing-photo.jpg" alt="周雨晴">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">周雨晴/Yuqing Zhou</h3>
+        <div class="team-position">Ph.D. Candidate</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          噬菌体裂解酶、细菌检测
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:jingmin0629@163.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 路艳 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/luyan-photo.jpg" alt="路艳">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">路艳/Yan Lu</h3>
+        <div class="team-position">Ph.D. Candidate</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          铜绿假单胞菌与噬菌体的相互作用
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:850462855@qq.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 邱操 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/qiucao-photo.jpg" alt="邱操">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">邱操/Cao Qiu</h3>
+        <div class="team-position">Ph.D. Candidate</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          噬菌体防御系统
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:qiucao2021@163.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- 王丽 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/wangli-photo.jpg" alt="王丽">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">王丽/Li Wang</h3>
+        <div class="team-position">Ph.D. Candidate</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          金黄色葡萄球菌与噬菌体的相互作用
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:1350670958@qq.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 宋利然 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/songliran-photo.jpg" alt="宋利然">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">宋利然/Liran Song</h3>
+        <div class="team-position">Graduate Student</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          噬菌体抗菌蛋白
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:1964064510@qq.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 宁晖 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/ninghui-photo.jpg" alt="宁晖">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">宁晖/Hui Ning</h3>
+        <div class="team-position">Graduate Student</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          微生物组学
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:15754674768@163.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 李晓楠 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/lixiaonan2-photo.jpg" alt="李晓楠">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">李晓楠/Xiaonan Li</h3>
+        <div class="team-position">Graduate Student</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          噬菌体防御系统
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:lixn0224@163.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 马益明 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/mayiming-photo.jpg" alt="马益明">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">马益明/Yiming Ma</h3>
+        <div class="team-position">Graduate Student</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          噬菌体与材料交叉应用
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:2478845916@qq.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 杨航 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/yanghang-photo.jpg" alt="杨航">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">杨航/Hang Yang</h3>
+        <div class="team-position">Graduate Student</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          噬菌体防御系统
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:820459039@qq.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 丁薇 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/dingwei-photo.jpg" alt="丁薇">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">丁薇/Wei Ding</h3>
+        <div class="team-position">Graduate Student</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          细菌检测
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:dingweivi@163.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 杨若文 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/yangruowen-photo.jpg" alt="丁薇">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">杨若文/Ruowen Yang</h3>
+        <div class="team-position">Graduate Student</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          沙门氏菌
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:2917686214@qq.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 甘舒琳 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/ganshulin-photo.jpg" alt="丁薇">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">甘舒琳/Shulin Gan</h3>
+        <div class="team-position">Graduate Student</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          铜绿假单胞菌
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:15183298463@163.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 杜芊芊 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/duqianqian-photo.jpg" alt="丁薇">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">杜芊芊/Qianqian Du</h3>
+        <div class="team-position">Graduate Student</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+          细菌检测
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:1825305505@qq.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+  <h3 class="category-title">Alumni</h3>
+  <div class="team-container">
+    <!-- 赵日虹 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/zhaorihong-photo.jpg" alt="赵日虹">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">赵日虹/Rihong Zhao</h3>
+        <div class="team-position">Ph.D.</div>
+        <div class="team-contacts">
+          <a href="mailto:jingmin0629@163.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 张博威 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/zhangbowei-photo.jpg" alt="张博威">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">张博威/Bowei Zhang</h3>
+        <div class="team-position">Master</div>
+        <div class="team-contacts">
+          <a href="mailto:457510281@qq.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 覃荔 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/qinli-photo.jpg" alt="覃荔">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">覃荔/Li Qin</h3>
+        <div class="team-position">Master</div>
+        <div class="team-contacts">
+          <a href="mailto:1286539809@qq.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 姜珊杉 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="image/members/jiangshanshan-photo.jpg" alt="姜珊杉">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">姜珊杉/Shanshan Jiang</h3>
+        <div class="team-position">Master</div>
+        <div class="team-contacts">
+          <a href="mailto:qflss33@163.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="category-title">Visiting Scholar</h3>
+  <div class="team-container">
+    <!-- 示例访问学者1 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="https://via.placeholder.com/150" alt="访问学者">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name"></h3>
+        <div class="team-position">欢迎交流访问</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:example@university.edu" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 示例访问学者2 -->
+    <div class="team-card">
+      <div class="team-image">
+        <img src="https://via.placeholder.com/150" alt="访问学者">
+      </div>
+      <div class="team-content">
+        <h3 class="team-name"></h3>
+        <div class="team-position">欢迎交流访问</div>
+        <p class="team-interests">
+          <strong>研究方向：</strong>
+
+        </p>
+        <div class="team-contacts">
+          <a href="mailto:example@university.edu" class="contact-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-logo">
+      <i class="fas fa-flask"></i> GU LAB
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Photo Wall Implementation
+  const PHOTO_WALL_CONFIG = {
+    PHOTO_COUNT: 60,
+    PHOTO_SIZE: 5,
+    SPHERE_RADIUS: 22,
+    ANIM_SPEED: 0.1,
+    CAMERA_DISTANCE: 40
+  };
+
+  let scene, camera, renderer, photosGroup;
+  let isDragging = false;
+  let mouseX = 0, mouseY = 0;
+
+  function initPhotoWall() {
+    // 获取容器元素
+    const container = document.getElementById('photo-wall');
+
+    // 确保容器存在且有尺寸
+    if (!container || container.clientWidth === 0 || container.clientHeight === 0) {
+      console.error("Photo wall container not found or has zero dimensions");
+      return;
+    }
+
+    // 初始化Three.js场景
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(
+            75,
+            container.clientWidth / container.clientHeight,
+            0.1,
+            1000
+    );
+
+    renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true // 透明背景
+    });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container.appendChild(renderer.domElement);
+
+    // 创建照片组
+    photosGroup = new THREE.Group();
+    scene.add(photosGroup);
+
+    // 生成球面位置
+    const positions = [];
+    const goldenRatio = (1 + Math.sqrt(5)) / 2;
+    for (let i = 0; i < PHOTO_WALL_CONFIG.PHOTO_COUNT; i++) {
+      const theta = 2 * Math.PI * i / goldenRatio;
+      const phi = Math.acos(1 - 2 * (i + 0.5) / PHOTO_WALL_CONFIG.PHOTO_COUNT);
+      positions.push(new THREE.Vector3(
+              PHOTO_WALL_CONFIG.SPHERE_RADIUS * Math.cos(theta) * Math.sin(phi),
+              PHOTO_WALL_CONFIG.SPHERE_RADIUS * Math.sin(theta) * Math.sin(phi),
+              PHOTO_WALL_CONFIG.SPHERE_RADIUS * Math.cos(phi)
+      ));
+    }
+
+    // 创建照片
+    const textureLoader = new THREE.TextureLoader();
+    for (let i = 0; i < PHOTO_WALL_CONFIG.PHOTO_COUNT; i++) {
+      textureLoader.load(`https://picsum.photos/200/200?random=${i}`, (texture) => {
+        const geometry = new THREE.PlaneGeometry(
+                PHOTO_WALL_CONFIG.PHOTO_SIZE,
+                PHOTO_WALL_CONFIG.PHOTO_SIZE
+        );
+        const material = new THREE.MeshBasicMaterial({
+          map: texture,
+          side: THREE.DoubleSide,
+          transparent: true
+        });
+        const photo = new THREE.Mesh(geometry, material);
+
+        // 初始动画位置
+        photo.position.set(
+                (Math.random() - 0.5) * 50,
+                (Math.random() - 0.5) * 50,
+                (Math.random() - 0.5) * 50
+        );
+
+        // 存储目标位置
+        photo.userData = {
+          target: positions[i],
+          arrived: false
+        };
+
+        photosGroup.add(photo);
+      });
+    }
+
+    // 设置相机
+    camera.position.z = PHOTO_WALL_CONFIG.CAMERA_DISTANCE;
+
+    // 事件监听
+    container.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    document.addEventListener('mouseup', () => isDragging = false);
+    document.addEventListener('mousemove', (e) => {
+      if (isDragging) {
+        const deltaX = e.clientX - mouseX;
+        const deltaY = e.clientY - mouseY;
+        photosGroup.rotation.y += deltaX * 0.005;
+        photosGroup.rotation.x += deltaY * 0.005;
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      }
+    });
+
+    // 响应式处理
+    window.addEventListener('resize', () => {
+      const container = document.getElementById('photo-wall');
+      if (!container) return;
+
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+  }
+
+  // 动画循环
+  function animate() {
+    requestAnimationFrame(animate);
+
+    // 照片移动动画
+    let allArrived = true;
+    if (photosGroup && photosGroup.children) {
+      photosGroup.children.forEach(photo => {
+        if (!photo.userData.arrived) {
+          const distance = photo.position.distanceTo(photo.userData.target);
+          if (distance > 0.1) {
+            photo.position.lerp(photo.userData.target, PHOTO_WALL_CONFIG.ANIM_SPEED);
+            allArrived = false;
+          } else {
+            photo.userData.arrived = true;
+          }
+        }
+        if (camera) {
+          photo.lookAt(camera.position);
+        }
+      });
+    }
+
+    // 自动旋转
+    if (!isDragging && allArrived && photosGroup) {
+      photosGroup.rotation.y += 0.002;
+    }
+
+    if (renderer && scene && camera) {
+      renderer.render(scene, camera);
+    }
+  }
+
+  // 确保DOM加载完成后再初始化
+  document.addEventListener('DOMContentLoaded', () => {
+    initPhotoWall();
+    animate();
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const readMoreBtn = document.getElementById('readMoreBtn');
+    const piDetails = document.getElementById('piDetails');
+    const btnText = document.querySelector('.btn-text');
+
+    readMoreBtn.addEventListener('click', function() {
+      // 切换详细信息区域的显示状态
+      piDetails.classList.toggle('active');
+
+      // 切换按钮文本和图标
+      if (piDetails.classList.contains('active')) {
+        btnText.textContent = 'Show less';
+        readMoreBtn.classList.add('active');
+      } else {
+        btnText.textContent = 'Read more';
+        readMoreBtn.classList.remove('active');
+      }
+    });
+
+    // 模拟数据加载（实际使用时可从API获取）
+    console.log('PI简介页面已加载');
+  });
+</script><!-- pi card -->
+</body>
+</html>
