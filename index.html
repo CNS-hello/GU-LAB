@@ -4,64 +4,262 @@
     <meta charset="UTF-8">
     <title>Gu Lab</title>
     <meta name="author " content="邱操">
-    <meta name="description" content="这是一个用于吉林大学顾敬敏教授课题组的文化展示页面，无商业用途，网页设计参考了诸多开源素材，如有侵权请及时联系">
+    <meta name="description" content="这是一个用于吉林大学顾敬敏教授课题组的展示网页，所有代码由邱操编写并保留该网站所有权利，需要借鉴请联系实验室负责人，禁止将源代码用于商业用途，侵权必究！">
     <meta name="keywords" content="顾敬敏，吉林大学动物医学学院，噬菌体，裂解酶，超级细菌，phage,LysGH15，解聚酶 ">
     <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body, html {
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        .image-container {
+        body {
+            background-color: #f8f9fa;
+            padding-top: 80px; /* 为固定导航栏留出空间 */
+            min-height: 100vh;
+        }
+
+        /* 主要内容容器 */
+        .main-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        /* 导航栏样式 - 固定在顶部 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 9.5%; /* 距离网页顶部xxx个像素 */
-
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 5%;
+            background-color: white;
+            border-bottom: 1px solid #eaeaea;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
         }
 
-        .image-link {
-            text-decoration: none; /* 去除超链接下划线 */
-            margin: 0 0; /* 为图片之间设置间距，这里设置较小以近似"左右连接"效果，根据图片实际情况可能需要调整 */
-            width: 20%;
-            background-size: cover;
+        /* 左侧logo和实验室名称 */
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
 
-        .image-link img {
-            width:100%; /* 图片宽度为容器宽度的1/4，减去间距以保持并列 */
-            height: 4%;
-            transition: transform 0.3s ease; /* 设置图片悬浮效果的过渡动画 */
-            margin-top: 0.8%;
+        /* 院徽容器 */
+        .emblem-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        .image-link:hover img {
-            transform: scale(1.1); /* 鼠标悬停时放大图片，可以调整放大的比例 */
+        /* 院徽图片样式 */
+        .emblem-img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            border-radius: 4px;
         }
 
-        /* 针对第一个和最后一个图片链接，去除左右的间距 */
-        .image-container .image-link:first-child {
-            margin-left: 0;
+        /* 竖线分隔符 */
+        .vertical-line {
+            width: 1px;
+            height: 100px;
+            background-color: #171717;
         }
 
-        .image-container .image-link:last-child {
-            margin-right: 0;
+        /* 实验室logo图片样式 */
+        .lab-logo-img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
         }
 
-        /* 针对图片容器本身设置左右间距 */
-        .image-container {
-            max-width: 100%; /* 设置容器宽度为视口的100%减去左右各8像素的间距 */
-            margin-left: auto;
-            margin-right: auto;
+        .lab-name {
+            font-family: "Segoe Script";
+            font-size: 60px;
+            font-weight: 700;
+            color: rgba(34, 34, 34, 0.92);
+            letter-spacing: 1px;
+            margin-left: 20px;
         }
-        body{
-            background-image: url("image/background-photo/index-background.jpg");
-            background-size: contain;
-            background-repeat: no-repeat;
-            overflow-x: hidden;
+
+        /* 右侧导航菜单 */
+        .navbar-right {
+            display: flex;
+            gap: 40px;
+            align-items: center;
         }
-        </style><!-- 导航栏 -->
+
+        .nav-item {
+            position: relative;
+            font-size: 20px;
+            font-weight: 500;
+            color: #333;
+            text-decoration: none;
+            padding: 8px 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* 悬浮效果 */
+        .nav-item:hover {
+            color: #0077cc;
+            transform: translateY(-2px);
+        }
+
+        /* 悬浮时显示浅蓝色横线 */
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            left: 0;
+            background-color: #4da6ff;
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        /* 当前选中的项目 */
+        .nav-item.active {
+            color: #0077cc;
+        }
+
+        .nav-item.active::after {
+            width: 100%;
+            background-color: #4da6ff;
+        }
+
+        /* 页面内容 */
+        .header {
+            margin-bottom: 40px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .section p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1024px) {
+            .navbar {
+                padding: 12px 3%;
+            }
+
+            .navbar-right {
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px;
+                gap: 20px;
+            }
+
+            .navbar-left {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .navbar-right {
+                width: 100%;
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-item {
+                font-size: 15px;
+            }
+
+            .lab-name {
+                font-size: 24px;
+            }
+
+            .emblem-img, .lab-logo-img {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar-left {
+                flex-wrap: wrap;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .emblem-container {
+                margin-bottom: 10px;
+            }
+
+            .lab-name {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .navbar-right {
+                gap: 10px;
+            }
+
+            .nav-item {
+                font-size: 14px;
+                padding: 5px;
+            }
+        }
+    </style><!-- 导航栏 -->
     <style>
         * {
             margin: 0;
@@ -71,28 +269,7 @@
         }
 
 
-
-        /* 实验室名称和标语 */
-        .lab-header {
-            text-align: center;
-            padding: 15% 0 3%;
-            animation: fadeInDown 1.5s ease-out;
-            height: 20%;
-        }
-
-        .lab-name {
-            font-size: 5rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            text-shadow: 0 5px 15px rgb(187, 205, 232);
-            background: linear-gradient(to right, #4facfe, #00f2fe);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: 2px;
-        }
-
-        /* 板块容器 */
+         /* 板块容器 */
 
         .sections-container2 {
             max-width: 2000px;
@@ -325,7 +502,6 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('https://api.mapbox.com/styles/v1/mapbox/dark-v10/static/-83.077,42.280,14,0,0/600x300?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmZjBkMTgifQ.-g_vE53SD2WrJ6tFX7QHmA') no-repeat center center;
             background-size: cover;
             opacity: 0.8;
         }
@@ -382,32 +558,20 @@
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(79, 172, 254, 0.6);
         }
-
-        /* 页脚 */
+        /* 页脚样式 */
         .footer {
             text-align: center;
-            padding: 40px 0;
-            margin-top: 60px;
-            background: rgb(255, 255, 255);
-            font-size: 2rem;
-            color: #131313;
+            padding: 40px 20px;
+            margin-top: 40px;
+            background-color: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            color: #666;
         }
 
         .footer p {
-            margin: 10px 0;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
         }
-
-        .footer a {
-            color: #4facfe;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer a:hover {
-            color: #00f2fe;
-            text-decoration: underline;
-        }
-
         /* 动画 */
         @keyframes fadeInDown {
             from {
@@ -486,28 +650,29 @@
     </style>
 </head>
 <body>
-<div >
-    <div style="height: 100%" class="image-container">
-        <a href="index.html" class="image-link" data-title="首页">
-            <img src="image/index-labpage2/home3.png" alt="首页">
-        </a>
-        <a href="people.html" class="image-link" data-title="团队成员">
-            <img src="image/index-labpage2/team.png" alt="团队">
-        </a>
-        <a href="publication.html" class="image-link" data-title="研究成果">
-            <img src="image/index-labpage2/publication3.png" alt="出版物">
-        </a>
-        <a href="protocol.html" class="image-link" data-title="实验方法">
-            <img src="image/index-labpage2/protocol2.png" alt="实验方法">
-        </a>
-        <a href="link.html" class="image-link" data-title="资源链接">
-            <img src="image/index-labpage2/Link2.png" alt="资源链接">
-        </a>
+<!-- 固定在顶部的导航栏 -->
+<nav class="navbar">
+    <!-- 左侧：院徽、竖线、实验室logo和实验室名称 -->
+    <div class="navbar-left" style="padding-left: 150px">
+        <div class="emblem-container">
+            <!-- 院徽图片 -->
+            <img src="image/index-labpage2/yuanhui.jpg" alt="吉林大学动物医学学院院徽" class="emblem-img">
+            <!-- 实验室logo图片 -->
+
+        </div>
+        <div class="lab-name">The Gu Lab</div>
     </div>
-    <div class="lab-header">
-        <h1 id="disappearing-text" class="lab-name">WELCOME</h1>
+
+    <!-- 右侧：导航菜单 -->
+    <div class="navbar-right" style="padding-right: 150px">
+        <a href="index.html" class="nav-item active">Home</a>
+        <a href="research.html" class="nav-item">Research</a>
+        <a href="publication.html" class="nav-item">Publications</a>
+        <a href="team.html" class="nav-item">Team</a>
+        <a href="protocol.html" class="nav-item">Protocol</a>
+        <a href="link.html" class="nav-item">Link</a>
     </div>
-</div>
+</nav>
 <!-- 主要内容区域 -->
 <div class="sections-container2">
     <!-- 研究方向板块 -->
@@ -595,24 +760,10 @@
     </section>
 </div>
 <!-- 页脚 -->
+<!-- 页脚 -->
 <footer class="footer">
-    <p>© 2025 GU LAB</p>
+    <p>© 2026 The Gu Lab - College of Veterinary Medicine, Jilin University. All rights reserved.</p>
 </footer>
-<script>
-    // 获取元素
-    var element = document.getElementById('disappearing-text');
 
-    // 设置5秒后执行消失操作
-    setTimeout(function() {
-        // 方式1：隐藏元素（保留空间）
-        //element.style.display = 'none';
-
-        // 方式2：让元素透明（保留空间）
-        element.style.opacity = '0';
-
-        // 方式3：移除元素（不保留空间）
-        // element.parentNode.removeChild(element);
-    }, 2000); // 5000毫秒 = 5秒
-</script>
 </body>
 </html>
