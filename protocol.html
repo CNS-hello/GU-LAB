@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Protocol</title>
-     <link rel="icon" href="favicon.ico">
     <style>
         * {
             margin: 0;
@@ -256,48 +255,258 @@
         }
     </style><!--来自元宝-->
     <style>
-        body, html {
+        * {
             margin: 0;
             padding: 0;
-        }
-        .image-container {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 30px;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        .image-link {
-            text-decoration: none;
-            margin: 0 0;
-            width: 20%;
+        body {
+            background-color: #f8f9fa;
+            padding-top: 80px; /* 为固定导航栏留出空间 */
+            min-height: 100vh;
         }
 
-        .image-link img {
+        /* 主要内容容器 */
+        .main-container {
             width: 100%;
-            height: 4%;
-            transition: transform 0.3s ease;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
         }
 
-        .image-link:hover img {
-            transform: scale(1.1);
+        /* 导航栏样式 - 固定在顶部 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 5%;
+            background-color: white;
+            border-bottom: 1px solid #eaeaea;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
         }
 
-        .image-container .image-link:first-child {
-            margin-left: 0;
+        /* 左侧logo和实验室名称 */
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
 
-        .image-container .image-link:last-child {
-            margin-right: 0;
+        /* 院徽容器 */
+        .emblem-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        .image-container {
-            max-width: calc(100% - 16px);
-            margin-left: auto;
-            margin-right: auto;
+        /* 院徽图片样式 */
+        .emblem-img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            border-radius: 4px;
         }
 
-    </style><!--导航栏-->
+        /* 竖线分隔符 */
+        .vertical-line {
+            width: 1px;
+            height: 100px;
+            background-color: #171717;
+        }
+
+        /* 实验室logo图片样式 */
+        .lab-logo-img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+
+        .lab-name {
+            font-family: "Segoe Script";
+            font-size: 60px;
+            font-weight: 700;
+            color: rgba(34, 34, 34, 0.92);
+            letter-spacing: 1px;
+            margin-left: 20px;
+        }
+
+        /* 右侧导航菜单 */
+        .navbar-right {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-item {
+            font-family:  'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: relative;
+            font-size: 20px;
+            font-weight: 500;
+            color: #333;
+            text-decoration: none;
+            padding: 8px 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* 悬浮效果 */
+        .nav-item:hover {
+            color: #0077cc;
+            transform: translateY(-2px);
+        }
+
+        /* 悬浮时显示浅蓝色横线 */
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            left: 0;
+            background-color: #4da6ff;
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        /* 当前选中的项目 */
+        .nav-item.active {
+            color: #0077cc;
+        }
+
+        .nav-item.active::after {
+            width: 100%;
+            background-color: #4da6ff;
+        }
+
+        /* 页面内容 */
+        .header {
+            margin-bottom: 40px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .section p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1024px) {
+            .navbar {
+                padding: 12px 3%;
+            }
+
+            .navbar-right {
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px;
+                gap: 20px;
+            }
+
+            .navbar-left {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .navbar-right {
+                width: 100%;
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-item {
+                font-size: 15px;
+            }
+
+            .lab-name {
+                font-size: 24px;
+            }
+
+            .emblem-img, .lab-logo-img {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar-left {
+                flex-wrap: wrap;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .emblem-container {
+                margin-bottom: 10px;
+            }
+
+            .lab-name {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .navbar-right {
+                gap: 10px;
+            }
+
+            .nav-item {
+                font-size: 14px;
+                padding: 5px;
+            }
+        }
+    </style><!-- 导航栏 -->
     <style>
         * {
             margin: 0;
@@ -357,14 +566,29 @@
     </style><!--protocol web栏-->
 </head>
 <body>
-<!-- 导航栏 -->
-<div class="image-container">
-    <a href="index.html" class="image-link"><img src="image/index-labpage2/home3.png" alt="Home"></a>
-    <a href="people.html" class="image-link"><img src="image/index-labpage2/team.png" alt="Team"></a>
-    <a href="publication.html" class="image-link"><img src="image/index-labpage2/publication3.png" alt="Publications"></a>
-    <a href="protocol.html" class="image-link"><img src="image/index-labpage2/protocol2.png" alt="Protocols"></a>
-    <a href="link.html" class="image-link"><img src="image/index-labpage2/Link2.png" alt="Links"></a>
-</div>
+<!-- 固定在顶部的导航栏 -->
+<nav class="navbar">
+    <!-- 左侧：院徽、竖线、实验室logo和实验室名称 -->
+    <div class="navbar-left" style="padding-left: 150px">
+        <div class="emblem-container">
+            <!-- 院徽图片 -->
+            <img src="image/index-labpage2/yuanhui.jpg" alt="吉林大学动物医学学院院徽" class="emblem-img">
+            <!-- 实验室logo图片 -->
+
+        </div>
+        <div class="lab-name">The Gu Lab</div>
+    </div>
+
+    <!-- 右侧：导航菜单 -->
+    <div class="navbar-right" style="padding-right: 150px">
+        <a href="index.html" class="nav-item">Home</a>
+        <a href="research.html" class="nav-item">Research</a>
+        <a href="publication.html" class="nav-item">Publications</a>
+        <a href="team.html" class="nav-item">Team</a>
+        <a href="protocol.html" class="nav-item active">Protocol</a>
+        <a href="link.html" class="nav-item">Link</a>
+    </div>
+</nav>
 
 <!-- 协议轮播效果容器 -->
 <div class="protocol-container" style="margin-top: 200px">
@@ -629,4 +853,3 @@
 </div>
 </body>
 </html>
-
