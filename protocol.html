@@ -264,19 +264,8 @@
 
         body {
             background-color: #f8f9fa;
-            padding-top: 80px; /* 为固定导航栏留出空间 */
+            padding-top: 120px; /* 调整导航栏高度 */
             min-height: 100vh;
-        }
-
-        /* 主要内容容器 */
-        .main-container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
         }
 
         /* 导航栏样式 - 固定在顶部 */
@@ -288,67 +277,87 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 5%;
+            padding: 15px 20px;
             background-color: white;
             border-bottom: 1px solid #eaeaea;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
             z-index: 1000;
         }
 
-        /* 左侧logo和实验室名称 */
+        /* 左侧：院徽和学院信息 */
         .navbar-left {
             display: flex;
             align-items: center;
-            gap: 20px;
-        }
-
-        /* 院徽容器 */
-        .emblem-container {
-            display: flex;
-            align-items: center;
             gap: 15px;
+            flex: 1;
+            justify-content: flex-start;
+            padding-left: 5%;
         }
 
         /* 院徽图片样式 */
         .emblem-img {
-            width: 100px;
-            height: 100px;
+            width: 70px;
+            height: 70px;
             object-fit: contain;
-            border-radius: 4px;
         }
 
         /* 竖线分隔符 */
         .vertical-line {
             width: 1px;
-            height: 100px;
-            background-color: #171717;
+            height: 60px;
+            background-color: #333;
+            margin: 0 10px;
         }
 
-        /* 实验室logo图片样式 */
-        .lab-logo-img {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
+        /* 学院信息 */
+        .college-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .college-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+
+        .english-name {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+
+        /* 中间：实验室名称 */
+        .navbar-center {
+            flex: 1;
+            display: flex;
+            justify-content:center;
         }
 
         .lab-name {
-            font-family: "Segoe Script";
-            font-size: 60px;
+            font-family: "Segoe Script", cursive;
+            font-size: 48px;
             font-weight: 700;
             color: rgba(34, 34, 34, 0.92);
-            letter-spacing: 1px;
-            margin-left: 20px;
+            letter-spacing: 2px;
+            white-space: nowrap;
+            text-align: center;
         }
 
-        /* 右侧导航菜单 */
+        /* 右侧：导航菜单 */
         .navbar-right {
+            flex: 1;
             display: flex;
-            gap: 40px;
+            justify-content: flex-end;
+            gap: 30px;
             align-items: center;
+            padding-right: 5%;
         }
 
         .nav-item {
-            font-family:  'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             position: relative;
             font-size: 20px;
             font-weight: 500;
@@ -357,6 +366,8 @@
             padding: 8px 0;
             transition: all 0.3s ease;
             cursor: pointer;
+            white-space: nowrap;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         /* 悬浮效果 */
@@ -392,118 +403,142 @@
             background-color: #4da6ff;
         }
 
-        /* 页面内容 */
-        .header {
-            margin-bottom: 40px;
-            text-align: center;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 20px;
-        }
-
-        .header h1 {
-            color: #333;
-            font-size: 28px;
-            margin-bottom: 8px;
-        }
-
-        .header p {
-            color: #666;
-            font-size: 16px;
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
-        .content {
-            padding: 20px;
-        }
-
-        .section {
-            margin-bottom: 30px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-        }
-
-        .section h2 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 24px;
-        }
-
-        .section p {
-            color: #555;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
         /* 响应式设计 */
-        @media (max-width: 1024px) {
-            .navbar {
-                padding: 12px 3%;
-            }
-
-            .navbar-right {
-                gap: 30px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                padding: 15px;
-                gap: 20px;
-            }
-
-            .navbar-left {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .navbar-right {
-                width: 100%;
-                gap: 15px;
-                flex-wrap: wrap;
-                justify-content: center;
+        @media (max-width: 1200px) {
+            .lab-name {
+                font-size: 40px;
             }
 
             .nav-item {
                 font-size: 15px;
             }
 
-            .lab-name {
-                font-size: 24px;
+            .college-name {
+                font-size: 13px;
             }
 
-            .emblem-img, .lab-logo-img {
-                width: 40px;
-                height: 40px;
+            .english-name {
+                font-size: 11px;
             }
         }
 
-        @media (max-width: 480px) {
-            .navbar-left {
-                flex-wrap: wrap;
-                justify-content: center;
-                text-align: center;
+        @media (max-width: 992px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px;
+                gap: 15px;
             }
 
-            .emblem-container {
+            .navbar-left, .navbar-center, .navbar-right {
+                width: 100%;
+                justify-content: center;
+                flex: none;
+            }
+
+            .navbar-left {
+                order: 1;
                 margin-bottom: 10px;
             }
 
-            .lab-name {
-                margin-left: 0;
-                width: 100%;
+            .navbar-center {
+                order: 2;
+                margin-bottom: 15px;
             }
 
             .navbar-right {
+                order: 3;
+                gap: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .lab-name {
+                font-size: 36px;
+            }
+
+            .vertical-line {
+                height: 40px;
+            }
+
+            .emblem-img {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 180px; /* 增加顶部间距适应更高的导航栏 */
+            }
+
+            .navbar {
+                padding: 10px;
                 gap: 10px;
+            }
+
+            .lab-name {
+                font-size: 32px;
             }
 
             .nav-item {
                 font-size: 14px;
-                padding: 5px;
+                padding: 6px 8px;
+            }
+
+            .navbar-right {
+                gap: 15px;
+            }
+
+            .college-name {
+                font-size: 12px;
+            }
+
+            .english-name {
+                font-size: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .lab-name {
+                font-size: 28px;
+            }
+
+            .navbar-right {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .nav-item {
+                font-size: 13px;
+                padding: 4px 6px;
+            }
+
+            .emblem-img {
+                width: 50px;
+                height: 50px;
+            }
+
+            .vertical-line {
+                height: 30px;
+                margin: 0 5px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .lab-name {
+                font-size: 24px;
+            }
+
+            .navbar-right {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .nav-item {
+                width: 100%;
+                text-align: center;
+                padding: 8px 0;
+                border-bottom: 1px solid #eee;
             }
         }
     </style><!-- 导航栏 -->
@@ -568,19 +603,26 @@
 <body>
 <!-- 固定在顶部的导航栏 -->
 <nav class="navbar">
-    <!-- 左侧：院徽、竖线、实验室logo和实验室名称 -->
-    <div class="navbar-left" style="padding-left: 150px">
+    <!-- 左侧：院徽和学院信息 -->
+    <div class="navbar-left">
         <div class="emblem-container">
             <!-- 院徽图片 -->
             <img src="image/index-labpage2/yuanhui.jpg" alt="吉林大学动物医学学院院徽" class="emblem-img">
-            <!-- 实验室logo图片 -->
-
         </div>
+        <div class="vertical-line"></div>
+        <div class="college-info">
+            <div class="college-name">College of Veterinary Medicine</div>
+            <div class="english-name">Jilin University </div>
+        </div>
+    </div>
+
+    <!-- 中间：实验室名称 -->
+    <div class="navbar-center">
         <div class="lab-name">The Gu Lab</div>
     </div>
 
     <!-- 右侧：导航菜单 -->
-    <div class="navbar-right" style="padding-right: 150px">
+    <div class="navbar-right">
         <a href="index.html" class="nav-item">Home</a>
         <a href="research.html" class="nav-item">Research</a>
         <a href="publication.html" class="nav-item">Publications</a>
