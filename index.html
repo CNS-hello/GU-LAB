@@ -499,10 +499,11 @@
   </nav>
 
   <!-- Hero区域 -->
-  <section class="hero-container">
+  <!-- Hero区域 -->
+  <section class="hero-container relative">
     <div class="hero-content">
-      <!-- 左侧内容 -->
-      <div class="hero-left">
+      <!-- 左侧内容：控制宽度为 3/5 -->
+      <div class="hero-left" style="width: 60%; flex: none;">
         <h1 class="hero-title">
           Exploring Phages<br>
           Advancing One Health
@@ -542,8 +543,8 @@
         </div>
       </div>
 
-      <!-- 右侧数据面板（桌面端显示） -->
-      <div class="hero-right right-0 hidden lg:block">
+      <!-- 右侧数据面板：固定贴紧最右侧 + 垂直居中 -->
+      <div class="hidden lg:block absolute top-1/2 -translate-y-1/2 right-[2vw]">
         <div class="hero-stats">
           <div>
             <p class="text-lg text-white/80 uppercase mb-1">Phage Research</p>
