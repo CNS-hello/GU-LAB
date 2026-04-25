@@ -1,699 +1,851 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Gu Lab - Jilin University</title>
-    <!-- 引入Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 引入Font Awesome图标库 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- 自定义Tailwind配置 -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#3B82F6',
-                        dark: '#0B1224',
-                        darkblue: '#0F172A',
-                        light: '#F8FAFC',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                        handwritten: ['Segoe Script', 'Brush Script MT', 'cursive'],
-                    },
-                }
-            }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Gu Lab - Jilin University</title>
+  <!-- 引入Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 引入Font Awesome图标库 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- 自定义Tailwind配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#3B82F6',
+            dark: '#0B1224',
+            darkblue: '#0F172A',
+            light: '#F8FAFC',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            handwritten: ['Segoe Script', 'Brush Script MT', 'cursive'],
+          },
+          spacing: {
+            'screen-90': '90vw',
+            'screen-80': '80vw',
+            'screen-70': '70vw',
+          }
         }
-    </script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+      }
+    }
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        body {
-            background-color: #76a1cc;
-            /* 取消顶部内边距，因为导航栏不再固定 */
-            min-height: 100vh;
-        }
+    body {
+      background-color: #76a1cc;
+      min-height: 100vh;
+    }
 
-        /* 导航栏样式 - 取消固定定位 + 轻微磨砂玻璃效果 */
-        .navbar {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            /* 半透明白色底色 + 模糊 = 磨砂玻璃 */
-            background-color: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            z-index: 10;
-        }
+    /* 导航栏样式 */
+    .navbar {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5vh 1.5vw;
+      background-color: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      z-index: 10;
+    }
 
-        /* 左侧：院徽和学院信息 */
-        .navbar-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            flex: 1;
-            justify-content: flex-start;
-            padding-left: 5%;
-        }
+    /* 左侧：院徽和学院信息 */
+    .navbar-left {
+      display: flex;
+      align-items: center;
+      gap: 1vw;
+      flex: 1;
+      justify-content: flex-start;
+      padding-left: 2vw;
+    }
 
-        /* 院徽图片样式 */
-        .emblem-img {
-            width: 70px;
-            height: 70px;
-            object-fit: contain;
-        }
+    /* 院徽图片样式 - 使用视口单位 */
+    .emblem-img {
+      width: 5vw;
+      min-width: 50px;
+      max-width: 80px;
+      height: 5vw;
+      min-height: 50px;
+      max-height: 80px;
+      object-fit: contain;
+    }
 
-        /* 竖线分隔符 */
-        .vertical-line {
-            width: 1px;
-            height: 60px;
-            background-color: rgba(255, 255, 255, 0.5); /* 半透明白色 */
-            margin: 0 10px;
-        }
+    /* 竖线分隔符 */
+    .vertical-line {
+      width: 1px;
+      height: 4vw;
+      min-height: 40px;
+      max-height: 60px;
+      background-color: rgba(255, 255, 255, 0.5);
+      margin: 0 0.5vw;
+    }
 
-        /* 学院信息 */
-        .college-info {
-            display: flex;
-            flex-direction: column;
-        }
+    /* 学院信息 - 使用视口单位 */
+    .college-info {
+      display: flex;
+      flex-direction: column;
+    }
 
-        .college-name {
-            font-size: 18px;
-            font-weight: 600;
-            color: white; /* 白色文字 */
-            line-height: 1.2;
-            white-space: nowrap;
-        }
+    .college-name {
+      font-size: 1.2vw;
+      min-font-size: 13px;
+      max-font-size: 20px;
+      font-weight: 600;
+      color: white;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
 
-        .english-name {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.8); /* 半透明白色 */
-            line-height: 1.2;
-            white-space: nowrap;
-        }
+    .english-name {
+      font-size: 1vw;
+      min-font-size: 11px;
+      max-font-size: 16px;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.2;
+      white-space: nowrap;
+    }
 
-        /* 中间：实验室名称 */
-        .navbar-center {
-            flex: 1;
-            display: flex;
-            justify-content:center;
-        }
+    /* 中间：实验室名称 */
+    .navbar-center {
+      flex: 2;
+      display: flex;
+      justify-content: center;
+    }
 
-        .lab-name {
-            font-family: "Segoe Script", cursive;
-            font-size: 48px;
-            font-weight: 700;
-            color: white; /* 白色文字 */
-            letter-spacing: 2px;
-            white-space: nowrap;
-            text-align: center;
-        }
+    .lab-name {
+      font-family: "Segoe Script", cursive;
+      font-size: 3.5vw;
+      min-font-size: 28px;
+      max-font-size: 60px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: 0.1vw;
+      white-space: nowrap;
+      text-align: center;
+    }
 
-        /* 右侧：导航菜单 */
-        .navbar-right {
-            flex: 1;
-            display: flex;
-            justify-content: flex-end;
-            gap: 30px;
-            align-items: center;
-            padding-right: 5%;
-        }
+    /* 右侧：导航菜单 */
+    .navbar-right {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      gap: 2vw;
+      align-items: center;
+      padding-right: 2vw;
+    }
 
-        .nav-item {
-            position: relative;
-            font-size: 20px;
-            font-weight: 500;
-            color: white; /* 白色文字 */
-            text-decoration: none;
-            padding: 8px 0;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            white-space: nowrap;
-        }
+    .nav-item {
+      position: relative;
+      font-size: 1.2vw;
+      min-font-size: 12px;
+      max-font-size: 20px;
+      font-weight: 500;
+      color: white;
+      text-decoration: none;
+      padding: 0.5vh 0;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      white-space: nowrap;
+    }
 
-        /* 悬浮效果 */
-        .nav-item:hover {
-            color: #4da6ff; /* 浅蓝色 */
-            transform: translateY(-2px);
-        }
+    /* 悬浮效果 */
+    .nav-item:hover {
+      color: #4da6ff;
+      transform: translateY(-2px);
+    }
 
-        /* 悬浮时显示浅蓝色横线 */
-        .nav-item::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 3px;
-            bottom: 0;
-            left: 0;
-            background-color: #4da6ff;
-            transition: width 0.3s ease;
-            border-radius: 2px;
-        }
+    /* 悬浮时显示浅蓝色横线 */
+    .nav-item::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 3px;
+      bottom: 0;
+      left: 0;
+      background-color: #4da6ff;
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
 
-        .nav-item:hover::after {
-            width: 100%;
-        }
+    .nav-item:hover::after {
+      width: 100%;
+    }
 
-        /* 当前选中的项目 */
-        .nav-item.active {
-            color: #4da6ff;
-        }
+    /* 当前选中的项目 */
+    .nav-item.active {
+      color: #4da6ff;
+    }
 
-        .nav-item.active::after {
-            width: 100%;
-            background-color: #4da6ff;
-        }
+    .nav-item.active::after {
+      width: 100%;
+      background-color: #4da6ff;
+    }
 
-        /* 响应式设计 */
-        @media (max-width: 1200px) {
-            .lab-name {
-                font-size: 40px;
-            }
+    /* 新增：Hero区域响应式调整 */
+    .hero-container {
+      min-height: 65vh;
+      display: flex;
+      align-items: center;
+      padding: 2vh 2vw;
+    }
 
-            .nav-item {
-                font-size: 15px;
-            }
+    .hero-content {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      max-width: 90vw;
+      margin: 0 auto;
+    }
 
-            .college-name {
-                font-size: 13px;
-            }
+    .hero-left {
+      flex: 1;
+      padding-right: 4vw;
+    }
 
-            .english-name {
-                font-size: 11px;
-            }
-        }
 
-        @media (max-width: 992px) {
-            .navbar {
-                flex-direction: column;
-                padding: 15px;
-                gap: 15px;
-            }
 
-            .navbar-left, .navbar-center, .navbar-right {
-                width: 100%;
-                justify-content: center;
-                flex: none;
-            }
+    .hero-title {
+      font-size: 2.8vw;
+      min-font-size: 24px;
+      max-font-size: 48px;
+      font-weight: bold;
+      color: white;
+      line-height: 1.2;
+      margin-bottom: 2vh;
+    }
 
-            .navbar-left {
-                order: 1;
-                margin-bottom: 10px;
-            }
+    .hero-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 2vh;
+      padding: 2vw;
+    }
 
-            .navbar-center {
-                order: 2;
-                margin-bottom: 15px;
-            }
+    .research-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.3vw;
+      margin-top: 3vh;
+    }
 
-            .navbar-right {
-                order: 3;
-                gap: 20px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
+    .research-item {
+      text-align: center;
+      padding: 1vw;
+      border-radius: 12px;
 
-            .lab-name {
-                font-size: 36px;
-            }
+    }
 
-            .vertical-line {
-                height: 40px;
-            }
+    /* 内容卡片调整 */
+    .content-card {
+      height: 100%;
+      padding: 1.5vw;
+      display: flex;
+      flex-direction: column;
+    }
 
-            .emblem-img {
-                width: 60px;
-                height: 60px;
-            }
-        }
+    /* 响应式设计 */
+    @media (max-width: 1200px) {
+      .navbar-center {
+        flex: 1.5;
+      }
 
-        @media (max-width: 768px) {
-            .lab-name {
-                font-size: 32px;
-            }
+      .lab-name {
+        font-size: 3vw;
+      }
 
-            .nav-item {
-                font-size: 14px;
-                padding: 6px 8px;
-            }
+      .nav-item {
+        font-size: 1.1vw;
+      }
 
-            .navbar-right {
-                gap: 15px;
-            }
+      .college-name {
+        font-size: 1.1vw;
+      }
 
-            .college-name {
-                font-size: 12px;
-            }
+      .english-name {
+        font-size: 0.9vw;
+      }
+    }
 
-            .english-name {
-                font-size: 10px;
-            }
-        }
+    @media (max-width: 992px) {
+      .navbar {
+        flex-direction: column;
+        padding: 2vh 2vw;
+        gap: 2vh;
+      }
 
-        @media (max-width: 480px) {
-            .lab-name {
-                font-size: 28px;
-            }
+      .navbar-left, .navbar-center, .navbar-right {
+        width: 100%;
+        justify-content: center;
+        flex: none;
+      }
 
-            .navbar-right {
-                flex-wrap: wrap;
-                gap: 10px;
-            }
+      .navbar-left {
+        order: 1;
+        margin-bottom: 1vh;
+        padding-left: 0;
+      }
 
-            .nav-item {
-                font-size: 13px;
-                padding: 4px 6px;
-            }
+      .navbar-center {
+        order: 2;
+        margin-bottom: 1.5vh;
+      }
 
-            .emblem-img {
-                width: 50px;
-                height: 50px;
-            }
+      .navbar-right {
+        order: 3;
+        gap: 3vw;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding-right: 0;
+      }
 
-            .vertical-line {
-                height: 30px;
-                margin: 0 5px;
-            }
-        }
+      .hero-content {
+        flex-direction: column;
+      }
 
-        @media (max-width: 360px) {
-            .lab-name {
-                font-size: 24px;
-            }
+      .hero-left {
+        padding-right: 0;
+        margin-bottom: 4vh;
+      }
 
-            .navbar-right {
-                flex-direction: column;
-                gap: 8px;
-            }
+      .hero-right {
+        width: 90%;
+        min-width: auto;
+        margin-right: 0;
+      }
 
-            .nav-item {
-                width: 100%;
-                text-align: center;
-                padding: 8px 0;
-                border-bottom: 1px solid rgba(255,255,255,0.2);
-            }
-        }
-    </style>
-    <!-- 自定义工具类 -->
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .content-auto {
-                content-visibility: auto;
-            }
-            .bg-hero-gradient {
-                background: linear-gradient(135deg, #0B1224 0%, #1E293B 100%);
-            }
-            .nav-active {
-                border-bottom: 2px solid #3B82F6;
-            }
-            .card-hover {
-                transition: all 0.3s ease;
-            }
-            .card-hover:hover {
-                transform: translateY(-4px);
-                box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.1);
-            }
-        }
-    </style>
-    <!-- 基础字体引入 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;50;600;700&display=swap" rel="stylesheet">
+      .research-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2vw;
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+        gap: 3vh;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .lab-name {
+        font-size: 8vw;
+      }
+
+      .nav-item {
+        font-size: 3.5vw;
+        padding: 1vh 1vw;
+      }
+
+      .navbar-right {
+        gap: 4vw;
+      }
+
+      .college-name {
+        font-size: 3.5vw;
+      }
+
+      .english-name {
+        font-size: 3vw;
+      }
+
+      .emblem-img {
+        width: 12vw;
+        height: 12vw;
+      }
+
+      .vertical-line {
+        height: 8vw;
+      }
+
+      .hero-title {
+        font-size: 6vw;
+      }
+
+      .research-grid {
+        grid-template-columns: 1fr;
+        gap: 1vh;
+      }
+
+      .research-item {
+        padding: 4vw;
+      }
+
+      .hero-stats {
+        display: none;
+      }
+
+      .mobile-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2vw;
+        margin-top: 3vh;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .lab-name {
+        font-size: 9vw;
+      }
+
+      .navbar-right {
+        gap: 3vw;
+      }
+
+      .nav-item {
+        font-size: 4vw;
+      }
+
+      .hero-title {
+        font-size: 7vw;
+      }
+
+      .mobile-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3vw;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .lab-name {
+        font-size: 10vw;
+      }
+
+      .navbar-right {
+        flex-direction: column;
+        gap: 2vh;
+      }
+
+      .nav-item {
+        width: 100%;
+        text-align: center;
+        padding: 1.5vh 0;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+        font-size: 4.5vw;
+      }
+
+      .mobile-stats {
+        grid-template-columns: 1fr;
+        gap: 2vh;
+      }
+    }
+  </style>
+  <!-- 自定义工具类 -->
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .bg-hero-gradient {
+        background: linear-gradient(135deg, #0B1224 0%, #1E293B 100%);
+      }
+      .nav-active {
+        border-bottom: 2px solid #3B82F6;
+      }
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.1);
+      }
+    }
+  </style>
+  <!-- 基础字体引入 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body class="font-sans bg-light text-darkblue">
 
 <!-- 核心修改：父容器统一设置背景图，导航栏+section共用 -->
-<div class="relative w-full overflow-hidden
-    bg-[url('image/background-photo/indexhero.png')]
-    bg-no-repeat bg-cover bg-center">
+<div class="relative w-full overflow-hidden bg-[url('image/background-photo/indexhero.png')] bg-no-repeat bg-cover bg-center">
 
-    <!-- 导航栏：取消固定，正常布局，轻微磨砂玻璃效果 -->
-    <nav class="navbar">
-        <!-- 左侧：院徽和学院信息 -->
-        <div class="navbar-left">
-            <div class="emblem-container">
-                <img src="image/index-labpage2/yuanhui.png" alt="吉林大学动物医学学院院徽" class="emblem-img">
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <!-- 左侧：院徽和学院信息 -->
+    <div class="navbar-left">
+      <div class="emblem-container">
+        <img src="image/index-labpage2/yuanhui.png" alt="吉林大学动物医学学院院徽" class="emblem-img">
+      </div>
+      <div class="vertical-line"></div>
+      <div class="college-info">
+        <div class="college-name">College of Veterinary Medicine</div>
+        <div class="english-name">Jilin University</div>
+      </div>
+    </div>
+
+    <!-- 中间：实验室名称 -->
+    <div class="navbar-center">
+      <div class="lab-name">The Gu Lab</div>
+    </div>
+
+    <!-- 右侧：导航菜单 -->
+    <div class="navbar-right">
+      <a href="index.html" class="nav-item active">Home</a>
+      <a href="research.html" class="nav-item">Research</a>
+      <a href="publication.html" class="nav-item">Publications</a>
+      <a href="team.html" class="nav-item">Team</a>
+      <a href="protocol.html" class="nav-item">Protocol</a>
+      <a href="link.html" class="nav-item">Link</a>
+    </div>
+  </nav>
+
+  <!-- Hero区域 -->
+  <section class="hero-container">
+    <div class="hero-content">
+      <!-- 左侧内容 -->
+      <div class="hero-left">
+        <h1 class="hero-title">
+          Exploring Phages<br>
+          Advancing One Health
+        </h1>
+        <div class="w-16 h-1 bg-primary rounded-full mb-8"></div>
+
+        <!-- 四大研究方向 -->
+        <div class="research-grid">
+          <div class="research-item">
+            <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-3">
+              <i class="fa-solid fa-virus text-primary text-2xl"></i>
             </div>
-            <div class="vertical-line"></div>
-            <div class="college-info">
-                <div class="college-name">College of Veterinary Medicine</div>
-                <div class="english-name">Jilin University </div>
+            <h3 class="text-white font-semibold mb-1 text-xl">Discovery</h3>
+            <p class="text-white/80 text-sm">Uncovering phage diversity and evolution</p>
+          </div>
+          <div class="research-item">
+            <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-3">
+              <i class="fa-solid fa-dna text-primary text-2xl"></i>
             </div>
-        </div>
-
-        <!-- 中间：实验室名称 -->
-        <div class="navbar-center">
-            <div class="lab-name">The Gu Lab</div>
-        </div>
-
-        <!-- 右侧：导航菜单 -->
-        <div class="navbar-right">
-            <a href="index.html" class="nav-item active">Home</a>
-            <a href="research.html" class="nav-item">Research</a>
-            <a href="publication.html" class="nav-item">Publications</a>
-            <a href="team.html" class="nav-item">Team</a>
-            <a href="protocol.html" class="nav-item">Protocol</a>
-            <a href="link.html" class="nav-item">Link</a>
-        </div>
-    </nav>
-
-    <!-- Hero区域：移除单独背景图，继承父容器背景 -->
-    <section class="h-[50vh] pt-4 pb-16 px-6 md:px-12 relative">
-        <div class="max-w-8xl mx-auto h-full flex flex-col;">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
-                <!-- 左侧标题文本 -->
-                <div class="z-10" style="padding-left: 100px;">
-                    <h2 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-white leading-tight mb-4">
-                        Exploring Phages<br>
-                        Advancing One Health
-                    </h2>
-                    <div class="w-16 h-1 bg-primary rounded-full mb-12"></div>
-
-                    <!-- 四大研究方向 -->
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                        <div class="text-center">
-                            <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
-                                <i class="fa-solid fa-virus text-primary text-3xl"></i>
-                            </div>
-                            <h3 class="text-white font-semibold mb-1 text-3xl">Discovery</h3>
-                            <p class="text-white/60 text-xl">Uncovering phage diversity and evolution</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
-                                <i class="fa-solid fa-dna text-primary text-3xl"></i>
-                            </div>
-                            <h3 class="text-white font-semibold mb-1 text-3xl">Mechanism</h3>
-                            <p class="text-white/60 text-xl">Decoding phage-host interactions</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
-                                <i class="fa-solid fa-crosshairs text-primary text-3xl"></i>
-                            </div>
-                            <h3 class="text-white font-semibold mb-1 text-3xl">Engineering</h3>
-                            <p class="text-white/60 text-xl">Designing phage tools and therapeutics</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
-                                <i class="fa-solid fa-shield-halved text-primary text-3xl"></i>
-                            </div>
-                            <h3 class="text-white font-semibold mb-1 text-3xl">Therapy</h3>
-                            <p class="text-white/60 text-xl">Combating bacterial infections</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 右侧悬浮数据面板 -->
-                <div class="absolute right-0 top-1/2 -translate-y-1/2 z-10">
-                    <div class="hidden lg:flex flex-col gap-8 pr-6">
-                        <div>
-                            <p class="text-2xl text-white/80 uppercase mb-1">Phage Research</p>
-                            <p class="text-1xl text-white/80 max-w-[200px]">Innovative solutions for antimicrobial resistance</p>
-                        </div>
-                        <div>
-                            <p class="text-primary font-bold text-4xl">100+</p>
-                            <p class="text-white/80 text-xl">Phage Isolates</p>
-                        </div>
-                        <div>
-                            <p class="text-primary font-bold text-4xl">10+</p>
-                            <p class="text-white/80 text-xl">Research Projects</p>
-                        </div>
-                        <div>
-                            <p class="text-primary font-bold text-4xl">40+</p>
-                            <p class="text-white/80 text-xl">Publications</p>
-                        </div>
-                    </div>
-                </div>
+            <h3 class="text-white font-semibold mb-1 text-xl">Mechanism</h3>
+            <p class="text-white/80 text-sm">Decoding phage-host interactions</p>
+          </div>
+          <div class="research-item">
+            <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-3">
+              <i class="fa-solid fa-crosshairs text-primary text-2xl"></i>
             </div>
-
-            <!-- 移动端数据展示 -->
-            <div class="grid grid-cols-3 gap-6 lg:hidden mt-8">
-                <div class="text-center">
-                    <p class="text-primary font-bold text-2xl">100+</p>
-                    <p class="text-white/80 text-xs">Phage Isolates</p>
-                </div>
-                <div class="text-center">
-                    <p class="text-primary font-bold text-2xl">20+</p>
-                    <p class="text-white/80 text-xs">Research Projects</p>
-                </div>
-                <div class="text-center">
-                    <p class="text-primary font-bold text-2xl">30+</p>
-                    <p class="text-white/80 text-xs">Publications</p>
-                </div>
+            <h3 class="text-white font-semibold mb-1 text-xl">Engineering</h3>
+            <p class="text-white/80 text-sm">Designing phage tools and therapeutics</p>
+          </div>
+          <div class="research-item">
+            <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-3">
+              <i class="fa-solid fa-shield-halved text-primary text-2xl"></i>
             </div>
+            <h3 class="text-white font-semibold mb-1 text-xl">Therapy</h3>
+            <p class="text-white/80 text-sm">Combating bacterial infections</p>
+          </div>
         </div>
+      </div>
 
-        <!-- 背景装饰粒子 -->
-        <div class="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none">
-            <div class="absolute top-20 left-10 w-32 h-32 rounded-full bg-primary/20 blur-3xl"></div>
-            <div class="absolute bottom-20 right-10 w-40 h-40 rounded-full bg-primary/20 blur-3xl"></div>
+      <!-- 右侧数据面板（桌面端显示） -->
+      <div class="hero-right right-0 hidden lg:block">
+        <div class="hero-stats">
+          <div>
+            <p class="text-lg text-white/80 uppercase mb-1">Phage Research</p>
+            <p class="text-sm text-white/80 max-w-[200px]">Innovative solutions for antimicrobial resistance</p>
+          </div>
+          <div>
+            <p class="text-primary font-bold text-3xl">100+</p>
+            <p class="text-white/80 text-base">Phage Isolates</p>
+          </div>
+          <div>
+            <p class="text-primary font-bold text-3xl">10+</p>
+            <p class="text-white/80 text-base">Research Projects</p>
+          </div>
+          <div>
+            <p class="text-primary font-bold text-3xl">40+</p>
+            <p class="text-white/80 text-base">Publications</p>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
+
+  <!-- 移动端数据展示 -->
+  <div class="mobile-stats lg:hidden px-6 pb-8">
+    <div class="text-center bg-white/10 backdrop-blur-sm rounded-xl p-4">
+      <p class="text-primary font-bold text-2xl">100+</p>
+      <p class="text-white/80 text-sm">Phage Isolates</p>
+    </div>
+    <div class="text-center bg-white/10 backdrop-blur-sm rounded-xl p-4">
+      <p class="text-primary font-bold text-2xl">20+</p>
+      <p class="text-white/80 text-sm">Research Projects</p>
+    </div>
+    <div class="text-center bg-white/10 backdrop-blur-sm rounded-xl p-4">
+      <p class="text-primary font-bold text-2xl">30+</p>
+      <p class="text-white/80 text-sm">Publications</p>
+    </div>
+  </div>
+
+  <!-- 背景装饰粒子 -->
+  <div class="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none">
+    <div class="absolute top-20 left-10 w-32 h-32 rounded-full bg-primary/20 blur-3xl"></div>
+    <div class="absolute bottom-20 right-10 w-40 h-40 rounded-full bg-primary/20 blur-3xl"></div>
+  </div>
 </div>
 
 <!-- 核心内容区域 -->
-<section class="py-16 px-6 md:px-12 bg-light ">
-    <div class="max-w-8xl mx-auto ">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- 研究亮点板块 -->
-            <div class="bg-white rounded-2xl shadow-sm p-6 card-hover">
-                <div class="flex items-center gap-2 mb-6">
-                    <i class="fa-solid fa-flask-vial text-primary text-4xl"></i>
-                    <h3 class="font-bold text-4xl uppercase tracking-wider">Research</h3>
-                </div>
-
-                <div class="space-y-4">
-                    <a href="#" class="block group">
-                        <div class="flex items-start gap-3">
-                            <div>
-                                <h4 class="font-medium text-2xl group-hover:text-primary transition-colors">The Immune System of Bacteria</h4>
-                            </div>
-                        </div>
-                        <div class="w-full h-[1px] bg-gray-100 mt-4"></div>
-                    </a>
-
-                    <a href="#" class="block group">
-                        <div class="flex items-start gap-3">
-                            <div>
-                                <h4 class="font-medium text-2xl group-hover:text-primary transition-colors">Phage-Based Bacterial Detection</h4>
-                            </div>
-                        </div>
-                        <div class="w-full h-[1px] bg-gray-100 mt-4"></div>
-                    </a>
-
-                    <a href="#" class="block group">
-                        <div class="flex items-start gap-3">
-                            <div>
-                                <h4 class="font-medium text-2xl group-hover:text-primary transition-colors">Gut Viromics and ARG Dissemination</h4>
-                            </div>
-                        </div>
-                        <div class="w-full h-[1px] bg-gray-100 mt-4"></div>
-                    </a>
-
-                    <a href="#" class="block group">
-                        <div class="flex items-start gap-3">
-                            <div>
-                                <h4 class="font-medium text-2xl group-hover:text-primary transition-colors">Phage Therapy Applications</h4>
-                            </div>
-                        </div>
-                        <div class="w-full h-[1px] bg-gray-100 mt-4"></div>
-                    </a>
-
-                    <a href="#" class="block group">
-                        <div class="flex items-start gap-3">
-                            <div>
-                                <h4 class="font-medium text-2xl group-hover:text-primary transition-colors">Structural and Mechanistic Insights of Phage Proteins</h4>
-                            </div>
-                        </div>
-                        <div class="w-full h-[1px] bg-gray-100 mt-4"></div>
-                    </a>
-
-
-                </div>
-
-                <a href="research.html" class="inline-flex items-center gap-2 mt-6 text-xl text-primary font-medium">
-                    View Details <i class="fa-solid fa-arrow-right"></i>
-                </a>
-            </div>
-
-            <!-- 新闻动态板块 -->
-            <div class="bg-white rounded-2xl shadow-sm p-6 card-hover">
-                <div class="flex items-center justify-between mb-6">
-                    <div class="flex items-center gap-2">
-                        <i class="fa-solid fa-newspaper text-primary text-4xl"></i>
-                        <h3 class="font-bold text-4xl uppercase tracking-wider">News</h3>
-                    </div>
-                    <a href="publication.html" class="text-xs text-primary font-medium">View All</a>
-                </div>
-
-                <div class="space-y-6">
-                    <!-- 新闻项1：图片左、文字右 -->
-                    <a href="#" class="block group">
-                        <div class="flex flex-col md:flex-row gap-4 items-start">
-                            <img src="image/members/research1.jpeg" alt="News" class="w-full md:w-32 h-32 md:h-24 object-cover rounded-lg flex-shrink-0">
-                            <div class="flex-1">
-                                <h4 class="font-medium text-xl group-hover:text-primary transition-colors">We elucidated the mechanism through which Yersinia exhibits varying phage resistance at different temperatures.</h4>
-                                <p class="text-xs text-gray-500 mt-1">Nov. 26, 2025</p>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- 新闻项2：图片左、文字右 -->
-                    <a href="#" class="block group">
-                        <div class="flex flex-col md:flex-row gap-4 items-start">
-                            <img src="https://picsum.photos/id/250/400/200" alt="News" class="w-full md:w-32 h-32 md:h-24 object-cover rounded-lg flex-shrink-0">
-                            <div class="flex-1">
-                                <h4 class="font-medium text-xl group-hover:text-primary transition-colors">Warm congratulations to our lab members on their graduation!</h4>
-                                <p class="text-xs text-gray-500 mt-1">Apr 26, 2026</p>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- 新闻项3：图片左、文字右 -->
-                    <a href="#" class="block group">
-                        <div class="flex flex-col md:flex-row gap-4 items-start">
-                            <img src="https://picsum.photos/id/228/400/200" alt="News" class="w-full md:w-32 h-32 md:h-24 object-cover rounded-lg flex-shrink-0">
-                            <div class="flex-1">
-                                <h4 class="font-medium text-xl group-hover:text-primary transition-colors">Welcome, new members!</h4>
-                                <p class="text-xs text-gray-500 mt-1">Sept. 1, 2026</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <!-- 关于实验室板块 -->
-            <div class="bg-white rounded-2xl shadow-sm p-6 card-hover  bg-[url('image/background-photo/phage.jpg')]
-    bg-no-repeat bg-cover bg-center">
-                <div class="flex items-center gap-2 mb-6">
-                    <i class="fa-solid fa-circle-info text-primary text-4xl"></i>
-                    <h3 class="font-bold text-4xl uppercase tracking-wider">The Gu Lab</h3>
-                </div>
-
-                <p class="text-xl text-gray-600 leading-relaxed mb-6 w-3/5 ">
-                    We are dedicated to phage research and translational applications, integrating basic discovery with innovative therapeutic strategies to address the global challenge of antimicrobial resistance.
-                </p>
-                <p class="text-xl text-gray-600 leading-relaxed mb-6 w-3/5 ">
-                    Our lab members come from various provinces across China. The lab environment is relaxed and collaborative, with everyone supporting each other in a friendly and united manner. We are all working together toward shared research goals—welcome to join our team!
-                </p>
-
-                <a href="team.html" class="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-x font-medium hover:bg-primary hover:text-white transition-colors">
-                    Learn More About Us <i class="fa-solid fa-chevron-right"></i>
-                </a>
-            </div>
+<section class="py-16 px-6 md:px-12 bg-light">
+  <div class="max-w-8xl mx-auto">
+    <div class="content-grid grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- 研究亮点板块 -->
+      <div class="bg-white rounded-2xl shadow-sm content-card card-hover">
+        <div class="flex items-center gap-2 mb-6">
+          <i class="fa-solid fa-flask-vial text-primary text-3xl"></i>
+          <h3 class="font-bold text-2xl uppercase tracking-wider">Research</h3>
         </div>
+
+        <div class="space-y-4 flex-grow">
+          <a href="#" class="block group">
+            <div class="flex items-start gap-3">
+              <div>
+                <h4 class="font-medium text-lg group-hover:text-primary transition-colors">The Immune System of Bacteria</h4>
+              </div>
+            </div>
+            <div class="w-full h-[1px] bg-gray-100 mt-4"></div>
+          </a>
+
+          <a href="#" class="block group">
+            <div class="flex items-start gap-3">
+              <div>
+                <h4 class="font-medium text-lg group-hover:text-primary transition-colors">Phage-Based Bacterial Detection</h4>
+              </div>
+            </div>
+            <div class="w-full h-[1px] bg-gray-100 mt-4"></div>
+          </a>
+
+          <a href="#" class="block group">
+            <div class="flex items-start gap-3">
+              <div>
+                <h4 class="font-medium text-lg group-hover:text-primary transition-colors">Gut Viromics and ARG Dissemination</h4>
+              </div>
+            </div>
+            <div class="w-full h-[1px] bg-gray-100 mt-4"></div>
+          </a>
+
+          <a href="#" class="block group">
+            <div class="flex items-start gap-3">
+              <div>
+                <h4 class="font-medium text-lg group-hover:text-primary transition-colors">Phage Therapy Applications</h4>
+              </div>
+            </div>
+            <div class="w-full h-[1px] bg-gray-100 mt-4"></div>
+          </a>
+
+          <a href="#" class="block group">
+            <div class="flex items-start gap-3">
+              <div>
+                <h4 class="font-medium text-lg group-hover:text-primary transition-colors">Structural and Mechanistic Insights of Phage Proteins</h4>
+              </div>
+            </div>
+            <div class="w-full h-[1px] bg-gray-100 mt-4"></div>
+          </a>
+        </div>
+
+        <a href="research.html" class="inline-flex items-center gap-2 mt-6 text-base text-primary font-medium">
+          View Details <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <!-- 新闻动态板块 -->
+      <div class="bg-white rounded-2xl shadow-sm content-card card-hover">
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-newspaper text-primary text-3xl"></i>
+            <h3 class="font-bold text-2xl uppercase tracking-wider">News</h3>
+          </div>
+          <a href="publication.html" class="text-sm text-primary font-medium">View All</a>
+        </div>
+
+        <div class="space-y-6 flex-grow">
+          <!-- 新闻项1 -->
+          <a href="#" class="block group">
+            <div class="flex flex-col md:flex-row gap-4 items-start">
+              <img src="image/members/research1.jpeg" alt="News" class="w-full md:w-32 h-32 md:h-24 object-cover rounded-lg flex-shrink-0">
+              <div class="flex-1">
+                <h4 class="font-medium text-base group-hover:text-primary transition-colors">We elucidated the mechanism through which Yersinia exhibits varying phage resistance at different temperatures.</h4>
+                <p class="text-xs text-gray-500 mt-1">Nov. 26, 2025</p>
+              </div>
+            </div>
+          </a>
+
+          <!-- 新闻项2 -->
+          <a href="#" class="block group">
+            <div class="flex flex-col md:flex-row gap-4 items-start">
+              <img src="https://picsum.photos/id/250/400/200" alt="News" class="w-full md:w-32 h-32 md:h-24 object-cover rounded-lg flex-shrink-0">
+              <div class="flex-1">
+                <h4 class="font-medium text-base group-hover:text-primary transition-colors">Warm congratulations to our lab members on their graduation!</h4>
+                <p class="text-xs text-gray-500 mt-1">Apr 26, 2026</p>
+              </div>
+            </div>
+          </a>
+
+          <!-- 新闻项3 -->
+          <a href="#" class="block group">
+            <div class="flex flex-col md:flex-row gap-4 items-start">
+              <img src="https://picsum.photos/id/228/400/200" alt="News" class="w-full md:w-32 h-32 md:h-24 object-cover rounded-lg flex-shrink-0">
+              <div class="flex-1">
+                <h4 class="font-medium text-base group-hover:text-primary transition-colors">Welcome, new members!</h4>
+                <p class="text-xs text-gray-500 mt-1">Sept. 1, 2026</p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- 关于实验室板块 -->
+      <div class="bg-white rounded-2xl shadow-sm p-6 card-hover  bg-[url('image/background-photo/phage.jpg')]
+    bg-no-repeat bg-cover bg-center">
+        <div class="flex items-center gap-2 mb-6">
+          <i class="fa-solid fa-circle-info text-primary text-4xl"></i>
+          <h3 class="font-bold text-4xl uppercase tracking-wider">The Gu Lab</h3>
+        </div>
+
+        <p class="text-xl text-gray-600 leading-relaxed mb-6 w-3/5 ">
+          We are dedicated to phage research and translational applications, integrating basic discovery with innovative therapeutic strategies to address the global challenge of antimicrobial resistance.
+        </p>
+        <a href="team.html" class="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-x font-medium hover:bg-primary hover:text-white transition-colors">
+          Learn More About Us <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </div>
     </div>
+  </div>
 </section>
 
 <!-- 底部信息区域 -->
-<section class="py-16 px-6 md:px-12 bg-light ">
-    <div class="max-w-8xl mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-            <!-- 基金项目 -->
-            <div class="p-6 md:p-8">
-                <!-- 统一标题样式：和Contact完全一致 -->
-                <div class="flex items-center gap-3 mb-6">
-                    <i class="fa-solid fa-award text-primary text-2xl"></i>
-                    <h3 class="font-bold text-2xl uppercase tracking-wider">Founding</h3>
-                </div>
-
-                <!-- 去掉多余的max-w-6xl mx-auto，让内容自然左对齐，和Contact一致 -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-                    <!-- 项目1 -->
-                    <div class="bg-white rounded-xl shadow-sm p-5 card-hover group text-center">
-                        <p class="font-semibold text-lg text-darkblue group-hover:text-primary transition-colors">国家自然科学基金优秀青年科学基金项目</p>
-                        <p class="text-xs text-gray-500 mt-2 leading-relaxed">重要人兽共患病原菌的噬菌体及其抗菌蛋白</p>
-                    </div>
-
-                    <!-- 项目2 -->
-                    <div class="bg-white rounded-xl shadow-sm p-5 card-hover group text-center">
-                        <p class="font-semibold text-lg text-darkblue group-hover:text-primary transition-colors">国家重点研发计划项目课题三</p>
-                        <p class="text-xs text-gray-500 mt-2 leading-relaxed">噬菌体生产底盘菌株构建及噬菌体制剂制备工艺研究</p>
-                    </div>
-
-                    <!-- 项目3 -->
-                    <div class="bg-white rounded-xl shadow-sm p-5 card-hover group text-center">
-                        <p class="font-semibold text-lg text-darkblue group-hover:text-primary transition-colors">国家重点研发计划</p>
-                        <p class="text-xs text-gray-500 mt-2 leading-relaxed">铜绿假单胞菌人工噬菌体高效制剂的合成与应用</p>
-                    </div>
-
-                    <!-- 项目4 -->
-                    <div class="bg-white rounded-xl shadow-sm p-5 card-hover group text-center">
-                        <p class="font-semibold text-lg text-darkblue group-hover:text-primary transition-colors">国家自然科学基金面上项目</p>
-                        <p class="text-xs text-gray-500 mt-2 leading-relaxed">基于三维结构和分子机制构建跨肺炎克雷伯菌K1和K2荚膜型解聚酶的研究</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 联系信息 -->
-            <div>
-                <!-- 去掉外层浅背景卡片的额外内边距，让标题和Founding在同一水平线 -->
-                <div class="bg-gray-50 rounded-2xl p-6 md:p-8 h-full">
-                    <!-- 核心布局：左内容区 + 右图片区 -->
-                    <div class="flex flex-col md:flex-row gap-8 items-center md:items-start h-full">
-
-                        <!-- 左侧：联系信息主体 -->
-                        <div class="flex-1 w-full">
-                            <!-- 标题行：和Founding完全一致的图标大小、标题大小、间距 -->
-                            <div class="flex items-center gap-3 mb-6">
-                                <i class="fa-solid fa-map-location-dot text-primary text-2xl"></i>
-                                <h3 class="font-bold text-2xl uppercase tracking-wider">CONTACT</h3>
-                            </div>
-
-                            <!-- 地址信息：图标+两行地址文本 -->
-                            <div class="flex items-start gap-3 mb-8" >
-                                <i class="fa-solid fa-location-dot text-primary text-xl mt-1"></i>
-                                <div>
-                                    <p class="text-xl text-gray-700 font-medium">College of Veterinary Medicine, Jilin University</p>
-                                    <p class="text-lg text-gray-600 mt-1">Room 604, Basis Teaching Building, Heping Campus, Changchun, Jilin</p>
-                                </div>
-                            </div>
-
-                            <!-- 底部横向信息栏：邮箱、邮编、工作时间 并排显示 -->
-                            <div class="flex flex-wrap items-center gap-x-10 gap-y-4">
-                                <!-- 邮箱 -->
-                                <div class="flex items-center gap-3">
-                                    <i class="fa-solid fa-envelope text-primary text-xl"></i>
-                                    <a href="mailto:jingmin0629@163.com" class="text-lg text-gray-600 hover:text-primary transition-colors">jingmin0629@163.com</a>
-                                </div>
-                                <!-- 邮编 -->
-                                <div class="flex items-center gap-3">
-                                    <i class="fa-solid fa-hashtag text-primary text-xl"></i>
-                                    <p class="text-lg text-gray-600">Postal Code: 130062</p>
-                                </div>
-                                <!-- 工作时间 -->
-                                <div class="flex items-center gap-3">
-                                    <i class="fa-solid fa-clock text-primary text-xl"></i>
-                                    <p class="text-lg text-gray-600">Mon–Fri &nbsp  8:30 AM – 5:30 PM</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 右侧：校园图片 -->
-                        <div class="flex-shrink-0 w-full md:w-auto">
-                            <img src="image/background-photo/contact.png" alt="Campus Building" class="w-full max-w-[320px] h-auto rounded-xl object-cover shadow-sm">
-                        </div>
-                    </div>
-                </div>
-            </div>
+<section class="py-16 px-6 md:px-12 bg-light">
+  <div class="max-w-8xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      <!-- 基金项目 -->
+      <div class="p-4">
+        <div class="flex items-center gap-3 mb-6">
+          <i class="fa-solid fa-award text-primary text-2xl"></i>
+          <h3 class="font-bold text-2xl uppercase tracking-wider">Founding</h3>
         </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+          <div class="bg-white rounded-xl shadow-sm p-4 card-hover group">
+            <p class="font-semibold text-base text-darkblue group-hover:text-primary transition-colors">国家自然科学基金优秀青年科学基金项目</p>
+            <p class="text-xs text-gray-500 mt-2 leading-relaxed">重要人兽共患病原菌的噬菌体及其抗菌蛋白</p>
+          </div>
+
+          <div class="bg-white rounded-xl shadow-sm p-4 card-hover group">
+            <p class="font-semibold text-base text-darkblue group-hover:text-primary transition-colors">国家重点研发计划项目课题三</p>
+            <p class="text-xs text-gray-500 mt-2 leading-relaxed">噬菌体生产底盘菌株构建及噬菌体制剂制备工艺研究</p>
+          </div>
+
+          <div class="bg-white rounded-xl shadow-sm p-4 card-hover group">
+            <p class="font-semibold text-base text-darkblue group-hover:text-primary transition-colors">国家重点研发计划</p>
+            <p class="text-xs text-gray-500 mt-2 leading-relaxed">铜绿假单胞菌人工噬菌体高效制剂的合成与应用</p>
+          </div>
+
+          <div class="bg-white rounded-xl shadow-sm p-4 card-hover group">
+            <p class="font-semibold text-base text-darkblue group-hover:text-primary transition-colors">国家自然科学基金面上项目</p>
+            <p class="text-xs text-gray-500 mt-2 leading-relaxed">基于三维结构和分子机制构建跨肺炎克雷伯菌K1和K2荚膜型解聚酶的研究</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 联系信息 -->
+      <div>
+        <div class="bg-gray-50 rounded-2xl p-6 md:p-8 h-full">
+          <div class="flex flex-col lg:flex-row gap-8 items-center lg:items-start h-full">
+            <div class="flex-1 w-full">
+              <div class="flex items-center gap-3 mb-6">
+                <i class="fa-solid fa-map-location-dot text-primary text-2xl"></i>
+                <h3 class="font-bold text-2xl uppercase tracking-wider">CONTACT</h3>
+              </div>
+
+              <div class="flex items-start gap-3 mb-8">
+                <i class="fa-solid fa-location-dot text-primary text-xl mt-1"></i>
+                <div>
+                  <p class="text-base text-gray-700 font-medium">College of Veterinary Medicine, Jilin University</p>
+                  <p class="text-sm text-gray-600 mt-1">Room 604, Basis Teaching Building, Heping Campus, Changchun, Jilin</p>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap items-center gap-x-6 gap-y-4">
+                <div class="flex items-center gap-3">
+                  <i class="fa-solid fa-envelope text-primary text-xl"></i>
+                  <a href="mailto:jingmin0629@163.com" class="text-sm text-gray-600 hover:text-primary transition-colors">jingmin0629@163.com</a>
+                </div>
+                <div class="flex items-center gap-3">
+                  <i class="fa-solid fa-hashtag text-primary text-xl"></i>
+                  <p class="text-sm text-gray-600">Postal Code: 130062</p>
+                </div>
+                <div class="flex items-center gap-3">
+                  <i class="fa-solid fa-clock text-primary text-xl"></i>
+                  <p class="text-sm text-gray-600">Mon–Fri 8:30 AM – 5:30 PM</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex-shrink-0 w-full lg:w-auto">
+              <img src="image/background-photo/contact.png" alt="Campus Building" class="w-full max-w-[280px] h-auto rounded-xl object-cover shadow-sm mx-auto lg:mx-0">
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </section>
 
 <!-- 页脚版权 -->
-<footer class="bg-dark py-6 px-6 md:px-12">
-    <div class="max-w-7xl mx-auto text-center">
-        <p class="text-white/60 text-xs">© 2026 The Gu Lab. All Rights Reserved.</p>
-    </div>
+<footer class="bg-dark py-8 px-6 md:px-12">
+  <div class="max-w-7xl mx-auto text-center">
+    <p class="text-white/60 text-sm">© 2026 The Gu Lab. All Rights Reserved.</p>
+  </div>
 </footer>
+
+<script>
+  // 添加视口单位计算辅助
+  function setViewportUnits() {
+    const vh = window.innerHeight * 0.01;
+    const vw = window.innerWidth * 0.01;
+
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    document.documentElement.style.setProperty('--vw', `${vw}px`);
+
+    // 确保最小字体大小
+    const elements = document.querySelectorAll('[style*="min-font-size"]');
+    elements.forEach(el => {
+      const style = getComputedStyle(el);
+      const fontSize = parseFloat(style.fontSize);
+      const minFontSize = parseFloat(el.getAttribute('min-font-size')) || 12;
+      const maxFontSize = parseFloat(el.getAttribute('max-font-size')) || 48;
+
+      if (fontSize < minFontSize) {
+        el.style.fontSize = `${minFontSize}px`;
+      } else if (fontSize > maxFontSize) {
+        el.style.fontSize = `${maxFontSize}px`;
+      }
+    });
+  }
+
+  // 初始化
+  setViewportUnits();
+
+  // 监听窗口大小变化
+  window.addEventListener('resize', setViewportUnits);
+
+  // 导航栏高亮当前页面
+  document.addEventListener('DOMContentLoaded', function() {
+    const currentPage = window.location.pathname.split('/').pop();
+    const navLinks = document.querySelectorAll('.nav-item');
+
+    navLinks.forEach(link => {
+      if (link.getAttribute('href') === currentPage) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  });
+</script>
 </body>
 </html>
